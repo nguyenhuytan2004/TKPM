@@ -1,10 +1,10 @@
-package com.example.Project.components.home;
+package com.example.Project.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
+public class Home {
     @GetMapping("/")
     public String index() {
         return "home";
