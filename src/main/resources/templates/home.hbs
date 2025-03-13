@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/output.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>IT Tools</title>
 </head>
 
@@ -18,10 +19,9 @@
             </div>
             <nav class="mt-5">
                 <ul class="space-y-2">
-                    <li><a href="#" class="block py-2 px-4 hover:bg-green-600">Crypto</a></li>
-                    <li><a href="#" class="block py-2 px-4 hover:bg-green-600">Converter</a></li>
-                    <li><a href="#" class="block py-2 px-4 hover:bg-green-600">Web</a></li>
-                    <li><a href="#" class="block py-2 px-4 hover:bg-green-600">Images & Videos</a></li>
+                    {{#categories}}
+                    <li><a href="#" class="block py-2 px-4 hover:bg-green-600">{{name}}</a></li>
+                    {{/categories}}
                 </ul>
             </nav>
         </aside>
@@ -34,24 +34,13 @@
                 <button class="px-4 py-2 bg-green-600 rounded">Buy me a coffee</button>
             </div>
 
-            <section class="mt-10 grid grid-cols-4 gap-4">
-                <!-- Sample Tool Card -->
+            <section class="mt-10 grid grid-cols-3 gap-4">
+                {{#tools}}
                 <div class="bg-gray-800 p-4 rounded-lg hover:border-green-400 border">
-                    <h3 class="text-lg font-semibold">Token Generator</h3>
-                    <p class="text-sm text-gray-400">Generate random strings with uppercase/lowercase options.</p>
+                    <h3 class="text-lg font-semibold">T{{name}}</h3>
+                    <p class="text-sm text-gray-400">{{description}}</p>
                 </div>
-                <div class="bg-gray-800 p-4 rounded-lg hover:border-green-400 border">
-                    <h3 class="text-lg font-semibold">Hash Text</h3>
-                    <p class="text-sm text-gray-400">Hash a text string using MD5, SHA1, SHA256...</p>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg hover:border-green-400 border">
-                    <h3 class="text-lg font-semibold">UUIDs Generator</h3>
-                    <p class="text-sm text-gray-400">Generate random Universally Unique Identifiers (UUIDs).</p>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg hover:border-green-400 border">
-                    <h3 class="text-lg font-semibold">UUIDs Generator</h3>
-                    <p class="text-sm text-gray-400">Generate random Universally Unique Identifiers (UUIDs).</p>
-                </div>
+                {{/tools}}
             </section>
         </main>
     </div>
