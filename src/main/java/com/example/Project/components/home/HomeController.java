@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
     @GetMapping("/")
-    public String index(Model model) {
+    public String show(Model model) {
         model.addAttribute("message", "Hello Handlebars!");
         return "home";
     }
