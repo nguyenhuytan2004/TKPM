@@ -1,10 +1,10 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/output.css" />
+    <script src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script>
     <title>IT Tools</title>
 </head>
 
@@ -21,7 +21,10 @@
             <div class="mt-5">
                 <ul class="space-y-2">
                     {{#categories}}
-                    <li><a href="#" class="block py-2 px-4 hover:bg-green-600">{{name}}</a></li>
+                    <div class="flex flex-row items-center cursor-pointer">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                        <li class="block py-2 px-4">{{name}}</li>
+                    </div>
                     {{/categories}}
                 </ul>
             </div>
@@ -31,17 +34,18 @@
         <div class="flex-1 p-10">
             <div class="flex justify-between items-center">
                 <input type="text" placeholder="Search..."
-                    class="px-4 py-2 w-1/3 bg-gray-800 border border-gray-700 rounded">
-                <button class="px-4 py-2 bg-green-600 rounded">Buy me a coffee</button>
+                    class="px-4 py-2 w-1/3 bg-gray-800 border border-gray-700 rounded" />
+                <button class="px-4 py-2 bg-green-600 rounded">Buy me a
+                    coffee</button>
             </div>
 
             <div class="mt-8 flex flex-col items-center">
                 <div class="w-1/2 space-y-3 mb-6">
-                    <h1 class="text-4xl font-bold text-gray-400">Token Generator</h1>
-                    <p class="text-gray-400">Generate random string with the chars you want, uppercase or
-                        lowercase
-                        letters, numbers and/or
-                        symbols.</p>
+                    <h1 class="text-4xl font-bold text-gray-400">Token
+                        Generator</h1>
+                    <p class="text-gray-400">Generate random string with the
+                        chars you want, uppercase or lowercase letters,
+                        numbers and/or symbols.</p>
                 </div>
 
                 <div class="p-4 bg-gray-600 w-1/2 space-y-8">
@@ -49,7 +53,7 @@
                         <div class="flex flex-row space-x-3 items-center">
                             <p>Uppercase (ABC...)</p>
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="uppercaseToggle" class="sr-only peer" value="true" checked>
+                                <input type="checkbox" id="uppercaseToggle" class="sr-only peer" value="true" checked />
                                 <div
                                     class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
                                 </div>
@@ -58,7 +62,7 @@
                         <div class="flex flex-row space-x-3 items-center">
                             <p>Numbers (123...)</p>
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="numberToggle" class="sr-only peer" value="true" checked>
+                                <input type="checkbox" id="numberToggle" class="sr-only peer" value="true" checked />
                                 <div
                                     class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
                                 </div>
@@ -69,7 +73,7 @@
                         <div class="flex flex-row space-x-3 items-center">
                             <p>Lowercase (abc...)</p>
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="lowercaseToggle" class="sr-only peer" value="true" checked>
+                                <input type="checkbox" id="lowercaseToggle" class="sr-only peer" value="true" checked />
                                 <div
                                     class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
                                 </div>
@@ -78,7 +82,7 @@
                         <div class="flex flex-row space-x-3 items-center">
                             <p class="">Symbols (!-;...)</p>
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="symbolToggle" class="sr-only peer" value="true" checked>
+                                <input type="checkbox" id="symbolToggle" class="sr-only peer" value="true" checked />
                                 <div
                                     class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
                                 </div>
@@ -88,17 +92,14 @@
                     <div class="flex flex-col items-center space-y-3">
                         <p id="lengthText" class="text-lg font-semibold">Length (30)</p>
                         <input type="range" id="lengthSlider" min="1" max="512" value="30"
-                            class="w-64 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                            class="w-64 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer" />
                     </div>
-                    <div class="bg-gray-500 flex flex-wrap break-all p-2">
+                    <div class="bg-gray-500 flex flex-wrap break-all p-2 rounded-md">
                         <p id="tokenText">
-                            OfajUq3aV68UbZQqhxmIPaq5prSkIH3RlC0Vb4Js7L6z0wtIXeCXEfIIwzJ744EmsgEBL79ILvJh0rMjsl7gxP7OWPrtBVqvjo3pJg8D9pp5BrIo4911E2dRjqoXFTlzi5wUJC0vD3eMW1sbpou3OKHadZTQ7wc1G8PpMRA1ylewORxhx9YpmCPRFhbSgg2Qc1lY688tc8dO0hbZYHzcBI82F7ALRA8EZ1ATx
                         </p>
                     </div>
                     <div class="flex flex-row space-x-3 justify-center">
-                        <button
-                            class="bg-gray-500 p-2 rounded-md cursor-pointer hover:bg-gray-400 active:bg-gray-300">Copy</button>
-                        <button
+                        <button id="refreshBtn"
                             class="bg-gray-500 p-2 rounded-md cursor-pointer hover:bg-gray-400 active:bg-gray-300">Refresh</button>
                     </div>
                 </div>
@@ -106,36 +107,30 @@
         </div>
     </div>
 
-    {{!-- Hiển thị giá trị cho thanh trượt --}}
+    {{! Gọi API để hiển thị kết quả }}
     <script>
-        const slider = document.getElementById("lengthSlider");
-        const text = document.getElementById("lengthText");
-
+        const slider = document.getElementById("lengthSlider"); const text =
+            document.getElementById("lengthText");
         slider.addEventListener("input", function () {
-            text.textContent = `Length (${slider.value})`;
+            text.textContent =
+                `Length (${slider.value})`;
         });
     </script>
 
-    {{!-- Tạo token --}}
+    {{! Tạo token }}
     <script>
         document.addEventListener("DOMContentLoaded", generateToken);
-
-        const toggles = document.querySelectorAll("input[type='checkbox']");
-        const lengthSlider = document.getElementById("lengthSlider");
+        const toggles = document.querySelectorAll("input[type='checkbox']"); const lengthSlider = document.getElementById("lengthSlider");
         const tokenText = document.getElementById("tokenText");
-
-        toggles.forEach(toggle => toggle.addEventListener("change", generateToken));
-        lengthSlider.addEventListener("input", generateToken);
+        toggles.forEach(toggle => toggle.addEventListener("change",
+            generateToken));
+        lengthSlider.addEventListener("input",
+            generateToken);
 
         function generateToken() {
-            const uppercase = document.getElementById("uppercaseToggle").checked
+            const uppercase = document.getElementById("uppercaseToggle").checked;
             const lowercase = document.getElementById("lowercaseToggle").checked;
-            const numbers = document.getElementById("numberToggle").checked;
-            const symbols = document.getElementById("symbolToggle").checked;
-            const length = lengthSlider.value;
-
-            console.log({ uppercase, lowercase, numbers, symbols, length })
-
+            const numbers = document.getElementById("numberToggle").checked; const symbols = document.getElementById("symbolToggle").checked; const length = lengthSlider.value;
             fetch("/api/crypto/token-generator", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -145,6 +140,11 @@
                 .then(data => tokenText.textContent = data.token)
                 .catch(error => console.error("Error:", error));
         }
+    </script>
+
+    <script>
+        const refreshBtn = document.getElementById("refreshBtn");
+        refreshBtn.addEventListener("click", generateToken);
     </script>
 
 </body>

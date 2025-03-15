@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/output.css">
+    <script src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script>
     <title>IT Tools</title>
 </head>
 
@@ -21,7 +22,10 @@
             <div class="mt-5">
                 <ul class="space-y-2">
                     {{#categories}}
-                    <li><a href="#" class="block py-2 px-4 hover:bg-green-600">{{name}}</a></li>
+                    <div class="flex flex-row items-center cursor-pointer">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                        <li class="block py-2 px-4">{{name}}</li>
+                    </div>
                     {{/categories}}
                 </ul>
             </div>
