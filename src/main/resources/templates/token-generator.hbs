@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/output.css" />
-    <script src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script>
     <title>IT Tools</title>
 </head>
 
@@ -122,15 +121,14 @@
         document.addEventListener("DOMContentLoaded", generateToken);
         const toggles = document.querySelectorAll("input[type='checkbox']"); const lengthSlider = document.getElementById("lengthSlider");
         const tokenText = document.getElementById("tokenText");
-        toggles.forEach(toggle => toggle.addEventListener("change",
-            generateToken));
-        lengthSlider.addEventListener("input",
-            generateToken);
+        toggles.forEach(toggle => toggle.addEventListener("change", generateToken));
+        lengthSlider.addEventListener("input", generateToken);
 
         function generateToken() {
             const uppercase = document.getElementById("uppercaseToggle").checked;
             const lowercase = document.getElementById("lowercaseToggle").checked;
             const numbers = document.getElementById("numberToggle").checked; const symbols = document.getElementById("symbolToggle").checked; const length = lengthSlider.value;
+
             fetch("/api/crypto/token-generator", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -147,6 +145,8 @@
         refreshBtn.addEventListener("click", generateToken);
     </script>
 
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

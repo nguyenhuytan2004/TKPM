@@ -35,7 +35,7 @@ public class HashTextController {
 
     @RestController
     @RequestMapping("")
-    public class HashController {
+    public class HashHandler {
 
         private static final List<String> ALGORITHMS = List.of(
                 "MD5", "SHA-1", "SHA-224", "SHA-256", "SHA-384", "SHA-512", "SHA3-256", "SHA3-512");
