@@ -54,7 +54,7 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 ('Bcrypt', 'Hash and compare text string using bcrypt. Bcrypt is a password-hashing function based on the Blowfish cipher.', '/crypto/bcrypt', 1),
 
 -- Converter (category_id = 2)
-('Date-Time Converter', 'Convert date and time into the various different formats.', '/converter/date-time', 2),
+('Text to NATO alphabet', 'Transform text into the NATO phonetic alphabet for oral transmission.', '/converter/text-to-nato-alphabet', 2),
 ('Integer Base Converter', 'Convert a number between different bases (decimal, hexadecimal, binary, octal, base64, ...).', '/converter/integer-base', 2),
 ('Color Converter', 'Convert color between the different formats (hex, rgb, hsl and css name).', '/converter/color', 2),
 

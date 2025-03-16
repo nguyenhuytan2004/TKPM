@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css">
+    <title>IT Tools</title>
+</head>
+
+<body class="bg-gray-900 text-white">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gradient-to-b bg-gray-800 p-5">
+            <a href="/">
+                <div class="w-full bg-green-500 p-4 rounded">
+                    <h1 class="text-2xl font-bold">IT - TOOLS</h1>
+                    <p class="text-sm">Handy tools for developers</p>
+                </div>
+            </a>
+            <div class="mt-5">
+                <ul class="space-y-2">
+                    {{#categories}}
+                    <div class="flex flex-row items-center cursor-pointer">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                        <li class="block py-2 px-4">{{name}}</li>
+                    </div>
+                    {{/categories}}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-10">
+            <div class="flex justify-between items-center">
+                <input type="text" placeholder="Search..."
+                    class="px-4 py-2 w-1/3 bg-gray-800 border border-gray-700 rounded">
+                <button class="px-4 py-2 bg-green-600 rounded">Buy me a coffee</button>
+            </div>
+
+            <div class="mt-8 flex flex-col items-center">
+                <div class="w-1/2 space-y-3 mb-6">
+                    <h1 class="text-4xl font-bold text-gray-400">Text to NATO alphabet</h1>
+                    <p class="text-gray-400">Transform text into the NATO phonetic alphabet for oral transmission.</p>
+                </div>
+
+                <div class="p-4 bg-gray-600 w-1/2 space-y-8">
+                    <div class="flex flex-col space-y-2">
+                        <p>Your text to convert to NATO phonetic alphabet</p>
+                        <input id="textToConvert" placeholder="Put your text here..."
+                            class="bg-gray-500 p-3 rounded-md"></input>
+                    </div>
+                    <div class="w-full h-0.5 bg-gray-500"></div>
+                    <div class="flex flex-col space-y-2">
+                        <p>Your text in NATO phonetic alphabet</p>
+                        <p id="textInNatoAlphabet" class="bg-gray-500 p-5 rounded-md"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Chuyển text thành NATO alphabet --}}
+        <script>
+            const textToConvert = document.getElementById("textToConvert");
+            textToConvert.addEventListener("input", textToNatoAlphabet);
+
+            function textToNatoAlphabet() {
+                const string = textToConvert.value;
+                const textInNatoAlphabet = document.getElementById("textInNatoAlphabet");
+
+                fetch(`/api/converter/text-to-nato-alphabet?string=${string}`)
+                    .then(response => response.json())
+                    .then(data => textInNatoAlphabet.textContent = data.convertedString)
+                    .catch(error => console.log(error));
+            }
+        </script>
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
