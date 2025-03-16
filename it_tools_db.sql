@@ -55,7 +55,7 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 
 -- Converter (category_id = 2)
 ('Text to NATO alphabet', 'Transform text into the NATO phonetic alphabet for oral transmission.', '/converter/text-to-nato-alphabet', 2),
-('Integer Base Converter', 'Convert a number between different bases (decimal, hexadecimal, binary, octal, base64, ...).', '/converter/integer-base', 2),
+('Text to ASCII binary', 'Convert text to its ASCII binary representation and vice-versa.', '/converter/text-to-binary', 2),
 ('Color Converter', 'Convert color between the different formats (hex, rgb, hsl and css name).', '/converter/color', 2),
 
 -- Web (category_id = 3)
