@@ -125,8 +125,8 @@
                             errorElement.remove();
                         }
                     } else {
+                        textFromBinary.textContent = "";
                         if (!document.getElementById("errorMessage")) {
-                            textFromBinary.textContent = "";
                             const errorElement = document.createElement("p");
                             errorElement.id = "errorMessage";
                             errorElement.className = "text-red-600";
