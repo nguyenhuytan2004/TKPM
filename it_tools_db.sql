@@ -56,7 +56,7 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 -- Converter (category_id = 2)
 ('Text to NATO alphabet', 'Transform text into the NATO phonetic alphabet for oral transmission.', '/converter/text-to-nato-alphabet', 2),
 ('Text to ASCII binary', 'Convert text to its ASCII binary representation and vice-versa.', '/converter/text-to-binary', 2),
-('Color Converter', 'Convert color between the different formats (hex, rgb, hsl and css name).', '/converter/color', 2),
+('Text to Unicode', 'Parse and convert text to unicode and vice-versa.', '/converter/text-to-unicode', 2),
 
 -- Web (category_id = 3)
 ('Encode/Decode URL', 'Encode text to URL-encoded format (also known as "percent-encoded"), or decode from it.', '/web/url-encode-decode', 3),
