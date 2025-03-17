@@ -105,10 +105,10 @@
             const binaryString = inputBinary.value;
 
             if (binaryString == "") {
+                textFromBinary.textContent = "";
                 const errorElement = document.getElementById("errorMessage");
                 if (errorElement) {
                     errorElement.remove();
-                    textFromBinary.textContent = "";
                 }
 
                 return;
