@@ -40,16 +40,25 @@
 
             <div class="mt-8 flex flex-col items-center">
                 <div class="w-1/2 space-y-3 mb-6">
-                    <h1 class="text-4xl font-bold text-gray-400">QR Code generator</h1>
-                    <p class="text-gray-400">Generate and download a QR code for a URL (or just plain text), and
-                        customize the background and foreground colors.</p>
+                    <h1 class="text-4xl font-bold text-gray-400">WiFi QR Code generator
+                    </h1>
+                    <p class="text-gray-400">Generate and download QR codes for quick connections to WiFi networks.</p>
                 </div>
 
                 <div class="flex flex-col p-6 bg-gray-600 w-1/2 space-y-6">
                     <div class="grid grid-cols-4 gap-4 items-center">
-                        <p class="text-right text-nowrap">Text:</p>
-                        <input id="textInput" type="text" class="bg-gray-500 w-full rounded-sm p-2 col-span-3"
-                            value="https://www.google.com">
+
+                        <p class="text-right text-nowrap">Encryption method</p>
+                        <input type="text" class="bg-gray-500 w-full rounded-sm p-2 col-span-3" value="WPA/WPA2"
+                            readonly>
+
+                        <p class="text-right text-nowrap">SSID:</p>
+                        <input id="ssidInput" type="text" class="bg-gray-500 w-full rounded-sm p-2 col-span-3"
+                            placeholder="Your WiFi SSID...">
+
+                        <p class="text-right text-nowrap">Password:</p>
+                        <input id="passwordInput" type="password" class="bg-gray-500 w-full rounded-sm p-2 col-span-3"
+                            placeholder="Your WiFi Password...">
 
                         <p class="text-right text-nowrap">Foreground color:</p>
                         <input id="fgColorPicker" type="color"
@@ -58,22 +67,6 @@
                         <p class="text-right text-nowrap">Background color:</p>
                         <input id="bgColorPicker" type="color" value="#ffffff"
                             class="bg-gray-500 w-full rounded-sm col-span-3 cursor-pointer h-10 border px-0.5 hover:border-green-400">
-
-                        <p class="text-right text-nowrap">Error resistance:</p>
-                        <div id="dropdownContainer" class="relative col-span-3">
-                            <div
-                                class="flex justify-between items-center p-3 bg-gray-500 cursor-pointer border hover:border-green-400 rounded-md">
-                                <p id="selectedOption">Low</p>
-                                <ion-icon name="chevron-down-outline"></ion-icon>
-                            </div>
-                            <ul id="dropdownMenu"
-                                class="absolute left-0 w-full bg-gray-600 rounded-md overflow-hidden transition-all duration-300 max-h-0 opacity-0 z-10">
-                                <li class="p-2 hover:bg-green-500 cursor-pointer ml-2">Low</li>
-                                <li class="p-2 hover:bg-green-500 cursor-pointer ml-2">Medium</li>
-                                <li class="p-2 hover:bg-green-500 cursor-pointer ml-2">Quartile</li>
-                                <li class="p-2 hover:bg-green-500 cursor-pointer ml-2">High</li>
-                            </ul>
-                        </div>
 
                         <div class="bg-gray-500 col-span-4 h-0.5"></div>
 
@@ -88,57 +81,28 @@
             </div>
         </div>
 
-        {{!-- Hiển thị Menu --}}
+        {{!-- Generate Wifi QR Code --}}
         <script>
-            const dropdownContainer = document.getElementById("dropdownContainer");
-            const dropdownMenu = document.getElementById("dropdownMenu");
-
-            dropdownContainer.addEventListener("click", () => {
-                dropdownMenu.classList.toggle("max-h-40");
-                dropdownMenu.classList.toggle("opacity-100");
-                dropdownMenu.classList.toggle("max-h-0");
-                dropdownMenu.classList.toggle("opacity-0");
-            });
-
-            dropdownMenu.querySelectorAll("li").forEach(item => {
-                item.addEventListener("click", (event) => {
-                    event.stopPropagation();
-                    const selectedOption = document.getElementById("selectedOption");
-
-                    selectedOption.textContent = item.textContent;
-                    dropdownMenu.classList.add("max-h-0", "opacity-0");
-                    dropdownMenu.classList.remove("max-h-40", "opacity-100");
-                })
-            })
-        </script>
-
-        {{!-- Generate QR Code --}}
-        <script>
-            const textInput = document.getElementById("textInput");
+            const ssidInput = document.getElementById("ssidInput");
+            const passwordInput = document.getElementById("passwordInput");
             const fgColorPicker = document.getElementById("fgColorPicker");
             const bgColorPicker = document.getElementById("bgColorPicker");
-            const selectedOption = document.getElementById("selectedOption");
             const qrCodeImage = document.getElementById("qrCodeImage");
             const btnDownload = document.getElementById("btnDownload");
 
-            document.addEventListener("DOMContentLoaded", generateQrCode);
-            textInput.addEventListener("input", generateQrCode);
-            fgColorPicker.addEventListener("input", generateQrCode);
-            bgColorPicker.addEventListener("input", generateQrCode);
-            dropdownMenu.querySelectorAll("li").forEach(item => {
-                item.addEventListener("click", (event) => {
-                    event.stopPropagation();
-                    generateQrCode();
-                })
-            })
+            document.addEventListener("DOMContentLoaded", generateWifiQrCode);
+            ssidInput.addEventListener("input", generateWifiQrCode);
+            passwordInput.addEventListener("input", generateWifiQrCode);
+            fgColorPicker.addEventListener("input", generateWifiQrCode);
+            bgColorPicker.addEventListener("input", generateWifiQrCode);
 
-            function generateQrCode() {
-                const text = textInput.value;
+            function generateWifiQrCode() {
+                const ssid = ssidInput.value;
+                const password = passwordInput.value;
                 const fgColor = fgColorPicker.value;
                 const bgColor = bgColorPicker.value;
-                const errorResistance = selectedOption.innerText;
 
-                fetch(`/api/images-videos/qr-code-generator?text=${encodeURIComponent(text)}&errorResistance=${errorResistance}&fgColor=${encodeURIComponent(fgColor)}&bgColor=${encodeURIComponent(bgColor)}`)
+                fetch(`/api/images-videos/wifi-qr-code-generator?ssid=${encodeURIComponent(ssid)}&password=${encodeURIComponent(password)}&fgColor=${encodeURIComponent(fgColor)}&bgColor=${encodeURIComponent(bgColor)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.isSuccess) {

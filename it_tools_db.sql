@@ -65,8 +65,8 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 
 -- Images & Videos (category_id = 4)
 ('QR Code Generator', 'Generate and download a QR code for a URL (or just plain text), and customize the background and foreground colors.', '/images-videos/qr-code-generator', 4),
-('WiFi QR Code Generator', 'Generate and download QR codes for quick connections to WiFi networks.', '/images-videos/wifi-qr-code', 4),
-('SVG Placeholder Generator', 'Generate svg images to use as a placeholder in your applications.', '/images-videos/svg-placeholder', 4),
+('WiFi QR Code Generator', 'Generate and download QR codes for quick connections to WiFi networks.', '/images-videos/wifi-qr-code-generator', 4),
+('SVG Placeholder Generator', 'Generate svg images to use as a placeholder in your applications.', '/images-videos/svg-placeholder-generator', 4),
 
 -- Development (category_id = 5)
 ('Git Cheatsheet', 'Git is a decentralized version management software. With this cheatsheet, you will have quick access to the most common git commands.', '/development/git-cheatsheet', 5),
