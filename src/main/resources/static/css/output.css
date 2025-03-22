@@ -22,6 +22,8 @@
     --color-gray-900: oklch(0.21 0.034 264.665);
     --color-white: #fff;
     --spacing: 0.25rem;
+    --container-sm: 24rem;
+    --container-lg: 32rem;
     --container-2xl: 42rem;
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
@@ -309,6 +311,9 @@
   .w-2\/12 {
     width: calc(2/12 * 100%);
   }
+  .w-2xl {
+    width: var(--container-2xl);
+  }
   .w-3 {
     width: calc(var(--spacing) * 3);
   }
@@ -330,11 +335,20 @@
   .w-12 {
     width: calc(var(--spacing) * 12);
   }
+  .w-20 {
+    width: calc(var(--spacing) * 20);
+  }
   .w-64 {
     width: calc(var(--spacing) * 64);
   }
   .w-full {
     width: 100%;
+  }
+  .w-lg {
+    width: var(--container-lg);
+  }
+  .w-sm {
+    width: var(--container-sm);
   }
   .max-w-2xl {
     max-width: var(--container-2xl);
@@ -485,6 +499,13 @@
       --tw-space-x-reverse: 0;
       margin-inline-start: calc(calc(var(--spacing) * 4) * var(--tw-space-x-reverse));
       margin-inline-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-x-reverse)));
+    }
+  }
+  .space-x-6 {
+    :where(& > :not(:last-child)) {
+      --tw-space-x-reverse: 0;
+      margin-inline-start: calc(calc(var(--spacing) * 6) * var(--tw-space-x-reverse));
+      margin-inline-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-x-reverse)));
     }
   }
   .overflow-auto {

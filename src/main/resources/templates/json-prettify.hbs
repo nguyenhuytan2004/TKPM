@@ -40,50 +40,97 @@
 
             <div class="mt-8 flex flex-col items-center">
                 <div class="w-1/2 space-y-3 mb-6">
-                    <h1 class="text-4xl font-bold text-gray-400">Random port generator
+                    <h1 class="text-4xl font-bold text-gray-400">JSON prettify and format
                     </h1>
-                    <p class="text-gray-400">Generate random port numbers outside of the range of "known" ports
-                        (0-1023).</p>
+                    <p class="text-gray-400">Prettify your JSON string into a friendly, human-readable format.</p>
                 </div>
 
-                <div class="w-1/2 flex flex-col bg-gray-600 items-center p-6 space-y-8 rounded-sm">
-                    <p id="portNumber" class="text-4xl pt-6">
-                    </p>
-                    <div class="flex space-x-4">
-                        <button id="btnCopy"
-                            class="p-3 bg-gray-500 rounded-lg cursor-pointer hover:bg-gray-400 active:bg-gray-300">Copy</button>
-                        <button id="btnRefresh"
-                            class="p-3 bg-gray-500 rounded-lg cursor-pointer hover:bg-gray-400 active:bg-gray-300">Refresh</button>
+                <div class="flex p-8 space-x-4">
+                    <div class="flex space-x-3 items-center">
+                        <p>Sort keys :</p>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="sortToggle" class="sr-only peer" value="true" />
+                            <div
+                                class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="flex space-x-3 items-center">
+                        <p>Indent size :</p>
+                        <input id="indentSizeInput" type="number" value="4" min="0"
+                            class="bg-gray-500 w-20 p-2 rounded-lg px-4">
+                    </div>
+                    <div class="flex"></div>
+                </div>
+                <div class="flex w-full space-x-2">
+                    <div id="divContainer" class="flex flex-col w-1/2 space-y-2">
+                        <p>Your raw JSON</p>
+                        <div class="flex flex-col bg-gray-600 rounded-sm p-4">
+                            <input id="rawJson" type="text"
+                                value='{"hello": "world", "foo": "bar", "value": {"hello": "world", "foo": "bar"}}'>
+                        </div>
+                    </div>
+                    <div class="flex flex-col w-1/2 space-y-2">
+                        <p>Prettified version of your JSON</p>
+                        <div class="flex flex-col bg-gray-600 rounded-sm p-4">
+                            <pre id="jsonPrettified">
+                            </pre>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <script>
-            const portNumber = document.getElementById("portNumber");
-            const btnRefresh = document.getElementById("btnRefresh");
+            const rawJson = document.getElementById("rawJson");
+            const jsonPrettified = document.getElementById("jsonPrettified");
+            const sortToggle = document.getElementById("sortToggle");
+            const indentSizeInput = document.getElementById("indentSizeInput");
 
-            document.addEventListener("DOMContentLoaded", randomPort);
-            btnRefresh.addEventListener("click", randomPort);
+            const divContainer = document.getElementById("divContainer");
 
-            function randomPort() {
-                fetch(`/api/development/random-port`)
-                    .then(response => response.json())
-                    .then(data => portNumber.textContent = data.portNumber)
-                    .catch(error => console.log(error));
-            }
-        </script>
+            document.addEventListener("DOMContentLoaded", jsonFormatter);
+            rawJson.addEventListener("input", jsonFormatter);
+            sortToggle.addEventListener("input", jsonFormatter);
+            indentSizeInput.addEventListener("input", jsonFormatter);
 
-        <script>
-            const btnCopy = document.getElementById("btnCopy");
-            btnCopy.addEventListener("click", () => {
-                const textToCopy = portNumber.textContent.trim();
-                if (textToCopy) {
-                    navigator.clipboard.writeText(textToCopy)
-                        .then(() => alert("Copied!\n" + textToCopy))
-                        .catch(err => alert("Failed to copy!", err));
+            function jsonFormatter() {
+                const jsonText = rawJson.value;
+                const isSort = sortToggle.checked;
+                const indentSize = Number(indentSizeInput.value);
+                let jsonParsed;
+
+                try {
+                    jsonParsed = JSON.parse(jsonText);
+                    const errorElement = document.getElementById("errorMessage");
+                    if (errorElement) {
+                        errorElement.remove();
+                    }
+                } catch {
+                    jsonPrettified.textContent = "";
+                    if (!document.getElementById("errorMessage")) {
+                        const errorElement = document.createElement("p");
+                        errorElement.id = "errorMessage";
+                        errorElement.className = "text-red-600";
+                        errorElement.textContent = "Provided JSON is not valid.";
+                        divContainer.appendChild(errorElement);
+                    }
+                    return;
                 }
-            });
+
+                if (isSort) {
+                    jsonParsed = Object.keys(jsonParsed)
+                        .sort() // Sắp xếp key theo thứ tự alphabet
+                        .reduce((acc, key) => {
+                            acc[key] = jsonParsed[key]; // Gán lại theo thứ tự mới
+                            return acc;
+                        }, {});
+                }
+
+                const jsonFormatted = JSON.stringify(jsonParsed, null, indentSize);
+
+                jsonPrettified.textContent = jsonFormatted;
+            }
         </script>
 
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
