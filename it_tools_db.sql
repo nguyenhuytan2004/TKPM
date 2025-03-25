@@ -7,7 +7,7 @@ CREATE TABLE users (
     id MEDIUMINT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL UNIQUE,
     password_hash VARCHAR(100) NOT NULL,
-    role ENUM('anonymous', 'user', 'premium') NOT NULL DEFAULT 'anonymous'
+    role ENUM('user', 'premium') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB;
 
 CREATE TABLE admins (

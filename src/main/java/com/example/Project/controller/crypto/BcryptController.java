@@ -41,7 +41,7 @@ public class BcryptController {
                 int salt = Integer.parseInt(saltCount);
                 String hashed = BCrypt.hashpw(stringToHash, BCrypt.gensalt(salt));
                 return Collections.singletonMap("hashedString", hashed);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 return Collections.singletonMap("error", "Invalid input");
             }
         }
