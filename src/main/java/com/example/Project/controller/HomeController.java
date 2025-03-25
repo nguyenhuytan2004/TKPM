@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project.model.Category;
 import com.example.Project.model.Tool;
@@ -28,5 +30,14 @@ public class HomeController {
         model.addAttribute("categories", allCategories);
         model.addAttribute("tools", allTools);
         return "home";
+    }
+
+    @RestController
+    @RequestMapping("/api")
+    public class HomeHandler {
+        @GetMapping("/search-tool")
+        public List<Tool> searchTool(@RequestParam String hintText) {
+            return toolService.getToolsByName(hintText);
+        }
     }
 }

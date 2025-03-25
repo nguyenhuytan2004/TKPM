@@ -15,5 +15,10 @@ public class ToolService {
 
     public List<Tool> getAllTools() {
         return toolRepository.findAll();
+
+    }
+
+    public List<Tool> getToolsByName(String hintText) {
+        return toolRepository.findByNameContainingIgnoreCase(hintText);
     }
 }
