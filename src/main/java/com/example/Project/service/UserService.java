@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean authenticate(String username, String password) {
+    public boolean authenticateUser(String username, String password) {
         Optional<User> userOptional = userRepository.findByUsername(username);
 
         if (userOptional.isPresent()) {
@@ -22,5 +22,20 @@ public class UserService {
             return BCrypt.checkpw(password, user.getPasswordHash());
         }
         return false;
+    }
+
+    public boolean createUser(String username, String password) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+
+        if (userOptional.isPresent()) {
+            return false;
+        }
+
+        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+        User user = new User();
+        user.setUsername(username);
+        user.setPasswordHash(passwordHash);
+        userRepository.save(user);
+        return true;
     }
 }

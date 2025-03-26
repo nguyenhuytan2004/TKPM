@@ -17,6 +17,13 @@
     </p>
     {{/error}}
 
+    {{#message}}
+    <p id="message"
+        class="fixed right-10 top-10 text-white p-4 bg-green-500 rounded-full opacity-100 duration-2000 z-50">
+        {{message}}
+    </p>
+    {{/message}}
+
     <div class="flex items-center justify-center h-screen bg-gray-800 px-4">
         <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-semibold text-blue-500 mb-4 text-center">Login</h2>
@@ -39,6 +46,7 @@
                     Login
                 </button>
             </form>
+
             <div class="flex my-4 space-x-2 justify-center">
                 <p>Don't have an account?</p>
                 <a href="/user/register" class="text-blue-500 hover:underline">Register</a>
@@ -52,9 +60,25 @@
 
     <script>
         const errorMessage = document.getElementById("error-message");
-        setTimeout(() => {
-            errorMessage.classList.replace("opacity-100", "opacity-0");
-        }, 3000);
+        const message = document.getElementById("message");
+
+        if (errorMessage) {
+            setTimeout(() => {
+                errorMessage.style.opacity = 0;
+                setTimeout(() => {
+                    errorMessage.remove();
+                }, 2000);
+            }, 2000);
+        }
+
+        if (message) {
+            setTimeout(() => {
+                message.style.opacity = 0;
+                setTimeout(() => {
+                    message.remove();
+                }, 2000);
+            }, 2000);
+        }
     </script>
 </body>
 

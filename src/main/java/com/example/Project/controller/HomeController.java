@@ -15,6 +15,8 @@ import com.example.Project.model.Tool;
 import com.example.Project.service.CategoryService;
 import com.example.Project.service.ToolService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("")
 public class HomeController {
@@ -24,11 +26,16 @@ public class HomeController {
     private ToolService toolService;
 
     @GetMapping("")
-    public String show(Model model) {
+    public String show(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        model.addAttribute("username", username);
+
         List<Category> allCategories = categoriesService.getAllCategories();
-        List<Tool> allTools = toolService.getAllTools();
         model.addAttribute("categories", allCategories);
+
+        List<Tool> allTools = toolService.getAllTools();
         model.addAttribute("tools", allTools);
+
         return "home";
     }
 
