@@ -7,13 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project.model.Category;
 import com.example.Project.model.Tool;
-import com.example.Project.service.CategoryService;
-import com.example.Project.service.ToolService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,9 +17,11 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("")
 public class HomeController {
     @Autowired
-    private CategoryService categoriesService;
+    private CategoryController categoryController;
     @Autowired
-    private ToolService toolService;
+    private ToolController toolController;
+    @Autowired
+    private FavoriteController favoriteController;
 
     @GetMapping("")
     public String show(Model model, HttpSession session) {
@@ -33,23 +31,17 @@ public class HomeController {
         if (username != null) {
             Integer userId = (Integer) session.getAttribute("userId");
             model.addAttribute("userId", userId);
+
+            List<Tool> favoriteTools = favoriteController.getAllFavoritesByUserId(userId);
+            model.addAttribute("favoriteTools", favoriteTools);
         }
 
-        List<Category> allCategories = categoriesService.getAllCategories();
+        List<Category> allCategories = categoryController.getAllCategories();
         model.addAttribute("categories", allCategories);
 
-        List<Tool> allTools = toolService.getAllTools();
+        List<Tool> allTools = toolController.getAllTools();
         model.addAttribute("tools", allTools);
 
         return "home";
-    }
-
-    @RestController
-    @RequestMapping("/api")
-    public class HomeHandler {
-        @GetMapping("/search-tool")
-        public List<Tool> searchTool(@RequestParam String hintText) {
-            return toolService.getToolsByName(hintText);
-        }
     }
 }

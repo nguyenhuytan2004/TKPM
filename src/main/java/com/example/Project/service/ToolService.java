@@ -21,4 +21,8 @@ public class ToolService {
     public List<Tool> getToolsByName(String hintText) {
         return toolRepository.findByNameContainingIgnoreCase(hintText);
     }
+
+    public Tool getToolById(Integer toolId) {
+        return toolRepository.findById(toolId).orElse(null);
+    }
 }

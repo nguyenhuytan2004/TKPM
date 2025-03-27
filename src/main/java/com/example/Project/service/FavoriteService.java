@@ -1,5 +1,6 @@
 package com.example.Project.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,10 @@ import com.example.Project.repository.FavoriteRepository;
 public class FavoriteService {
     @Autowired
     private FavoriteRepository favoriteRepository;
+
+    public List<Favorite> getAllFavoritesByUserId(int userId) {
+        return favoriteRepository.findAllByUserId(userId);
+    }
 
     public boolean addFavorite(int userId, int toolId) {
         Optional<Favorite> favorite = favoriteRepository.findByUserIdAndToolId(userId, toolId);
