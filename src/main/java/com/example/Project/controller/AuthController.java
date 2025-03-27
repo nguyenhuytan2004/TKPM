@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.Project.model.User;
 import com.example.Project.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -51,11 +52,12 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, HttpSession session,
             Model model, RedirectAttributes redirectAttributes) {
-        boolean isValidUser = userService.authenticateUser(username, password);
+        User user = userService.authenticateUser(username, password);
 
-        if (isValidUser) {
+        if (user != null) {
             session.setMaxInactiveInterval(1800);
             session.setAttribute("username", username);
+            session.setAttribute("userId", user.getId());
 
             redirectAttributes.addFlashAttribute("message", "Welcome back, " + username + "!");
             return "redirect:/"; // home.hbs

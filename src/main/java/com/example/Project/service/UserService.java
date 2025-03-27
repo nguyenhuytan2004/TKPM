@@ -14,14 +14,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean authenticateUser(String username, String password) {
+    public User authenticateUser(String username, String password) {
         Optional<User> userOptional = userRepository.findByUsername(username);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return BCrypt.checkpw(password, user.getPasswordHash());
+            return BCrypt.checkpw(password, user.getPasswordHash()) ? user : null;
         }
-        return false;
+        return null;
     }
 
     public boolean createUser(String username, String password) {

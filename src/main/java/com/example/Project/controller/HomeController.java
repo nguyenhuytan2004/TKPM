@@ -30,6 +30,11 @@ public class HomeController {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
 
+        if (username != null) {
+            Integer userId = (Integer) session.getAttribute("userId");
+            model.addAttribute("userId", userId);
+        }
+
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
 
