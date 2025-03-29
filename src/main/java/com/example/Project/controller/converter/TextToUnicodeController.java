@@ -21,16 +21,18 @@ import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("converter")
 public class TextToUnicodeController {
     @Autowired
     private CategoryService categoriesService;
 
-    @GetMapping("/converter/text-to-unicode")
+    @GetMapping("/text-to-unicode")
     public String show(Model model) {
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
-        return "text-to-unicode";
+        model.addAttribute("title", "Text to Unicode Converter"); // Thêm title
+        model.addAttribute("body", "text-to-unicode"); // Load template con
+        return "layout"; // Load vào layout.hbs
     }
 
     @RestController
@@ -50,7 +52,7 @@ public class TextToUnicodeController {
 
             if (!unicodeString.matches("(&#\\d+;\\s*)+")) {
                 response.put("isSuccess", false);
-                response.put("textFromBinary", "");
+                response.put("textFromUnicode", "");
                 return response;
             }
 
@@ -68,7 +70,7 @@ public class TextToUnicodeController {
             }
 
             response.put("isSuccess", true);
-            response.put("textFromUnicode", textString);
+            response.put("textFromUnicode", textString.toString());
 
             return response;
         }

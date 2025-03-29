@@ -1,140 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="mt-8 flex flex-col items-center">
+    <div class="w-1/2 space-y-3 mb-6">
+        <h1 class="text-4xl font-bold text-gray-400">JSON prettify and format</h1>
+        <p class="text-gray-400">Prettify your JSON string into a friendly, human-readable format.</p>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css">
-    <title>IT Tools</title>
-</head>
-
-<body class="bg-gray-900 text-white">
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 bg-gradient-to-b bg-gray-800 p-5">
-            <a href="/">
-                <div class="w-full bg-green-500 p-4 rounded">
-                    <h1 class="text-2xl font-bold">IT - TOOLS</h1>
-                    <p class="text-sm">Handy tools for developers</p>
+    <div class="flex p-8 space-x-4">
+        <div class="flex space-x-3 items-center">
+            <p>Sort keys :</p>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="sortToggle" class="sr-only peer" value="true" />
+                <div class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
                 </div>
-            </a>
-            <div class="mt-5">
-                <ul class="space-y-2">
-                    {{#categories}}
-                    <div class="flex flex-row items-center cursor-pointer">
-                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                        <li class="block py-2 px-4">{{name}}</li>
-                    </div>
-                    {{/categories}}
-                </ul>
+            </label>
+        </div>
+        <div class="flex space-x-3 items-center">
+            <p>Indent size :</p>
+            <input id="indentSizeInput" type="number" value="4" min="0"
+                class="bg-gray-500 w-20 p-2 rounded-lg px-4">
+        </div>
+    </div>
+
+    <div class="flex w-full space-x-2">
+        <div id="divContainer" class="flex flex-col w-1/2 space-y-2">
+            <p>Your raw JSON</p>
+            <div class="flex flex-col bg-gray-600 rounded-sm p-4">
+                <input id="rawJson" type="text"
+                    value='{"hello": "world", "foo": "bar", "value": {"hello": "world", "foo": "bar"}}'>
             </div>
         </div>
-
-        <!-- Main Content -->
-        <div class="flex-1 p-10">
-            <div class="flex justify-between items-center">
-                <input type="text" placeholder="Search..."
-                    class="px-4 py-2 w-1/3 bg-gray-800 border border-gray-700 rounded">
-                <button class="px-4 py-2 bg-green-600 rounded">Buy me a coffee</button>
-            </div>
-
-            <div class="mt-8 flex flex-col items-center">
-                <div class="w-1/2 space-y-3 mb-6">
-                    <h1 class="text-4xl font-bold text-gray-400">JSON prettify and format
-                    </h1>
-                    <p class="text-gray-400">Prettify your JSON string into a friendly, human-readable format.</p>
-                </div>
-
-                <div class="flex p-8 space-x-4">
-                    <div class="flex space-x-3 items-center">
-                        <p>Sort keys :</p>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="sortToggle" class="sr-only peer" value="true" />
-                            <div
-                                class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
-                            </div>
-                        </label>
-                    </div>
-                    <div class="flex space-x-3 items-center">
-                        <p>Indent size :</p>
-                        <input id="indentSizeInput" type="number" value="4" min="0"
-                            class="bg-gray-500 w-20 p-2 rounded-lg px-4">
-                    </div>
-                    <div class="flex"></div>
-                </div>
-                <div class="flex w-full space-x-2">
-                    <div id="divContainer" class="flex flex-col w-1/2 space-y-2">
-                        <p>Your raw JSON</p>
-                        <div class="flex flex-col bg-gray-600 rounded-sm p-4">
-                            <input id="rawJson" type="text"
-                                value='{"hello": "world", "foo": "bar", "value": {"hello": "world", "foo": "bar"}}'>
-                        </div>
-                    </div>
-                    <div class="flex flex-col w-1/2 space-y-2">
-                        <p>Prettified version of your JSON</p>
-                        <div class="flex flex-col bg-gray-600 rounded-sm p-4">
-                            <pre id="jsonPrettified">
-                            </pre>
-                        </div>
-                    </div>
-                </div>
+        <div class="flex flex-col w-1/2 space-y-2">
+            <p>Prettified version of your JSON</p>
+            <div class="flex flex-col bg-gray-600 rounded-sm p-4">
+                <pre id="jsonPrettified"></pre>
             </div>
         </div>
+    </div>
+</div>
 
-        <script>
-            const rawJson = document.getElementById("rawJson");
-            const jsonPrettified = document.getElementById("jsonPrettified");
-            const sortToggle = document.getElementById("sortToggle");
-            const indentSizeInput = document.getElementById("indentSizeInput");
+<script>
+    const rawJson = document.getElementById("rawJson");
+    const jsonPrettified = document.getElementById("jsonPrettified");
+    const sortToggle = document.getElementById("sortToggle");
+    const indentSizeInput = document.getElementById("indentSizeInput");
+    const divContainer = document.getElementById("divContainer");
 
-            const divContainer = document.getElementById("divContainer");
+    document.addEventListener("DOMContentLoaded", jsonFormatter);
+    rawJson.addEventListener("input", jsonFormatter);
+    sortToggle.addEventListener("input", jsonFormatter);
+    indentSizeInput.addEventListener("input", jsonFormatter);
 
-            document.addEventListener("DOMContentLoaded", jsonFormatter);
-            rawJson.addEventListener("input", jsonFormatter);
-            sortToggle.addEventListener("input", jsonFormatter);
-            indentSizeInput.addEventListener("input", jsonFormatter);
+    function jsonFormatter() {
+        const jsonText = rawJson.value;
+        const isSort = sortToggle.checked;
+        const indentSize = Number(indentSizeInput.value);
+        let jsonParsed;
 
-            function jsonFormatter() {
-                const jsonText = rawJson.value;
-                const isSort = sortToggle.checked;
-                const indentSize = Number(indentSizeInput.value);
-                let jsonParsed;
+        try {
+            jsonParsed = JSON.parse(jsonText);
+        } catch {
+            jsonPrettified.textContent = "Invalid JSON";
+            return;
+        }
 
-                try {
-                    jsonParsed = JSON.parse(jsonText);
-                    const errorElement = document.getElementById("errorMessage");
-                    if (errorElement) {
-                        errorElement.remove();
-                    }
-                } catch {
-                    jsonPrettified.textContent = "";
-                    if (!document.getElementById("errorMessage")) {
-                        const errorElement = document.createElement("p");
-                        errorElement.id = "errorMessage";
-                        errorElement.className = "text-red-600";
-                        errorElement.textContent = "Provided JSON is not valid.";
-                        divContainer.appendChild(errorElement);
-                    }
-                    return;
-                }
+        if (isSort) {
+            jsonParsed = Object.keys(jsonParsed)
+                .sort()
+                .reduce((acc, key) => {
+                    acc[key] = jsonParsed[key];
+                    return acc;
+                }, {});
+        }
 
-                if (isSort) {
-                    jsonParsed = Object.keys(jsonParsed)
-                        .sort() // Sắp xếp key theo thứ tự alphabet
-                        .reduce((acc, key) => {
-                            acc[key] = jsonParsed[key]; // Gán lại theo thứ tự mới
-                            return acc;
-                        }, {});
-                }
-
-                const jsonFormatted = JSON.stringify(jsonParsed, null, indentSize);
-
-                jsonPrettified.textContent = jsonFormatted;
-            }
-        </script>
-
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</body>
-
-</html>
+        jsonPrettified.textContent = JSON.stringify(jsonParsed, null, indentSize);
+    }
+</script>

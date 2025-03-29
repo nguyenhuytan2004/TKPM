@@ -1,143 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css">
-    <title>IT Tools</title>
-</head>
 
-<body class="bg-gray-900 text-white">
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 bg-gradient-to-b bg-gray-800 p-5">
-            <a href="/">
-                <div class="w-full bg-green-500 p-4 rounded">
-                    <h1 class="text-2xl font-bold">IT - TOOLS</h1>
-                    <p class="text-sm">Handy tools for developers</p>
-                </div>
-            </a>
-            <div class="mt-5">
-                <ul class="space-y-2">
-                    {{#categories}}
-                    <div class="flex flex-row items-center cursor-pointer">
-                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                        <li class="block py-2 px-4">{{name}}</li>
-                    </div>
-                    {{/categories}}
-                </ul>
-            </div>
-        </div>
+<div class="mt-8 flex flex-col items-center">
+    <div class="w-1/2 space-y-3 mb-6">
+        <h1 class="text-4xl font-bold text-gray-400">Git cheatsheet
+        </h1>
+        <p class="text-gray-400">Git is a decentralized version management software. With this cheatsheet,
+            you will have quick access to the most common git commands.</p>
+    </div>
 
-        <!-- Main Content -->
-        <div class="flex-1 p-10">
-            <div class="flex justify-between items-center">
-                <input type="text" placeholder="Search..."
-                    class="px-4 py-2 w-1/3 bg-gray-800 border border-gray-700 rounded">
-                <button class="px-4 py-2 bg-green-600 rounded">Buy me a coffee</button>
-            </div>
-
-            <div class="mt-8 flex flex-col items-center">
-                <div class="w-1/2 space-y-3 mb-6">
-                    <h1 class="text-4xl font-bold text-gray-400">Git cheatsheet
-                    </h1>
-                    <p class="text-gray-400">Git is a decentralized version management software. With this cheatsheet,
-                        you will have quick access to the most common git commands.</p>
-                </div>
-
-                <div class="w-1/2 flex flex-col items-start space-y-8">
-                    <div class="w-full space-y-6">
-                        <p class="text-2xl font-bold">Configuration</p>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Set the global config</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git config --global user.name "[name]"
-                            </code>
-                                <code>
-                                git config --global user.email "[email]"</code>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full space-y-6">
-                        <p class="text-2xl font-bold">Get started</p>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Create a git repository</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git init</code>
-                            </div>
-                        </div>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Clone an existing git repository</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git clone [url]</code>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full space-y-6">
-                        <p class="text-2xl font-bold">Commit</p>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Commit all tracked changes</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git commit -am "[commit message]"</code>
-                            </div>
-                        </div>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Add new modifications to the last commit</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git commit --amend --no-edit</code>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full space-y-6">
-                        <p class="text-2xl font-bold">I’ve made a mistake</p>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Change last commit message</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git commit --amend</code>
-                            </div>
-                        </div>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Undo most recent commit and keep changes</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git reset HEAD~1</code>
-                            </div>
-                        </div>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Undo the N most recent commit and keep changes</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git reset HEAD~N</code>
-                            </div>
-                        </div>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Undo most recent commit and get rid of changes</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git reset HEAD~1 --hard</code>
-                            </div>
-                        </div>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Reset branch to remote state</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git fetch origin</code>
-                                <code>git reset --hard origin/[branch-name]</code>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full space-y-6">
-                        <p class="text-2xl font-bold">Miscellaneous</p>
-                        <div class="flex flex-col space-y-3 w-full">
-                            <p>Renaming the local master branch to main</p>
-                            <div class="bg-gray-800 p-6 flex flex-col w-full">
-                                <code>git branch -m master main</code>
-                            </div>
-                        </div>
-                    </div>
+    <div class="w-1/2 flex flex-col items-start space-y-8">
+        <div class="w-full space-y-6">
+            <p class="text-2xl font-bold">Configuration</p>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Set the global config</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git config --global user.name "[name]"
+                </code>
+                    <code>
+                    git config --global user.email "[email]"</code>
                 </div>
             </div>
         </div>
-
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</body>
-
-</html>
+        <div class="w-full space-y-6">
+            <p class="text-2xl font-bold">Get started</p>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Create a git repository</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git init</code>
+                </div>
+            </div>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Clone an existing git repository</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git clone [url]</code>
+                </div>
+            </div>
+        </div>
+        <div class="w-full space-y-6">
+            <p class="text-2xl font-bold">Commit</p>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Commit all tracked changes</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git commit -am "[commit message]"</code>
+                </div>
+            </div>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Add new modifications to the last commit</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git commit --amend --no-edit</code>
+                </div>
+            </div>
+        </div>
+        <div class="w-full space-y-6">
+            <p class="text-2xl font-bold">I’ve made a mistake</p>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Change last commit message</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git commit --amend</code>
+                </div>
+            </div>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Undo most recent commit and keep changes</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git reset HEAD~1</code>
+                </div>
+            </div>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Undo the N most recent commit and keep changes</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git reset HEAD~N</code>
+                </div>
+            </div>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Undo most recent commit and get rid of changes</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git reset HEAD~1 --hard</code>
+                </div>
+            </div>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Reset branch to remote state</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git fetch origin</code>
+                    <code>git reset --hard origin/[branch-name]</code>
+                </div>
+            </div>
+        </div>
+        <div class="w-full space-y-6">
+            <p class="text-2xl font-bold">Miscellaneous</p>
+            <div class="flex flex-col space-y-3 w-full">
+                <p>Renaming the local master branch to main</p>
+                <div class="bg-gray-800 p-6 flex flex-col w-full">
+                    <code>git branch -m master main</code>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

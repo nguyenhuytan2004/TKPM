@@ -17,21 +17,25 @@ import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("crypto")
 public class BcryptController {
     @Autowired
     private CategoryService categoriesService;
 
-    @GetMapping("/crypto/bcrypt")
+    @GetMapping("/bcrypt")
     public String show(Model model) {
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
-        return "bcrypt";
+        model.addAttribute("title", "Bcrypt Hashing Tool");
+        model.addAttribute("body", "bcrypt");  // Load template con
+        return "layout";  // Trả về layout.hbs
     }
 
+    // API xử lý bcrypt
     @RestController
     @RequestMapping("/api/crypto/bcrypt")
-    public class BcryptHandler {
+    public static class BcryptApiController {
+
         @GetMapping("/hash")
         public Map<String, String> hashUsingBcrypt(
                 @RequestParam String stringToHash,

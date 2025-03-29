@@ -12,15 +12,17 @@ import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("development")
 public class JsonPrettifyController {
     @Autowired
     private CategoryService categoriesService;
 
-    @GetMapping("/development/json-prettify")
+    @GetMapping("/json-prettify")
     public String show(Model model) {
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
-        return "json-prettify";
+        model.addAttribute("title", "JSON Prettify Tool");
+        model.addAttribute("body", "json-prettify");  // Chỉ truyền tên template con
+        return "layout";  // Trả về layout.hbs
     }
 }

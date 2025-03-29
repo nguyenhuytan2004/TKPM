@@ -8,36 +8,43 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("crypto")
 public class TokenGeneratorController {
     @Autowired
     private CategoryService categoriesService;
 
-    @GetMapping("/crypto/token-generator")
+    @GetMapping("/token-generator")
     public String show(Model model) {
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
-        return "token-generator";
+        model.addAttribute("title", "Token Generator Tool");  // Thêm tiêu đề
+        model.addAttribute("body", "token-generator");  // Load trang con
+        return "layout";  // Load vào layout.hbs
     }
+}
 
-    @PostMapping("/api/crypto/token-generator")
-    @ResponseBody
+@RestController
+@RequestMapping("api/crypto")
+class TokenGeneratorApiController {
+    @PostMapping("/token-generator")
     public Map<String, String> generateToken(@RequestBody Map<String, Object> payload) {
-        boolean uppercase = (boolean) payload.get("uppercase");
-        boolean lowercase = (boolean) payload.get("lowercase");
-        boolean numbers = (boolean) payload.get("numbers");
-        boolean symbols = (boolean) payload.get("symbols");
-        int length = Integer.parseInt((String) payload.get("length"));
+        boolean uppercase = (boolean) payload.getOrDefault("uppercase", false);
+        boolean lowercase = (boolean) payload.getOrDefault("lowercase", false);
+        boolean numbers = (boolean) payload.getOrDefault("numbers", false);
+        boolean symbols = (boolean) payload.getOrDefault("symbols", false);
+
+        int length;
+        try {
+            length = Integer.parseInt(payload.getOrDefault("length", "16").toString());
+        } catch (NumberFormatException e) {
+            length = 16; // Giá trị mặc định nếu parse lỗi
+        }
 
         String chars = (uppercase ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "") +
                 (lowercase ? "abcdefghijklmnopqrstuvwxyz" : "") +
@@ -45,7 +52,7 @@ public class TokenGeneratorController {
                 (symbols ? "!@#$%^&*(),<.>/?;:'\"\\|-_=+" : "");
 
         if (chars.isEmpty()) {
-            return Collections.singletonMap("token", "");
+            return Collections.singletonMap("token", "ERROR: No character set selected");
         }
 
         StringBuilder token = new StringBuilder();

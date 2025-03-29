@@ -1,226 +1,180 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="mt-8 flex flex-col items-center">
+    <div class="w-1/2 space-y-3 mb-6">
+        <h1 class="text-4xl font-bold text-gray-400">Hash text</h1>
+        <p class="text-gray-400">Hash a text string using the function you need : MD5, SHA1, SHA256, SHA224,
+            SHA512, SHA384, SHA3 or RIPEMD160.</p>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css">
-    <title>IT Tools</title>
-</head>
-
-<body class="bg-gray-900 text-white">
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 bg-gradient-to-b bg-gray-800 p-5">
-            <a href="/">
-                <div class="w-full bg-green-500 p-4 rounded">
-                    <h1 class="text-2xl font-bold">IT - TOOLS</h1>
-                    <p class="text-sm">Handy tools for developers</p>
+    <div class="p-4 bg-gray-600 w-1/2 space-y-8">
+        <div class="flex flex-col space-y-2">
+            <p>Your text to hash</p>
+            <textarea id="stringToHash" placeholder="Your string to hash..."
+                class="bg-gray-500 p-3 rounded-md"></textarea>
+        </div>
+        <div class="w-full h-0.5 bg-gray-500"></div>
+        <div class="flex flex-col space-y-2">
+            <p>Digest encoding</p>
+            <div id="dropdownContainer" class="relative">
+                <div
+                    class="flex justify-between items-center p-3 bg-gray-500 cursor-pointer border hover:border-green-400 rounded-md">
+                    <p id="selectedOption">Binary (base 2)</p>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
                 </div>
-            </a>
-            <div class="mt-5">
-                <ul class="space-y-2">
-                    {{#categories}}
-                    <div class="flex flex-row items-center cursor-pointer">
-                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                        <li class="block py-2 px-4">{{name}}</li>
-                    </div>
-                    {{/categories}}
+                <ul id="dropdownMenu"
+                    class="absolute left-0 w-full bg-gray-600 rounded-md overflow-hidden transition-all duration-300 max-h-0 opacity-0 z-10">
+                    <li class="p-2 hover:bg-green-500 cursor-pointer">Binary (base 2)</li>
+                    <li class="p-2 hover:bg-green-500 cursor-pointer">Hexadecimal (base 16)</li>
+                    <li class="p-2 hover:bg-green-500 cursor-pointer">Base64 (base 64)</li>
+                    <li class="p-2 hover:bg-green-500 cursor-pointer">Base64url (base 64 with URL safe
+                        chars)</li>
                 </ul>
             </div>
         </div>
-
-        <!-- Main Content -->
-        <div class="flex-1 p-10">
-            <div class="flex justify-between items-center">
-                <input type="text" placeholder="Search..."
-                    class="px-4 py-2 w-1/3 bg-gray-800 border border-gray-700 rounded">
-                <button class="px-4 py-2 bg-green-600 rounded">Buy me a coffee</button>
-            </div>
-
-            <div class="mt-8 flex flex-col items-center">
-                <div class="w-1/2 space-y-3 mb-6">
-                    <h1 class="text-4xl font-bold text-gray-400">Hash text</h1>
-                    <p class="text-gray-400">Hash a text string using the function you need : MD5, SHA1, SHA256, SHA224,
-                        SHA512, SHA384, SHA3 or RIPEMD160.</p>
+        <div class="flex flex-col space-y-1 max-w-2xl">
+            <div class="flex space-x-1">
+                <p class="w-1/5 bg-gray-400 p-2 rounded-md">MD5</p>
+                <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
+                    <input id="md5" class="overflow-hidden whitespace-nowrap mr-2 w-full" readonly></input>
+                    <ion-icon name="copy-outline"
+                        class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
                 </div>
-
-                <div class="p-4 bg-gray-600 w-1/2 space-y-8">
-                    <div class="flex flex-col space-y-2">
-                        <p>Your text to hash</p>
-                        <textarea id="stringToHash" placeholder="Your string to hash..."
-                            class="bg-gray-500 p-3 rounded-md"></textarea>
-                    </div>
-                    <div class="w-full h-0.5 bg-gray-500"></div>
-                    <div class="flex flex-col space-y-2">
-                        <p>Digest encoding</p>
-                        <div id="dropdownContainer" class="relative">
-                            <div
-                                class="flex justify-between items-center p-3 bg-gray-500 cursor-pointer border hover:border-green-400 rounded-md">
-                                <p id="selectedOption">Binary (base 2)</p>
-                                <ion-icon name="chevron-down-outline"></ion-icon>
-                            </div>
-                            <ul id="dropdownMenu"
-                                class="absolute left-0 w-full bg-gray-600 rounded-md overflow-hidden transition-all duration-300 max-h-0 opacity-0 z-10">
-                                <li class="p-2 hover:bg-green-500 cursor-pointer">Binary (base 2)</li>
-                                <li class="p-2 hover:bg-green-500 cursor-pointer">Hexadecimal (base 16)</li>
-                                <li class="p-2 hover:bg-green-500 cursor-pointer">Base64 (base 64)</li>
-                                <li class="p-2 hover:bg-green-500 cursor-pointer">Base64url (base 64 with URL safe
-                                    chars)</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="flex flex-col space-y-1 max-w-2xl">
-                        <div class="flex space-x-1">
-                            <p class="w-1/5 bg-gray-400 p-2 rounded-md">MD5</p>
-                            <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
-                                <input id="md5" class="overflow-hidden whitespace-nowrap mr-2 w-full" readonly></input>
-                                <ion-icon name="copy-outline"
-                                    class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="flex space-x-1">
-                            <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA1</p>
-                            <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
-                                <input id="sha1" class="overflow-hidden whitespace-nowrap mr-2 w-full" readonly></input>
-                                <ion-icon name="copy-outline"
-                                    class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="flex space-x-1">
-                            <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA256</p>
-                            <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
-                                <input id="sha256" class="overflow-hidden whitespace-nowrap mr-2 w-full"
-                                    readonly></input>
-                                <ion-icon name="copy-outline"
-                                    class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="flex space-x-1">
-                            <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA224</p>
-                            <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
-                                <input id="sha224" class="overflow-hidden whitespace-nowrap mr-2 w-full"
-                                    readonly></input>
-                                <ion-icon name="copy-outline"
-                                    class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="flex space-x-1">
-                            <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA512</p>
-                            <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
-                                <input id="sha512" class="overflow-hidden whitespace-nowrap mr-2 w-full"
-                                    readonly></input>
-                                <ion-icon name="copy-outline"
-                                    class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="flex space-x-1">
-                            <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA384</p>
-                            <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
-                                <input id="sha384" class="overflow-hidden whitespace-nowrap mr-2 w-full"
-                                    readonly></input>
-                                <ion-icon name="copy-outline"
-                                    class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="flex space-x-1">
-                            <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA3-256</p>
-                            <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
-                                <input id="sha3-256" class="overflow-hidden whitespace-nowrap mr-2 w-full"
-                                    readonly></input>
-                                <ion-icon name="copy-outline"
-                                    class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="flex space-x-1">
-                            <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA3-512</p>
-                            <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
-                                <input id="sha3-512" class="overflow-hidden whitespace-nowrap mr-2 w-full"
-                                    readonly></input>
-                                <ion-icon name="copy-outline"
-                                    class="shrink-0 cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200">
-                                </ion-icon>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="flex space-x-1">
+                <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA1</p>
+                <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
+                    <input id="sha1" class="overflow-hidden whitespace-nowrap mr-2 w-full" readonly></input>
+                    <ion-icon name="copy-outline"
+                        class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
+                </div>
+            </div>
+            <div class="flex space-x-1">
+                <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA256</p>
+                <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
+                    <input id="sha256" class="overflow-hidden whitespace-nowrap mr-2 w-full"
+                        readonly></input>
+                    <ion-icon name="copy-outline"
+                        class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
+                </div>
+            </div>
+            <div class="flex space-x-1">
+                <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA224</p>
+                <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
+                    <input id="sha224" class="overflow-hidden whitespace-nowrap mr-2 w-full"
+                        readonly></input>
+                    <ion-icon name="copy-outline"
+                        class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
+                </div>
+            </div>
+            <div class="flex space-x-1">
+                <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA512</p>
+                <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
+                    <input id="sha512" class="overflow-hidden whitespace-nowrap mr-2 w-full"
+                        readonly></input>
+                    <ion-icon name="copy-outline"
+                        class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
+                </div>
+            </div>
+            <div class="flex space-x-1">
+                <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA384</p>
+                <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
+                    <input id="sha384" class="overflow-hidden whitespace-nowrap mr-2 w-full"
+                        readonly></input>
+                    <ion-icon name="copy-outline"
+                        class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
+                </div>
+            </div>
+            <div class="flex space-x-1">
+                <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA3-256</p>
+                <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
+                    <input id="sha3-256" class="overflow-hidden whitespace-nowrap mr-2 w-full"
+                        readonly></input>
+                    <ion-icon name="copy-outline"
+                        class="shrink-0  cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200"></ion-icon>
+                </div>
+            </div>
+            <div class="flex space-x-1">
+                <p class="w-1/5 bg-gray-400 p-2 rounded-md">SHA3-512</p>
+                <div class="w-4/5 flex justify-between items-center bg-gray-500 p-2 rounded-md">
+                    <input id="sha3-512" class="overflow-hidden whitespace-nowrap mr-2 w-full"
+                        readonly></input>
+                    <ion-icon name="copy-outline"
+                        class="shrink-0 cursor-pointer hover:text-green-500 active:text-green-700 transition duration-200">
+                    </ion-icon>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        {{!-- Hiển thị Menu --}}
-        <script>
-            const dropdownContainer = document.getElementById("dropdownContainer");
-            const dropdownMenu = document.getElementById("dropdownMenu");
 
-            dropdownContainer.addEventListener("click", () => {
-                dropdownMenu.classList.toggle("max-h-40");
-                dropdownMenu.classList.toggle("opacity-100");
-                dropdownMenu.classList.toggle("max-h-0");
-                dropdownMenu.classList.toggle("opacity-0");
-            });
+{{!-- Hiển thị Menu --}}
+<script>
+    const dropdownContainer = document.getElementById("dropdownContainer");
+    const dropdownMenu = document.getElementById("dropdownMenu");
 
-            dropdownMenu.querySelectorAll("li").forEach(item => {
-                item.addEventListener("click", (event) => {
-                    event.stopPropagation();
-                    const selectedOption = document.getElementById("selectedOption");
+    dropdownContainer.addEventListener("click", () => {
+        dropdownMenu.classList.toggle("max-h-40");
+        dropdownMenu.classList.toggle("opacity-100");
+        dropdownMenu.classList.toggle("max-h-0");
+        dropdownMenu.classList.toggle("opacity-0");
+    });
 
-                    selectedOption.textContent = item.textContent;
-                    dropdownMenu.classList.add("max-h-0", "opacity-0");
-                    dropdownMenu.classList.remove("max-h-40", "opacity-100");
-                })
-            })
-        </script>
-
-        {{!-- Gọi API để hiển thị kết quả --}}
-        <script>
-            document.addEventListener("DOMContentLoaded", hashString);
-
-            const stringToHash = document.getElementById("stringToHash");
+    dropdownMenu.querySelectorAll("li").forEach(item => {
+        item.addEventListener("click", (event) => {
+            event.stopPropagation();
             const selectedOption = document.getElementById("selectedOption");
-            stringToHash.addEventListener("input", hashString);
-            dropdownMenu.querySelectorAll("li").forEach(item => {
-                item.addEventListener("click", (event) => {
-                    event.stopPropagation();
-                    hashString();
-                })
+
+            selectedOption.textContent = item.textContent;
+            dropdownMenu.classList.add("max-h-0", "opacity-0");
+            dropdownMenu.classList.remove("max-h-40", "opacity-100");
+        })
+    })
+</script>
+
+{{!-- Gọi API để hiển thị kết quả --}}
+<script>
+    document.addEventListener("DOMContentLoaded", hashString);
+
+    const stringToHash = document.getElementById("stringToHash");
+    const selectedOption = document.getElementById("selectedOption");
+    stringToHash.addEventListener("input", hashString);
+    dropdownMenu.querySelectorAll("li").forEach(item => {
+        item.addEventListener("click", (event) => {
+            event.stopPropagation();
+            hashString();
+        })
+    })
+
+    function hashString() {
+        const text = stringToHash.value;
+        const format = selectedOption.innerText;
+
+        fetch(`/api/crypto/hash-text?format=${format}&text=${encodeURIComponent(text)}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("md5").value = data.MD5;
+                document.getElementById("sha1").value = data["SHA-1"];
+                document.getElementById("sha224").value = data["SHA-224"];
+                document.getElementById("sha256").value = data["SHA-256"];
+                document.getElementById("sha384").value = data["SHA-384"];
+                document.getElementById("sha512").value = data["SHA-512"];
+                document.getElementById("sha3-256").value = data["SHA3-256"];
+                document.getElementById("sha3-512").value = data["SHA3-512"];
             })
+            .catch(error => console.error("Error:", error));
+    }
+</script>
 
-            function hashString() {
-                const text = stringToHash.value;
-                const format = selectedOption.innerText;
-
-                fetch(`/api/crypto/hash-text?format=${format}&text=${encodeURIComponent(text)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById("md5").value = data.MD5;
-                        document.getElementById("sha1").value = data["SHA-1"];
-                        document.getElementById("sha224").value = data["SHA-224"];
-                        document.getElementById("sha256").value = data["SHA-256"];
-                        document.getElementById("sha384").value = data["SHA-384"];
-                        document.getElementById("sha512").value = data["SHA-512"];
-                        document.getElementById("sha3-256").value = data["SHA3-256"];
-                        document.getElementById("sha3-512").value = data["SHA3-512"];
-                    })
-                    .catch(error => console.error("Error:", error));
+{{!-- Copy to clipboard --}}
+<script>
+    document.querySelectorAll("ion-icon").forEach(icon => {
+        icon.addEventListener("click", () => {
+            const textToCopy = icon.previousElementSibling.value.trim();
+            if (textToCopy) {
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => alert("Copied!\n" + textToCopy))
+                    .catch(err => alert("Failed to copy!", err));
             }
-        </script>
-
-        {{!-- Copy to clipboard --}}
-        <script>
-            document.querySelectorAll("ion-icon").forEach(icon => {
-                icon.addEventListener("click", () => {
-                    const textToCopy = icon.previousElementSibling.value.trim();
-                    if (textToCopy) {
-                        navigator.clipboard.writeText(textToCopy)
-                            .then(() => alert("Copied!\n" + textToCopy))
-                            .catch(err => alert("Failed to copy!", err));
-                    }
-                });
-            });
-        </script>
-
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</body>
-
-</html>
+        });
+    });
+</script>

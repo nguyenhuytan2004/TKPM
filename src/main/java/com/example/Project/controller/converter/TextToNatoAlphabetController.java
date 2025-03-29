@@ -15,16 +15,18 @@ import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("converter")
 public class TextToNatoAlphabetController {
     @Autowired
     private CategoryService categoriesService;
 
-    @GetMapping("/converter/text-to-nato-alphabet")
+    @GetMapping("/text-to-nato-alphabet")
     public String show(Model model) {
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
-        return "text-to-nato-alphabet";
+        model.addAttribute("title", "Text to NATO Alphabet Converter"); // Thêm title
+        model.addAttribute("body", "text-to-nato-alphabet"); // Load template con
+        return "layout"; // Load vào layout.hbs
     }
 
     @RestController

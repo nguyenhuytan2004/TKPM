@@ -19,16 +19,18 @@ import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("converter")
 public class TextToBinaryController {
     @Autowired
     private CategoryService categoriesService;
 
-    @GetMapping("/converter/text-to-binary")
+    @GetMapping("/text-to-binary")
     public String show(Model model) {
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
-        return "text-to-binary";
+        model.addAttribute("title", "Text to Binary Converter"); // Thêm title
+        model.addAttribute("body", "text-to-binary"); // Load template con
+        return "layout"; // Load vào layout.hbs
     }
 
     @RestController

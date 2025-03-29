@@ -1,57 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>IT Tools</title>
-</head>
-
-<body class="bg-gray-900 text-white">
-    {{#message}}
-    <p id="message"
-        class="fixed right-10 top-9 text-white py-4 px-6 bg-green-500 rounded-full opacity-100 duration-2000 z-50">
-        {{message}}
-    </p>
-    {{/message}}
-
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 bg-gradient-to-b bg-gray-800 p-5">
-            <a href="/">
-                <div class="w-full bg-gradient-to-b from-green-500 to-green-700 p-4 rounded">
-                    <h1 class="text-2xl font-bold">IT - TOOLS</h1>
-                    <p class="text-sm">Handy tools for developers</p>
-                </div>
-            </a>
-            <div class="mt-5">
-                <ul class="space-y-2">
-                    {{#categories}}
-                    <div class="flex flex-row items-center cursor-pointer">
-                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                        <li class="block py-2 px-4">{{name}}</li>
-                    </div>
-                    {{/categories}}
-                </ul>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="flex-1 p-10">
-            <div class="flex justify-between items-center">
-                <div class="flex w-3/7 space-x-4">
-                    <div class="relative w-full">
-                        <input id="searchBar" type="text" placeholder="Search..."
-                            class="px-4 py-2 w-full bg-gray-800 border border-gray-700 rounded">
-
-                        <ul id="searchResults"
-                            class="absolute w-full bg-gray-800 text-white border border-gray-700 mt-2 rounded-lg shadow-lg hidden z-10 p-4 max-h-96 overflow-y-auto">
-                        </ul>
-                    </div>
-                    <a href="" class="px-4 py-2 bg-green-600 rounded-full text-nowrap">Buy me a coffee</a>
-                </div>
                 <div class="flex space-x-6 items-center">
                     {{#username}}
                     <div id="userInformation" class="hidden" data-user-id="{{userId}}"></div>
@@ -79,7 +26,7 @@
                     </div>
                     {{/username}}
                 </div>
-            </div>
+
 
             <div class="mt-10 space-y-6">
                 <div class="space-y-2">
@@ -129,8 +76,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
 
     {{!-- Tìm kiếm tool --}}
     <script>
@@ -325,8 +271,3 @@
         }
     </script>
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</body>
-
-</html>

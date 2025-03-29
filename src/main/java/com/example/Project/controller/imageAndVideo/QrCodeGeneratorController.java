@@ -12,10 +12,7 @@ import javax.imageio.ImageIO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
@@ -28,79 +25,81 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("images-videos")
 public class QrCodeGeneratorController {
     @Autowired
     private CategoryService categoriesService;
 
-    @GetMapping("/images-videos/qr-code-generator")
+    @GetMapping("/qr-code-generator")
     public String show(Model model) {
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
-        return "qr-code-generator";
+        model.addAttribute("title", "QR Code Generator");  // Thêm tiêu đề
+        model.addAttribute("body", "qr-code-generator");  // Load trang con
+        return "layout";  // Load vào layout.hbs
     }
+}
 
-    @RestController
-    @RequestMapping("/api/images-videos/qr-code-generator")
-    public class QrCodeGeneratorHandler {
-        @GetMapping("")
-        public Map<String, Object> generateQrCode(
-                @RequestParam String text,
-                @RequestParam String errorResistance,
-                @RequestParam String fgColor,
-                @RequestParam String bgColor) {
+@RestController
+@RequestMapping("/api/images-videos/qr-code-generator")
+class QrCodeGeneratorApiController {
+    @GetMapping("/generate")
+    public Map<String, Object> generateQrCode(
+            @RequestParam String text,
+            @RequestParam(defaultValue = "medium") String errorResistance,
+            @RequestParam(defaultValue = "#000000") String fgColor,
+            @RequestParam(defaultValue = "#FFFFFF") String bgColor) {
 
-            Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
 
-            if (text.isEmpty()) {
-                response.put("isSuccess", false);
-                return response;
-            }
-
-            try {
-                int width = 300, height = 300;
-                ErrorCorrectionLevel level = getErrorCorrectionLevel(errorResistance);
-
-                Map<EncodeHintType, Object> hints = new HashMap<>();
-                hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-                hints.put(EncodeHintType.ERROR_CORRECTION, level);
-
-                BitMatrix matrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, width, height,
-                        hints);
-                BufferedImage image = MatrixToImageWriter.toBufferedImage(matrix, new MatrixToImageConfig(
-                        hexToColor(fgColor), hexToColor(bgColor)));
-
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                ImageIO.write(image, "png", outputStream);
-                byte[] imageBytes = outputStream.toByteArray();
-
-                response.put("qrCodeImage", "data:image/png;base64," + Base64.getEncoder().encodeToString(imageBytes));
-                response.put("isSuccess", true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (text.isEmpty()) {
+            response.put("isSuccess", false);
             return response;
         }
 
-        // Chuyển đổi mức độ chịu lỗi
-        private ErrorCorrectionLevel getErrorCorrectionLevel(String level) {
-            switch (level.toLowerCase()) {
-                case "low":
-                    return ErrorCorrectionLevel.L;
-                case "medium":
-                    return ErrorCorrectionLevel.M;
-                case "quartile":
-                    return ErrorCorrectionLevel.Q;
-                case "high":
-                    return ErrorCorrectionLevel.H;
-                default:
-                    return ErrorCorrectionLevel.M;
-            }
-        }
+        try {
+            int width = 300, height = 300;
+            ErrorCorrectionLevel level = getErrorCorrectionLevel(errorResistance);
 
-        // Chuyển mã HEX thành màu
-        private int hexToColor(String hex) {
-            return Integer.parseInt(hex.substring(1), 16) | 0xFF000000;
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            hints.put(EncodeHintType.ERROR_CORRECTION, level);
+
+            BitMatrix matrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, width, height, hints);
+            BufferedImage image = MatrixToImageWriter.toBufferedImage(matrix, new MatrixToImageConfig(
+                    hexToColor(fgColor), hexToColor(bgColor)));
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", outputStream);
+            byte[] imageBytes = outputStream.toByteArray();
+
+            response.put("qrCodeImage", "data:image/png;base64," + Base64.getEncoder().encodeToString(imageBytes));
+            response.put("isSuccess", true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("isSuccess", false);
         }
+        return response;
+    }
+
+    // Chuyển đổi mức độ chịu lỗi
+    private ErrorCorrectionLevel getErrorCorrectionLevel(String level) {
+        switch (level.toLowerCase()) {
+            case "low":
+                return ErrorCorrectionLevel.L;
+            case "medium":
+                return ErrorCorrectionLevel.M;
+            case "quartile":
+                return ErrorCorrectionLevel.Q;
+            case "high":
+                return ErrorCorrectionLevel.H;
+            default:
+                return ErrorCorrectionLevel.M;
+        }
+    }
+
+    // Chuyển mã HEX thành màu
+    private int hexToColor(String hex) {
+        return Integer.parseInt(hex.substring(1), 16) | 0xFF000000;
     }
 }
