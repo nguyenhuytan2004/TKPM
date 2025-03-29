@@ -12,7 +12,8 @@
             </div>
             <div class="flex space-x-2 items-center">
                 <p class="text-right w-2/5">Background</p>
-                <input id="bgColorPicker" type="color" class="bg-gray-500 p-0.5 rounded-sm w-3/5 h-10 cursor-pointer" value="#cccccc">
+                <input id="bgColorPicker" type="color" class="bg-gray-500 p-0.5 rounded-sm w-3/5 h-10 cursor-pointer"
+                    value="#cccccc">
             </div>
             <div class="flex space-x-2 items-center">
                 <p class="text-right text-nowrap w-2/5">Height (in px)</p>
@@ -20,7 +21,8 @@
             </div>
             <div class="flex space-x-2 items-center">
                 <p class="text-right w-2/5">Text Color</p>
-                <input id="textColorPicker" type="color" class="bg-gray-500 p-0.5 rounded-sm w-3/5 h-10 cursor-pointer" value="#333333">
+                <input id="textColorPicker" type="color" class="bg-gray-500 p-0.5 rounded-sm w-3/5 h-10 cursor-pointer"
+                    value="#333333">
             </div>
             <div class="flex space-x-2 items-center">
                 <p class="text-right w-2/5">Font size</p>
@@ -34,20 +36,27 @@
         <div class="flex flex-col space-y-6 bg-gray-600 p-4 w-full">
             <div class="space-y-2">
                 <p>SVG HTML element</p>
-                <pre id="svgInHtml" class="bg-gray-500 text-white p-4 rounded-md break-all border whitespace-pre-wrap"></pre>
+                <pre id="svgInHtml"
+                    class="bg-gray-500 text-white p-4 rounded-md break-all border whitespace-pre-wrap"></pre>
             </div>
             <div class="space-y-2">
                 <div class="space-y-2">
                     <p>SVG in Base64</p>
-                    <input id="svgInBase64" class="bg-gray-500 text-white p-4 rounded-md overflow-auto w-full border" readonly>
+                    <input id="svgInBase64" class="bg-gray-500 text-white p-4 rounded-md overflow-auto w-full border"
+                        readonly>
                     </input>
                 </div>
             </div>
         </div>
         <div class="flex space-x-2 justify-center">
-            <button id="btnCopySvg" class="p-3 bg-gray-500 rounded-sm cursor-pointer hover:bg-gray-400 active:bg-gray-300">Copy svg</button>
-            <button id="btnCopyBase64" class="p-3 bg-gray-500 rounded-sm cursor-pointer hover:bg-gray-400 active:bg-gray-300">Copy base64</button>
-            <button id="btnDownloadSvg" class="p-3 bg-gray-500 rounded-sm cursor-pointer hover:bg-gray-400 active:bg-gray-300">Download svg</button>
+            <button id="btnCopySvg"
+                class="p-3 bg-gray-500 rounded-sm cursor-pointer hover:bg-gray-400 active:bg-gray-300">Copy svg</button>
+            <button id="btnCopyBase64"
+                class="p-3 bg-gray-500 rounded-sm cursor-pointer hover:bg-gray-400 active:bg-gray-300">Copy
+                base64</button>
+            <button id="btnDownloadSvg"
+                class="p-3 bg-gray-500 rounded-sm cursor-pointer hover:bg-gray-400 active:bg-gray-300">Download
+                svg</button>
         </div>
         <div class="flex justify-center">
             <img id="svgImage" src="" alt="SVG">
@@ -95,6 +104,31 @@
                     svgInBase64.value = data.svgInBase64;
                     svgImage.src = data.svgImage;
                 }
-            });
+            })
+            .catch(error => console.error("Error:", error));
     }
+</script>
+
+{{!-- Cài đặt cho các nút --}}
+<script>
+    btnCopySvg.addEventListener("click", () => {
+        const svgText = svgInHtml.textContent;
+        navigator.clipboard.writeText(svgText).then(() => {
+            alert("Copied SVG HTML!");
+        });
+    });
+    btnCopyBase64.addEventListener("click", () => {
+        const base64Text = svgInBase64.value;
+        navigator.clipboard.writeText(base64Text).then(() => {
+            alert("Copied Base64!");
+        });
+    });
+    btnDownloadSvg.addEventListener("click", () => {
+        const link = document.createElement("a");
+        link.href = svgImage.src;
+        link.download = "svg-placeholder.svg";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
 </script>

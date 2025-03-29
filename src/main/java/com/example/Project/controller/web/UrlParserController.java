@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("")
 public class UrlParserController {
@@ -23,10 +25,15 @@ public class UrlParserController {
     private CategoryService categoriesService;
 
     @GetMapping("/web/url-parser")
-    public String show(Model model) {
+    public String show(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        model.addAttribute("username", username);
+
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
-        return "url-parser";
+        model.addAttribute("title", "URL Parser");
+        model.addAttribute("body", "url-parser");
+        return "layout";
     }
 
     @RestController

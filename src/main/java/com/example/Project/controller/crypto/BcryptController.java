@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("crypto")
 public class BcryptController {
@@ -23,18 +25,21 @@ public class BcryptController {
     private CategoryService categoriesService;
 
     @GetMapping("/bcrypt")
-    public String show(Model model) {
+    public String show(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        model.addAttribute("username", username);
+
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "Bcrypt Hashing Tool");
-        model.addAttribute("body", "bcrypt");  // Load template con
-        return "layout";  // Trả về layout.hbs
+        model.addAttribute("body", "bcrypt"); // Load template con
+        return "layout"; // Trả về layout.hbs
     }
 
     // API xử lý bcrypt
     @RestController
     @RequestMapping("/api/crypto/bcrypt")
-    public static class BcryptApiController {
+    public static class BcryptHandler {
 
         @GetMapping("/hash")
         public Map<String, String> hashUsingBcrypt(

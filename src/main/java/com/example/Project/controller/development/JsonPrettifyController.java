@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("development")
 public class JsonPrettifyController {
@@ -18,11 +20,14 @@ public class JsonPrettifyController {
     private CategoryService categoriesService;
 
     @GetMapping("/json-prettify")
-    public String show(Model model) {
+    public String show(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        model.addAttribute("username", username);
+
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "JSON Prettify Tool");
-        model.addAttribute("body", "json-prettify");  // Chỉ truyền tên template con
-        return "layout";  // Trả về layout.hbs
+        model.addAttribute("body", "json-prettify"); // Chỉ truyền tên template con
+        return "layout"; // Trả về layout.hbs
     }
 }
