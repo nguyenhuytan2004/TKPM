@@ -1,273 +1,192 @@
-
-                <div class="flex space-x-6 items-center">
-                    {{#username}}
-                    <div id="userInformation" class="hidden" data-user-id="{{userId}}"></div>
-                    <div class="flex items-center space-x-4">
-                        <div class="relative group">
-                            <button class="flex items-center space-x-2">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-xl font-semibold">
-                                </div>
-                                <span>Hi, {{username}}!</span>
-                                <span>|</span>
-                                <a href="/user/logout" class="hover:text-blue-500 hover:underline cursor-pointer">Sign
-                                    out</a>
-                            </button>
+<div class="space-y-6">
+    <div class="space-y-2">
+        <p class="text-xl text-gray-400 font-bold">Your favorite tools</p>
+        <div id="favoriteContainer" class="grid grid-cols-4 gap-4">
+            {{#favoriteTools}}
+            <a href={{endpoint}} id="toolLink" data-tool-id="{{id}}">
+                <div class="bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2">
+                    <div class="flex space-x-2 justify-between items-center">
+                        <h3 class="text-lg font-semibold">{{name}}</h3>
+                        <div id="addToFavoriteBtn" class="p-2 rounded-full hover:bg-gray-700 mr-2">
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path fill="#74C0FC"
+                                    d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
+                            </svg>
                         </div>
                     </div>
-                    {{/username}}
-
-                    {{^username}}
-                    <div id="userInformation" class="hidden"></div>
-                    <div class="space-x-2">
-                        <a href="/user/login" class="hover:underline hover:text-blue-500">Login</a>
-                        <span>|</span>
-                        <a href="/user/register" class="hover:underline hover:text-blue-500">Register</a>
-                    </div>
-                    {{/username}}
+                    <p class="text-sm text-gray-400 line-clamp-2">
+                        {{description}}
+                    </p>
                 </div>
-
-
-            <div class="mt-10 space-y-6">
-                <div class="space-y-2">
-                    <p class="text-xl text-gray-400 font-bold">Your favorite tools</p>
-                    <div id="favoriteContainer" class="grid grid-cols-4 gap-4">
-                        {{#favoriteTools}}
-                        <a href={{endpoint}} id="toolLink" data-tool-id="{{id}}">
-                            <div class="bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2">
-                                <div class="flex space-x-2 justify-between items-center">
-                                    <h3 class="text-lg font-semibold">{{name}}</h3>
-                                    <div id="addToFavoriteBtn" class="p-2 rounded-full hover:bg-gray-700 mr-2">
-                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path fill="#74C0FC"
-                                                d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p class="text-sm text-gray-400 line-clamp-2">
-                                    {{description}}
-                                </p>
-                            </div>
-                        </a>
-                        {{/favoriteTools}}
+            </a>
+            {{/favoriteTools}}
+        </div>
+    </div>
+    <div class="space-y-2">
+        <p class="text-xl text-gray-400 font-bold">All the tools</p>
+        <div id="allToolsContainer" class="grid grid-cols-4 gap-4">
+            {{#tools}}
+            <a href={{endpoint}} id="toolLink" data-tool-id="{{id}}">
+                <div class="bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2">
+                    <div class="flex space-x-2 justify-between items-center">
+                        <h3 class="text-lg font-semibold">{{name}}</h3>
+                        <div id="addToFavoriteBtn" class="p-2 rounded-full hover:bg-gray-700 mr-2">
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path fill="#74C0FC"
+                                    d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z" />
+                            </svg>
+                        </div>
                     </div>
+                    <p class="text-sm text-gray-400 line-clamp-2">
+                        {{description}}
+                    </p>
                 </div>
-                <div class="space-y-2">
-                    <p class="text-xl text-gray-400 font-bold">All the tools</p>
-                    <div id="allToolsContainer" class="grid grid-cols-4 gap-4">
-                        {{#tools}}
-                        <a href={{endpoint}} id="toolLink" data-tool-id="{{id}}">
-                            <div class="bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2">
-                                <div class="flex space-x-2 justify-between items-center">
-                                    <h3 class="text-lg font-semibold">{{name}}</h3>
-                                    <div id="addToFavoriteBtn" class="p-2 rounded-full hover:bg-gray-700 mr-2">
-                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path fill="#74C0FC"
-                                                d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p class="text-sm text-gray-400 line-clamp-2">
-                                    {{description}}
-                                </p>
-                            </div>
-                        </a>
-                        {{/tools}}
-                    </div>
-                </div>
-            </div>
+            </a>
+            {{/tools}}
+        </div>
+    </div>
+</div>
 
+{{!-- Nhấn nút "Yêu thích" --}}
+<script>
+    const addToFavoriteBtns = document.querySelectorAll("#addToFavoriteBtn");
+    const userId = document.getElementById("userInformation").dataset.userId;
 
-    {{!-- Tìm kiếm tool --}}
-    <script>
-        const searchBar = document.getElementById("searchBar");
-        const searchResults = document.getElementById("searchResults");
+    addToFavoriteBtns.forEach(btn => {
+        btn.addEventListener("click", event => handleFavoriteClick(event, btn));
+    });
 
-        searchBar.addEventListener("input", searchTool);
+    // Hàm xử lý click "Yêu thích" trong all tools
+    function handleFavoriteClick(event, btn) {
+        event.preventDefault();
+        event.stopPropagation();
 
-        function searchTool() {
-            const query = searchBar.value.trim();
-            if (query.length === 0) {
-                searchResults.innerHTML = "";
-                searchResults.classList.add("hidden");
-                return;
-            }
-
-            fetch(`/api/search-tool?hintText=${encodeURIComponent(query)}`)
-                .then(response => response.json())
-                .then(data => {
-                    searchResults.innerHTML = "";
-                    if (data.length === 0) {
-                        searchResults.classList.add("hidden");
-                        return;
-                    }
-
-                    searchResults.classList.remove("hidden");
-
-                    data.forEach(tool => {
-                        const li = document.createElement("li");
-                        li.textContent = tool.name;
-                        li.classList.add("p-2", "cursor-pointer", "hover:bg-gray-700");
-
-                        li.addEventListener("click", () => {
-                            window.location.href = tool.endpoint;
-                        });
-
-                        searchResults.appendChild(li);
-                    });
-                })
-                .catch(error => console.error(error));
+        if (!userId) {
+            window.location.href = '/user/login';
+            return;
         }
 
-        // Ẩn kết quả tìm kiếm khi click ra ngoài
-        document.addEventListener("click", (event) => {
-            if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
-                searchResults.classList.add("hidden");
-            }
-        });
-    </script>
+        const toolCard = btn.closest('[data-tool-id]');
+        const svg = btn.querySelector("svg");
 
-    {{!-- Nhấn nút "Yêu thích" --}}
-    <script>
-        const addToFavoriteBtns = document.querySelectorAll("#addToFavoriteBtn");
-        const userId = document.getElementById("userInformation").dataset.userId;
+        if (svg.innerHTML.includes("M225.8")) {
+            // Thêm vào yêu thích
+            svg.innerHTML = '<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#74C0FC" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>';
 
-        addToFavoriteBtns.forEach(btn => {
-            btn.addEventListener("click", event => handleFavoriteClick(event, btn));
-        });
+            // Clone tool card và thêm vào favorite
+            const clonedCard = toolCard.cloneNode(true);
+            // Thêm event listener cho nút favorite trong card đã clone
+            clonedCard.querySelector("#addToFavoriteBtn").addEventListener("click", handleFavoriteClickInFavoriteContainer);
+            favoriteContainer.appendChild(clonedCard);
 
-        // Hàm xử lý click "Yêu thích" trong all tools
-        function handleFavoriteClick(event, btn) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            if (!userId) {
-                window.location.href = '/user/login';
-                return;
-            }
-
-            const toolCard = btn.closest('[data-tool-id]');
-            const svg = btn.querySelector("svg");
-
-            if (svg.innerHTML.includes("M225.8")) {
-                // Thêm vào yêu thích
-                svg.innerHTML = '<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#74C0FC" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>';
-
-                // Clone tool card và thêm vào favorite
-                const clonedCard = toolCard.cloneNode(true);
-                // Thêm event listener cho nút favorite trong card đã clone
-                clonedCard.querySelector("#addToFavoriteBtn").addEventListener("click", handleFavoriteClickInFavoriteContainer);
-                favoriteContainer.appendChild(clonedCard);
-
-                // Gọi API cập nhật favorite tools
-                const toolId = toolCard.dataset.toolId;
-                updateFavoriteTool(toolId, "add");
-                toggleHiddenTitle();
-            } else {
-                // Bỏ yêu thích
-                svg.innerHTML = '<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#74C0FC" d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/></svg>';
-
-                // Xóa khỏi favorite
-                const toolId = toolCard.dataset.toolId;
-                const favoriteCard = favoriteContainer.querySelector(`[data-tool-id="${toolId}"]`);
-                if (favoriteCard) {
-                    favoriteCard.remove();
-                }
-
-                // Gọi API cập nhật favorite tools
-                updateFavoriteTool(toolId, "remove");
-                toggleHiddenTitle();
-            }
-        }
-
-        // Hàm xử lý click "Yêu thích" trong favorite container
-        function handleFavoriteClickInFavoriteContainer(event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            const toolCard = this.closest('[data-tool-id]');
+            // Gọi API cập nhật favorite tools
             const toolId = toolCard.dataset.toolId;
+            updateFavoriteTool(toolId, "add");
+            toggleHiddenTitle();
+        } else {
+            // Bỏ yêu thích
+            svg.innerHTML = '<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#74C0FC" d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/></svg>';
 
             // Xóa khỏi favorite
-            toolCard.remove();
+            const toolId = toolCard.dataset.toolId;
+            const favoriteCard = favoriteContainer.querySelector(`[data-tool-id="${toolId}"]`);
+            if (favoriteCard) {
+                favoriteCard.remove();
+            }
 
-            // Update icon trong all tools
-            const originalCard = document.querySelector(`[data-tool-id="${toolId}"]`);
-            if (originalCard) {
-                const originalSvg = originalCard.querySelector("#addToFavoriteBtn svg");
-                originalSvg.innerHTML = '<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#74C0FC" d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/></svg>';
+            // Gọi API cập nhật favorite tools
+            updateFavoriteTool(toolId, "remove");
+            toggleHiddenTitle();
+        }
+    }
 
-                // Gọi API cập nhật favorite tools
-                updateFavoriteTool(toolId, "remove");
-                toggleHiddenTitle();
+    // Hàm xử lý click "Yêu thích" trong favorite container
+    function handleFavoriteClickInFavoriteContainer(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const toolCard = this.closest('[data-tool-id]');
+        const toolId = toolCard.dataset.toolId;
+
+        // Xóa khỏi favorite
+        toolCard.remove();
+
+        // Update icon trong all tools
+        const originalCard = document.querySelector(`[data-tool-id="${toolId}"]`);
+        if (originalCard) {
+            const originalSvg = originalCard.querySelector("#addToFavoriteBtn svg");
+            originalSvg.innerHTML = '<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#74C0FC" d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/></svg>';
+
+            // Gọi API cập nhật favorite tools
+            updateFavoriteTool(toolId, "remove");
+            toggleHiddenTitle();
+        }
+    }
+</script>
+
+{{!-- Đồng bộ trạng thái favorite icon khi load trang --}}
+<script>
+    const allToolsContainer = document.getElementById("allToolsContainer");
+    const favoriteContainer = document.getElementById("favoriteContainer");
+
+    // Lấy danh sách tool IDs từ favorite container
+    const favoriteToolIds = Array.from(favoriteContainer.querySelectorAll('[data-tool-id]'))
+        .map(card => card.dataset.toolId);
+    favoriteContainer.querySelectorAll('[data-tool-id]').forEach(card => {
+        card.querySelector("#addToFavoriteBtn").addEventListener("click", handleFavoriteClickInFavoriteContainer);
+    });
+
+    // Cập nhật icon cho các tool trong All tools
+    favoriteToolIds.forEach(toolId => {
+        const toolCard = allToolsContainer.querySelector(`[data-tool-id="${toolId}"]`);
+        if (toolCard) {
+            const favoriteBtn = toolCard.querySelector('#addToFavoriteBtn svg');
+            if (favoriteBtn) {
+                favoriteBtn.innerHTML = '<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#74C0FC" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>';
             }
         }
-    </script>
+    });
+</script>
 
-    {{!-- Đồng bộ trạng thái favorite icon khi load trang --}}
-    <script>
-        const allToolsContainer = document.getElementById("allToolsContainer");
+{{!-- Ẩn thẻ <p>Favorite</p> nếu không có tool nào --}}
+<script>
+    function toggleHiddenTitle() {
         const favoriteContainer = document.getElementById("favoriteContainer");
+        const favoriteTools = favoriteContainer.querySelectorAll('[data-tool-id]');
+        const favoriteTitle = document.querySelector("p.text-xl.text-gray-400.font-bold");
 
-        // Lấy danh sách tool IDs từ favorite container
-        const favoriteToolIds = Array.from(favoriteContainer.querySelectorAll('[data-tool-id]'))
-            .map(card => card.dataset.toolId);
-        favoriteContainer.querySelectorAll('[data-tool-id]').forEach(card => {
-            card.querySelector("#addToFavoriteBtn").addEventListener("click", handleFavoriteClickInFavoriteContainer);
-        });
-
-        // Cập nhật icon cho các tool trong All tools
-        favoriteToolIds.forEach(toolId => {
-            const toolCard = allToolsContainer.querySelector(`[data-tool-id="${toolId}"]`);
-            if (toolCard) {
-                const favoriteBtn = toolCard.querySelector('#addToFavoriteBtn svg');
-                if (favoriteBtn) {
-                    favoriteBtn.innerHTML = '<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#74C0FC" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>';
-                }
-            }
-        });
-    </script>
-
-    {{!-- Ẩn thẻ <p>Favorite</p> nếu không có tool nào --}}
-    <script>
-        function toggleHiddenTitle() {
-            const favoriteContainer = document.getElementById("favoriteContainer");
-            const favoriteTools = favoriteContainer.querySelectorAll('[data-tool-id]');
-            const favoriteTitle = document.querySelector("p.text-xl.text-gray-400.font-bold");
-
-            if (favoriteTools.length === 0) {
-                favoriteTitle.classList.add("hidden");
-                favoriteContainer.classList.add("hidden");
-            }
-            else {
-                favoriteTitle.classList.remove("hidden");
-                favoriteContainer.classList.remove("hidden");
-            }
+        if (favoriteTools.length === 0) {
+            favoriteTitle.classList.add("hidden");
+            favoriteContainer.classList.add("hidden");
         }
-        toggleHiddenTitle();
-    </script>
-
-    {{!-- Gọi API cập nhật favorite tools --}}
-    <script>
-        function updateFavoriteTool(toolId, action) {
-
-            fetch(`/api/user/favorite-tool/${action}?userId=${Number(userId)}&toolId=${Number(toolId)}`)
-                .then(response => response.json())
-                .then(data => { })
-                .catch(error => console.error(error));
+        else {
+            favoriteTitle.classList.remove("hidden");
+            favoriteContainer.classList.remove("hidden");
         }
-    </script>
+    }
+    toggleHiddenTitle();
+</script>
 
-    {{!-- Chỉnh hiệu ứng cho thông báo (ẩn dần) --}}
-    <script>
-        const message = document.getElementById("message");
-        if (message) {
+{{!-- Gọi API cập nhật favorite tools --}}
+<script>
+    function updateFavoriteTool(toolId, action) {
+
+        fetch(`/api/user/favorite-tool/${action}?userId=${Number(userId)}&toolId=${Number(toolId)}`)
+            .then(response => response.json())
+            .then(data => { })
+            .catch(error => console.error(error));
+    }
+</script>
+
+{{!-- Chỉnh hiệu ứng cho thông báo (ẩn dần) --}}
+<script>
+    const message = document.getElementById("message");
+    if (message) {
+        setTimeout(() => {
+            message.style.opacity = 0;
             setTimeout(() => {
-                message.style.opacity = 0;
-                setTimeout(() => {
-                    message.remove();
-                }, 2000);
+                message.remove();
             }, 2000);
-        }
-    </script>
-
+        }, 2000);
+    }
+</script>

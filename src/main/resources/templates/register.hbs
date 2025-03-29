@@ -10,11 +10,11 @@
 </head>
 
 <body>
-    {{#error}}
+    {{#if error}}
     <p id="error-message"
         class="fixed right-10 top-10 text-white p-4 bg-red-500 rounded-full opacity-100 duration-2000 z-50">
         {{error}}</p>
-    {{/error}}
+    {{/if}}
 
     <div class="flex items-center justify-center h-screen bg-gray-800 px-4">
         <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6">
