@@ -1,0 +1,81 @@
+<div class="container mx-auto p-8 text-gray-300 min-h-screen">
+    <h1 class="text-3xl font-bold text-center mb-4">IPv4 Subnet Calculator</h1>
+    <p class="text-center mb-6">Parse your IPv4 CIDR blocks and get all the info you need about your subnet.</p>
+
+    <!-- Ô nhập IP + nút Calculate -->
+    <div class="flex items-center justify-center space-x-2">
+        <input id="ipInput"
+               class="bg-gray-800 text-white p-2 w-96 rounded-md"
+               placeholder="Enter an IPv4 address with or without mask"
+               onkeypress="handleKeyPress(event)" />
+        <button class="bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                onclick="calculateSubnet()">
+            Calculate
+        </button>
+    </div>
+
+    <!-- Bảng hiển thị kết quả -->
+    <div class="mt-6 bg-gray-900 p-6 rounded-md flex justify-center">
+        <table class="w-3/4 max-w-lg text-left mx-auto border border-gray-700 rounded-lg">
+            <tr><th class="p-3 border-b border-gray-700">Netmask</th><td id="netmask" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3 border-b border-gray-700">Network address</th><td id="networkAddress" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3 border-b border-gray-700">Network mask</th><td id="networkMask" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3 border-b border-gray-700">Network mask in binary</th><td id="networkMaskBinary" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3 border-b border-gray-700">CIDR notation</th><td id="cidrNotation" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3 border-b border-gray-700">Wildcard mask</th><td id="wildcardMask" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3 border-b border-gray-700">Network size</th><td id="networkSize" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3 border-b border-gray-700">First address</th><td id="firstAddress" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3 border-b border-gray-700">Last address</th><td id="lastAddress" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3 border-b border-gray-700">Broadcast address</th><td id="broadcastAddress" class="p-3 border-b border-gray-700"></td></tr>
+            <tr><th class="p-3">IP class</th><td id="ipClass" class="p-3"></td></tr>
+        </table>
+    </div>
+
+    <!-- Nút chuyển subnet -->
+    <div class="w-3/4 max-w-lg mx-auto mt-4 flex justify-between">
+        <button class="bg-gray-700 px-4 py-2 rounded-md hover:bg-gray-600 transition">
+            &larr; Previous block
+        </button>
+        <button class="bg-gray-700 px-4 py-2 rounded-md hover:bg-gray-600 transition">
+            Next block &rarr;
+        </button>
+    </div>
+</div>
+
+<script>
+    // Gọi API khi nhấn Enter
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            calculateSubnet();
+        }
+    }
+
+    // Gọi API để tính subnet
+    function calculateSubnet() {
+        const ipInput = document.getElementById("ipInput").value;
+        fetch(`/api/network/ipv4-subnet/calculate?ip=${encodeURIComponent(ipInput)}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("netmask").textContent = data.netmask || "-";
+                document.getElementById("networkAddress").textContent = data.networkAddress || "-";
+                document.getElementById("networkMask").textContent = data.networkMask || "-";
+                document.getElementById("networkMaskBinary").textContent = data.networkMaskBinary || "-";
+                document.getElementById("cidrNotation").textContent = data.cidrNotation || "-";
+                document.getElementById("wildcardMask").textContent = data.wildcardMask || "-";
+                document.getElementById("networkSize").textContent = data.networkSize || "-";
+                document.getElementById("firstAddress").textContent = data.firstAddress || "-";
+                document.getElementById("lastAddress").textContent = data.lastAddress || "-";
+                document.getElementById("broadcastAddress").textContent = data.broadcastAddress || "-";
+                document.getElementById("ipClass").textContent = data.ipClass || "-";
+            })
+            .catch(error => console.error("Error:", error));
+    }
+
+    function previousBlock() {
+        console.log("Previous block function triggered");
+    }
+
+    function nextBlock() {
+        console.log("Next block function triggered");
+    }
+</script>
