@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Project.model.Category;
 import com.example.Project.service.CategoryService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("converter")
 public class TextToUnicodeController {
@@ -27,7 +29,10 @@ public class TextToUnicodeController {
     private CategoryService categoriesService;
 
     @GetMapping("/text-to-unicode")
-    public String show(Model model) {
+    public String show(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        model.addAttribute("username", username);
+
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "Text to Unicode Converter"); // Thêm title

@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Project.model.Category;
 import com.example.Project.model.Tool;
-import com.example.Project.service.CategoryService;
-import com.example.Project.service.FavoriteService;
-import com.example.Project.service.ToolService;
 
 import jakarta.servlet.http.HttpSession;
 
