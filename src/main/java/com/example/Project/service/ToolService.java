@@ -25,4 +25,8 @@ public class ToolService {
     public Tool getToolById(Integer toolId) {
         return toolRepository.findById(toolId).orElse(null);
     }
+
+    public void updateTool(Tool tool) {
+        toolRepository.save(tool);
+    }
 }
