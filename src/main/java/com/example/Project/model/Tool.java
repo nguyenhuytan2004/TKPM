@@ -1,5 +1,7 @@
 package com.example.Project.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +38,9 @@ public class Tool {
     @Column(nullable = false, length = 200)
     private String endpoint;
 
+    @JsonProperty("isActive")
     private boolean isActive = true;
+
+    @JsonProperty("isPremium")
     private boolean isPremium = false;
 }

@@ -41,7 +41,7 @@ CREATE TABLE tools (
     name VARCHAR(50) NOT NULL UNIQUE,
     description TEXT,
     category_id MEDIUMINT NOT NULL,
-    endpoint VARCHAR(200) NOT NULL,
+    endpoint VARCHAR(50) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     is_premium BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE

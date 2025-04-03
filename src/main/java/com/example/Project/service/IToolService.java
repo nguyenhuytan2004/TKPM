@@ -1,7 +1,8 @@
 package com.example.Project.service;
 
-import com.example.Project.model.Tool;
 import java.util.List;
+
+import com.example.Project.model.Tool;
 
 public interface IToolService {
     List<Tool> getAllTools();
@@ -11,4 +12,6 @@ public interface IToolService {
     Tool getToolById(Integer toolId);
 
     void updateTool(Tool tool);
+
+    void deleteTool(Tool tool);
 }

@@ -34,4 +34,9 @@ public class ToolService implements IToolService {
     public void updateTool(Tool tool) {
         _toolRepository.save(tool);
     }
+
+    @Override
+    public void deleteTool(Tool tool) {
+        _toolRepository.delete(tool);
+    }
 }
