@@ -80,8 +80,7 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 
 -- Math (category_id = 7)
 ('Math Evaluator', 'A calculator for evaluating mathematical expressions. You can use functions like sqrt, cos, sin, abs, etc.', '/math/evaluator', 7),
-('ETA Calculator', 'An ETA (Estimated Time of Arrival) calculator to determine the approximate end time of a task, for example, the end time and duration of a file download.
-With a concrete example, if you wash 5 plates in 3 minutes and you have 500 plates to wash, it will take you 5 hours to wash them all.', '/math/eta-calculator', 7),
+('ETA Calculator', 'An ETA (Estimated Time of Arrival) calculator to determine the approximate end time of a task, for example, the end time and duration of a file download. With a concrete example, if you wash 5 plates in 3 minutes and you have 500 plates to wash, it will take you 5 hours to wash them all.', '/math/eta-calculator', 7),
 ('Percentage Calculator', 'Easily calculate percentages from a value to another value, or from a percentage to a value.', '/math/percentage', 7),
 
 -- Measurement (category_id = 8)
