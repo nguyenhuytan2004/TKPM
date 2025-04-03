@@ -13,18 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Project.model.Category;
 import com.example.Project.model.Tool;
+import com.example.Project.service.ICategoryService;
+import com.example.Project.service.IToolService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminDashboardController {
     @Autowired
-    ToolController toolController;
+    private IToolService _toolService;
     @Autowired
-    CategoryController categoryController;
+    private ICategoryService _categoryService;
 
     @GetMapping("/dashboard")
     public String showAdminDashboard(Model model) {
-        List<Tool> tools = toolController.getAllTools();
+        List<Tool> tools = _toolService.getAllTools();
         List<Map<String, Object>> toolList = new ArrayList<>();
         for (Tool tool : tools) {
             Map<String, Object> toolData = new HashMap<>();
@@ -37,7 +39,7 @@ public class AdminDashboardController {
             toolList.add(toolData);
         }
 
-        List<Category> categories = categoryController.getAllCategories();
+        List<Category> categories = _categoryService.getAllCategories();
 
         model.addAttribute("tools", toolList);
         model.addAttribute("categories", categories);

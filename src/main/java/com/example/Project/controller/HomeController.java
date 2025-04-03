@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Project.model.Category;
 import com.example.Project.model.Tool;
+import com.example.Project.service.ICategoryService;
+import com.example.Project.service.IFavoriteService;
+import com.example.Project.service.IToolService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -17,11 +20,11 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("")
 public class HomeController {
     @Autowired
-    private CategoryController categoryController;
+    private ICategoryService _categoryService;
     @Autowired
-    private ToolController toolController;
+    private IToolService _toolService;
     @Autowired
-    private FavoriteController favoriteController;
+    private IFavoriteService _favoriteService;
 
     @GetMapping("")
     public String show(Model model, HttpSession session) {
@@ -33,16 +36,16 @@ public class HomeController {
             model.addAttribute("userId", userId);
 
             // Lấy danh sách công cụ yêu thích của user
-            List<Tool> favoriteTools = favoriteController.getAllFavoritesByUserId(userId);
+            List<Tool> favoriteTools = _favoriteService.getAllFavoriteToolsByUserId(userId);
             model.addAttribute("favoriteTools", favoriteTools);
         }
 
         // Lấy danh sách categories từ Service
-        List<Category> allCategories = categoryController.getAllCategories();
+        List<Category> allCategories = _categoryService.getAllCategories();
         model.addAttribute("categories", allCategories);
 
         // Lấy danh sách tất cả công cụ
-        List<Tool> allTools = toolController.getAllTools();
+        List<Tool> allTools = _toolService.getAllTools();
         model.addAttribute("tools", allTools);
 
         // Trả về layout chính, chỉ truyền body là "home"

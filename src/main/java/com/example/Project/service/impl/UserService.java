@@ -1,4 +1,4 @@
-package com.example.Project.service;
+package com.example.Project.service.impl;
 
 import java.util.Optional;
 
@@ -7,15 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Project.model.User;
-import com.example.Project.repository.UserRepository;
+import com.example.Project.repository.IUserRepository;
+import com.example.Project.service.IUserService;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository _userRepository;
 
+    @Override
     public User authenticateUser(String username, String password) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
+        Optional<User> userOptional = _userRepository.findByUsername(username);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -24,8 +26,9 @@ public class UserService {
         return null;
     }
 
+    @Override
     public boolean createUser(String username, String password) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
+        Optional<User> userOptional = _userRepository.findByUsername(username);
 
         if (userOptional.isPresent()) {
             return false;
@@ -35,7 +38,7 @@ public class UserService {
         User user = new User();
         user.setUsername(username);
         user.setPasswordHash(passwordHash);
-        userRepository.save(user);
+        _userRepository.save(user);
         return true;
     }
 }

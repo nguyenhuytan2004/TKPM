@@ -14,40 +14,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project.model.Tool;
-import com.example.Project.service.ToolService;
+import com.example.Project.service.IToolService;
 
 @Controller
 @RequestMapping("")
 public class ToolController {
     @Autowired
-    private ToolService toolService;
-
-    public List<Tool> getAllTools() {
-        return toolService.getAllTools();
-    }
-
-    public List<Tool> getToolsByName(String name) {
-        return toolService.getToolsByName(name);
-    }
-
-    public Tool getToolById(int id) {
-        return toolService.getToolById(id);
-    }
+    private IToolService _toolService;
 
     @RestController
     @RequestMapping("/api")
     public class ToolHandler {
         @GetMapping("/search-tool")
         public List<Tool> searchTool(@RequestParam String hintText) {
-            return toolService.getToolsByName(hintText);
+            return _toolService.getToolsByName(hintText);
         }
 
         @PutMapping("/tool/{id}/premium")
         public boolean updateToolPremiumStatus(@PathVariable int id, @RequestBody Map<String, Boolean> requestBody) {
-            Tool tool = toolService.getToolById(id);
+            Tool tool = _toolService.getToolById(id);
             if (tool != null) {
                 tool.setPremium(requestBody.get("isPremium"));
-                toolService.updateTool(tool);
+                _toolService.updateTool(tool);
                 return true;
             }
             return false;
@@ -55,10 +43,10 @@ public class ToolController {
 
         @PutMapping("/tool/{id}/active")
         public boolean updateToolActiveStatus(@PathVariable int id, @RequestBody Map<String, Boolean> requestBody) {
-            Tool tool = toolService.getToolById(id);
+            Tool tool = _toolService.getToolById(id);
             if (tool != null) {
                 tool.setActive(requestBody.get("isActive"));
-                toolService.updateTool(tool);
+                _toolService.updateTool(tool);
                 return true;
             }
             return false;

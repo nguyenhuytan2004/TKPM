@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project.model.Category;
-import com.example.Project.service.CategoryService;
+import com.example.Project.service.ICategoryService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,14 +22,14 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("")
 public class HtmlEscapeController {
     @Autowired
-    private CategoryService categoriesService;
+    private ICategoryService _categoryService;
 
     @GetMapping("/web/html-escape")
     public String show(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
 
-        List<Category> allCategories = categoriesService.getAllCategories();
+        List<Category> allCategories = _categoryService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "HTML Escape Tool");
         model.addAttribute("body", "html-escape");

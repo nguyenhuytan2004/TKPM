@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Project.model.Category;
-import com.example.Project.service.CategoryService;
+import com.example.Project.service.ICategoryService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -17,14 +17,14 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("development")
 public class JsonPrettifyController {
     @Autowired
-    private CategoryService categoriesService;
+    private ICategoryService _categoryService;
 
     @GetMapping("/json-prettify")
     public String show(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
 
-        List<Category> allCategories = categoriesService.getAllCategories();
+        List<Category> allCategories = _categoryService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "JSON Prettify Tool");
         model.addAttribute("body", "json-prettify"); // Chỉ truyền tên template con

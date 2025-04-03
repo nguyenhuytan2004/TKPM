@@ -1,16 +1,21 @@
 package com.example.Project.controller.network;
 
-import com.example.Project.model.Category;
-import com.example.Project.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.Project.model.Category;
+import com.example.Project.service.impl.CategoryService;
 
 @Controller
 @RequestMapping("/network")
@@ -23,8 +28,8 @@ public class SubnetCalculatorController {
         List<Category> allCategories = categoriesService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "IPv4 Subnet Calculator");
-        model.addAttribute("body", "subnet");  // Load template subnet.hbs
-        return "layout";  // Trả về layout.hbs
+        model.addAttribute("body", "subnet"); // Load template subnet.hbs
+        return "layout"; // Trả về layout.hbs
     }
 
     @RestController
@@ -75,11 +80,10 @@ public class SubnetCalculatorController {
                 String lastAddress = intToIp(broadcast - 1);
 
                 // CIDR Notation
-                String cidrNotation ="/" + prefix;
+                String cidrNotation = "/" + prefix;
 
                 // Số lượng địa chỉ trong mạng (trừ 2 địa chỉ mạng và broadcast)
                 int totalHosts = (1 << (32 - prefix));
-
 
                 // Thêm thông tin vào Map trả về
                 info.put("ip", ip);
@@ -117,11 +121,16 @@ public class SubnetCalculatorController {
 
         private String getIpClass(int firstOctet) {
             firstOctet = firstOctet & 0xFF;
-            if (firstOctet >= 1 && firstOctet <= 126) return "A";
-            if (firstOctet >= 128 && firstOctet <= 191) return "B";
-            if (firstOctet >= 192 && firstOctet <= 223) return "C";
-            if (firstOctet >= 224 && firstOctet <= 239) return "D (Multicast)";
-            if (firstOctet >= 240 && firstOctet <= 255) return "E (Experimental)";
+            if (firstOctet >= 1 && firstOctet <= 126)
+                return "A";
+            if (firstOctet >= 128 && firstOctet <= 191)
+                return "B";
+            if (firstOctet >= 192 && firstOctet <= 223)
+                return "C";
+            if (firstOctet >= 224 && firstOctet <= 239)
+                return "D (Multicast)";
+            if (firstOctet >= 240 && firstOctet <= 255)
+                return "E (Experimental)";
             return "Unknown1";
         }
     }
