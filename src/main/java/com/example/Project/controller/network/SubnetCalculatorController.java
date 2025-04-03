@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.Project.service.ICategoryService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +17,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project.model.Category;
-import com.example.Project.service.impl.CategoryService;
 
 @Controller
 @RequestMapping("/network")
 public class SubnetCalculatorController {
     @Autowired
-    private CategoryService categoriesService;
+    private ICategoryService _categoryService;
 
     @GetMapping("/ipv4-subnet")
-    public String showSubnetPage(Model model) {
-        List<Category> allCategories = categoriesService.getAllCategories();
+    public String show(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        model.addAttribute("username", username);
+
+        List<Category> allCategories = _categoryService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "IPv4 Subnet Calculator");
         model.addAttribute("body", "subnet"); // Load template subnet.hbs
