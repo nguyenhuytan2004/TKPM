@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.Project.model.Favorite;
 
-public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
+public interface IFavoriteRepository extends JpaRepository<Favorite, Long> {
     Optional<Favorite> findByUserIdAndToolId(Integer userId, Integer toolId);
 
     List<Favorite> findAllByUserId(Integer userId);

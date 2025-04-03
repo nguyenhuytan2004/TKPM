@@ -2,6 +2,7 @@ package com.example.Project.controller.imageAndVideo;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -18,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project.model.Category;
-import com.example.Project.service.CategoryService;
+import com.example.Project.service.ICategoryService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -33,14 +35,14 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("images-videos")
 public class QrCodeGeneratorController {
     @Autowired
-    private CategoryService categoriesService;
+    private ICategoryService _categoryService;
 
     @GetMapping("/qr-code-generator")
     public String show(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
 
-        List<Category> allCategories = categoriesService.getAllCategories();
+        List<Category> allCategories = _categoryService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "QR Code Generator"); // Thêm tiêu đề
         model.addAttribute("body", "qr-code-generator"); // Load trang con
@@ -82,8 +84,7 @@ public class QrCodeGeneratorController {
 
                 response.put("qrCodeImage", "data:image/png;base64," + Base64.getEncoder().encodeToString(imageBytes));
                 response.put("isSuccess", true);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (WriterException | IOException e) {
                 response.put("isSuccess", false);
             }
             return response;
@@ -91,18 +92,13 @@ public class QrCodeGeneratorController {
 
         // Chuyển đổi mức độ chịu lỗi
         private ErrorCorrectionLevel getErrorCorrectionLevel(String level) {
-            switch (level.toLowerCase()) {
-                case "low":
-                    return ErrorCorrectionLevel.L;
-                case "medium":
-                    return ErrorCorrectionLevel.M;
-                case "quartile":
-                    return ErrorCorrectionLevel.Q;
-                case "high":
-                    return ErrorCorrectionLevel.H;
-                default:
-                    return ErrorCorrectionLevel.M;
-            }
+            return switch (level.toLowerCase()) {
+                case "low" -> ErrorCorrectionLevel.L;
+                case "medium" -> ErrorCorrectionLevel.M;
+                case "quartile" -> ErrorCorrectionLevel.Q;
+                case "high" -> ErrorCorrectionLevel.H;
+                default -> ErrorCorrectionLevel.M;
+            };
         }
 
         // Chuyển mã HEX thành màu

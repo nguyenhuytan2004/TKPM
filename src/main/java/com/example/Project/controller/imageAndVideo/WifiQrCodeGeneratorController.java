@@ -2,6 +2,7 @@ package com.example.Project.controller.imageAndVideo;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project.model.Category;
-import com.example.Project.service.CategoryService;
+import com.example.Project.service.ICategoryService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -34,14 +36,14 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("images-videos")
 public class WifiQrCodeGeneratorController {
     @Autowired
-    private CategoryService categoriesService;
+    private ICategoryService _categoryService;
 
     @GetMapping("/wifi-qr-code-generator")
     public String show(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
 
-        List<Category> allCategories = categoriesService.getAllCategories();
+        List<Category> allCategories = _categoryService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "WiFi QR Code Generator");
         model.addAttribute("body", "wifi-qr-code-generator");
@@ -90,7 +92,7 @@ public class WifiQrCodeGeneratorController {
 
                 response.put("qrCodeImage", "data:image/png;base64," + base64Image);
                 response.put("isSuccess", true);
-            } catch (Exception e) {
+            } catch (WriterException | IOException e) {
                 response.put("isSuccess", false);
                 response.put("error", e.getMessage());
             }

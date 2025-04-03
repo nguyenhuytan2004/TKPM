@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Project.model.Category;
-import com.example.Project.service.CategoryService;
+import com.example.Project.service.ICategoryService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,14 +22,14 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("")
 public class UrlParserController {
     @Autowired
-    private CategoryService categoriesService;
+    private ICategoryService _categoryService;
 
     @GetMapping("/web/url-parser")
     public String show(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
 
-        List<Category> allCategories = categoriesService.getAllCategories();
+        List<Category> allCategories = _categoryService.getAllCategories();
         model.addAttribute("categories", allCategories);
         model.addAttribute("title", "URL Parser");
         model.addAttribute("body", "url-parser");

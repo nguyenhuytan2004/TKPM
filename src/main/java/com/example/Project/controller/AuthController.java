@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.Project.model.User;
-import com.example.Project.service.UserService;
+import com.example.Project.service.IUserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/user")
 public class AuthController {
     @Autowired
-    private UserService userService;
+    private IUserService _userService;
 
     @GetMapping("/login")
     public String showLoginPage() {
@@ -37,7 +37,7 @@ public class AuthController {
             return "register";
         }
 
-        boolean isUserCreated = userService.createUser(username, password);
+        boolean isUserCreated = _userService.createUser(username, password);
 
         if (isUserCreated) {
             return "redirect:/user/login";
@@ -50,7 +50,7 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, HttpSession session,
             Model model) {
-        User user = userService.authenticateUser(username, password);
+        User user = _userService.authenticateUser(username, password);
 
         if (user != null) {
             session.setMaxInactiveInterval(1800);
