@@ -39,7 +39,7 @@ public class SvgPlaceholderGeneratorController {
 
     @RestController
     @RequestMapping("/api/images-videos/svg-placeholder-generator")
-    public class SvgPlaceholderGeneratorHandler {
+    public class SvgPlaceholderGeneratorApiController {
         @GetMapping("")
         public ResponseEntity<Map<String, Object>> generateSvgPlaceholder(
                 @RequestParam(defaultValue = "100") int width,

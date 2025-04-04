@@ -42,7 +42,7 @@ public class TextToUnicodeController {
 
     @RestController
     @RequestMapping("/api/converter/text-to-unicode")
-    public class TextToUnicodeHandler {
+    public class TextToUnicodeApiController {
         @GetMapping("")
         public Map<String, String> convertTextToUnicode(@RequestParam String textString) {
             String unicodeString = textString.chars()

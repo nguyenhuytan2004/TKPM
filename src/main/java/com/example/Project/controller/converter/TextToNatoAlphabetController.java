@@ -36,7 +36,7 @@ public class TextToNatoAlphabetController {
 
     @RestController
     @RequestMapping("/api/converter/text-to-nato-alphabet")
-    public class TextToNatoAlphabetHandler {
+    public class TextToNatoAlphabetApiController {
         private static final Map<Character, String> NATO_ALPHABET = Map.ofEntries(
                 Map.entry('A', "Alpha"), Map.entry('B', "Bravo"), Map.entry('C', "Charlie"),
                 Map.entry('D', "Delta"), Map.entry('E', "Echo"), Map.entry('F', "Foxtrot"),

@@ -39,7 +39,7 @@ public class TokenGeneratorController {
 
     @RestController
     @RequestMapping("api/crypto/token-generator")
-    public class TokenGeneratorHandler {
+    public class TokenGeneratorApiController {
         @PostMapping("")
         public Map<String, String> generateToken(@RequestBody Map<String, Object> payload) {
             boolean uppercase = (boolean) payload.getOrDefault("uppercase", false);

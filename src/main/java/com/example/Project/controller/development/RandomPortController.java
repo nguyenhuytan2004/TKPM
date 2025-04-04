@@ -37,7 +37,7 @@ public class RandomPortController {
 
     @RestController
     @RequestMapping("api/development/random-port")
-    public class RandomPortHandler {
+    public class RandomPortApiController {
         @GetMapping("")
         public Map<String, Integer> randomPort() {
             int port = ThreadLocalRandom.current().nextInt(1024, 65536);

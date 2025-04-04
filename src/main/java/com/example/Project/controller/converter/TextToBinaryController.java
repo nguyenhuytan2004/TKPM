@@ -40,7 +40,7 @@ public class TextToBinaryController {
 
     @RestController
     @RequestMapping("/api/converter/text-to-binary")
-    public class TextToBinaryHandler {
+    public class TextToBinaryApiController {
         @GetMapping("")
         public Map<String, String> convertTextToBinary(@RequestParam String textString) {
             String binaryString = textString.chars()

@@ -7,14 +7,22 @@ CREATE TABLE users (
     id MEDIUMINT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL UNIQUE,
     password_hash VARCHAR(100) NOT NULL,
-    role ENUM('user', 'premium') NOT NULL DEFAULT 'user'
+    is_premium BOOLEAN DEFAULT FALSE,
+    require_premium BOOLEAN DEFAULT FALSE
 ) ENGINE=InnoDB;
+
+INSERT INTO users (username, password_hash) VALUES 
+('u123', '$2a$10$8Huwx9kBs5q78Hp9bDbVS.uOEfT0xy7V7OIImwuvRN5F0W4HWWgi.'),
+('22127380', '$2a$10$QU2.4HZQ9X8Tx58rg5ZEs.v32gKbTJIn2cEs.Rl/Sgo.wuaaXl1Yu');
 
 CREATE TABLE admins (
     id MEDIUMINT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL UNIQUE,
     password_hash VARCHAR(100) NOT NULL
 ) ENGINE=InnoDB;
+
+INSERT INTO admins (username, password_hash) VALUES 
+('admin', '$2a$10$lTFd/PuGDUaB16GZ4g6TY.FtW5jxZtj4sGltpVxABNV7E7u50znHW');
 
 -- Bảng category (Lưu danh sách nhóm công cụ)
 CREATE TABLE categories (

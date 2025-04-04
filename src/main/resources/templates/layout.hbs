@@ -11,7 +11,7 @@
 <body class="bg-gray-900 text-white">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <div class="w-64 bg-gradient-to-b bg-gray-800 p-5">
+        <div class="fixed w-64 bg-gradient-to-b bg-gray-800 p-5 h-full">
             <a href="/">
                 <div class="w-full bg-green-500 p-4 rounded">
                     <h1 class="text-2xl font-bold">IT - TOOLS</h1>
@@ -29,6 +29,8 @@
                 </ul>
             </div>
         </div>
+
+        <div class="w-64"></div>
 
         <!-- Main Content (Load động trang con) -->
         <div class="flex-1 p-10">
@@ -55,7 +57,7 @@
                                 </div>
                                 <span>Hi, {{username}}!</span>
                                 <span>|</span>
-                                <a href="/user/logout" class="hover:text-blue-500 hover:underline cursor-pointer">Sign
+                                <a href="/user/logout" class="hover:text-red-500 hover:underline cursor-pointer">Sign
                                     out</a>
                             </button>
                         </div>
@@ -126,9 +128,6 @@
             }
         });
     </script>
-
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

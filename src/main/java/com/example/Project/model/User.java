@@ -2,8 +2,6 @@ package com.example.Project.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,11 +27,7 @@ public class User {
     @Column(nullable = false, length = 100)
     private String passwordHash;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role = Role.user;
+    private boolean isPremium = false;
 
-    public enum Role {
-        user, premium
-    }
+    private boolean requirePremium = false;
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+
+<body>
+    <div class="flex flex-col container mx-auto text-gray-300 min-h-screen bg-gray-900">
+        {{!-- Header --}}
+        <div class="flex bg-gray-800 justify-between items-center mb-8 p-4 text-gray-200 shadow-lg">
+            {{!-- Start --}}
+            <div class="flex-1">
+            </div>
+
+            {{!-- Middle --}}
+            <div class="flex-1 text-center space-x-8">
+                <a href="/admin/tool/management" class="hover:text-blue-400">Tool Management</a>
+                <a href="/admin/user/management" class="hover:text-blue-400">User Management</a>
+            </div>
+
+            {{!-- End --}}
+            <div class="flex-1 flex justify-end">
+                <div id="userInformation" class="hidden" data-user-id="{{userId}}"></div>
+                <div class="flex items-center space-x-4 pr-8">
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2">
+                            <div
+                                class="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-xl font-semibold text-white">
+                                T
+                            </div>
+                            <span class="text-white">Hi, {{username}}!</span>
+                            <span class="text-gray-500">|</span>
+                            <a href="/user/logout" class="hover:text-red-500 hover:underline cursor-pointer">Sign
+                                out</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{> (lookup . "body") }}
+    </div>
+</body>
+
+</html>

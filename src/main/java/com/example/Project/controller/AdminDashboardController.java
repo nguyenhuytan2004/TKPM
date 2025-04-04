@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Project.model.Category;
 import com.example.Project.model.Tool;
+import com.example.Project.model.User;
 import com.example.Project.service.ICategoryService;
 import com.example.Project.service.IToolService;
+import com.example.Project.service.IUserService;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,9 +25,11 @@ public class AdminDashboardController {
     private IToolService _toolService;
     @Autowired
     private ICategoryService _categoryService;
+    @Autowired
+    private IUserService _userService;
 
-    @GetMapping("/dashboard")
-    public String showAdminDashboard(Model model) {
+    @GetMapping("/tool/management")
+    public String showToolManagement(Model model) {
         List<Tool> tools = _toolService.getAllTools();
         List<Map<String, Object>> toolList = new ArrayList<>();
         for (Tool tool : tools) {
@@ -44,6 +48,30 @@ public class AdminDashboardController {
         model.addAttribute("tools", toolList);
         model.addAttribute("categories", categories);
 
-        return "admin_dashboard";
+        model.addAttribute("title", "Tool Management");
+        model.addAttribute("body", "tool_management");
+
+        return "layout_admin";
+    }
+
+    @GetMapping("/user/management")
+    public String showUserManagement(Model model) {
+        List<User> users = _userService.getAllUsers();
+        List<Map<String, Object>> userList = new ArrayList<>();
+        for (User user : users) {
+            Map<String, Object> userData = new HashMap<>();
+            userData.put("id", user.getId());
+            userData.put("username", user.getUsername());
+            userData.put("isPremium", user.isPremium());
+            userData.put("requirePremium", user.isRequirePremium());
+
+            userList.add(userData);
+        }
+        model.addAttribute("users", userList);
+
+        model.addAttribute("title", "User Management");
+        model.addAttribute("body", "user_management");
+
+        return "layout_admin";
     }
 }

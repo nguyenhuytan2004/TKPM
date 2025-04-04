@@ -42,7 +42,7 @@ public class HashTextController {
 
     @RestController
     @RequestMapping("api/crypto/hash-text")
-    public class HashTextHandler {
+    public class HashTextApiController {
         private static final List<String> ALGORITHMS = List.of(
                 "MD5", "SHA-1", "SHA-224", "SHA-256", "SHA-384", "SHA-512", "SHA3-256", "SHA3-512");
 

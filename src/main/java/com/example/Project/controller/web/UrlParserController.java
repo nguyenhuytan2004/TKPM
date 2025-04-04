@@ -38,7 +38,7 @@ public class UrlParserController {
 
     @RestController
     @RequestMapping("/api/web/url-parser")
-    public class UrlParserHandler {
+    public class UrlParserApiController {
         @GetMapping("")
         public Map<String, Object> parseUrl(String urlString) {
             Map<String, Object> result = new HashMap<>();

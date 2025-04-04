@@ -38,7 +38,7 @@ public class HtmlEscapeController {
 
     @RestController
     @RequestMapping("/api/web/html-escape")
-    public class HtmlEscapeHandler {
+    public class HtmlEscapeApiController {
         @GetMapping("")
         public Map<String, String> escapeHtml(@RequestParam String string) {
             @SuppressWarnings("deprecation")

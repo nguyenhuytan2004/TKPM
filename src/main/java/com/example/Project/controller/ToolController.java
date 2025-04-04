@@ -105,7 +105,6 @@ public class ToolController {
             try {
                 Tool tool = _toolService.getToolById(id);
                 if (tool != null) {
-                    System.out.println("Deleting tool: " + tool.getName());
                     _toolService.deleteTool(tool);
                     return true;
                 }

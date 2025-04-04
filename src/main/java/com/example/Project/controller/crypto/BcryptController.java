@@ -39,7 +39,7 @@ public class BcryptController {
     // API xử lý bcrypt
     @RestController
     @RequestMapping("/api/crypto/bcrypt")
-    public static class BcryptHandler {
+    public static class BcryptApiController {
 
         @GetMapping("/hash")
         public Map<String, String> hashUsingBcrypt(

@@ -1,5 +1,6 @@
 package com.example.Project.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -40,5 +41,53 @@ public class UserService implements IUserService {
         user.setPasswordHash(passwordHash);
         _userRepository.save(user);
         return true;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return _userRepository.findAll();
+    }
+
+    @Override
+    public boolean approvePremium(int id) {
+        Optional<User> userOptional = _userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setRequirePremium(false);
+            user.setPremium(true);
+            _userRepository.save(user);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean rejectPremium(int id) {
+        Optional<User> userOptional = _userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setRequirePremium(false);
+            _userRepository.save(user);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean downgrade(int id) {
+        Optional<User> userOptional = _userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setPremium(false);
+            _userRepository.save(user);
+            return true;
+        }
+
+        return false;
     }
 }

@@ -1,0 +1,298 @@
+<div class="p-8">
+    <!-- Bộ lọc -->
+    <div class="flex justify-start items-center mb-4 space-x-4">
+        <div class="flex space-x-4">
+            <div class="relative">
+                <select id="roleFilter" class="bg-gray-800 p-2 rounded-md appearance-none pl-3 pr-10">
+                    <option value="">All permission</option>
+                    <option value="user">User</option>
+                    <option value="premium">Premium</option>
+                </select>
+                <svg class="h-5 w-5 absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path fill="#d4d4d4"
+                        d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+                </svg>
+            </div>
+            <div class="relative">
+                <select id="requestFilter" class="bg-gray-800 p-2 rounded-md appearance-none pl-3 pr-10">
+                    <option value="">All request</option>
+                    <option value="pending">Pending</option>
+                    <option value="none">None</option>
+                </select>
+                <svg class="h-5 w-5 absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path fill="#d4d4d4"
+                        d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+                </svg>
+            </div>
+        </div>
+        <div class="relative">
+            <svg class="h-5 w-5 absolute left-3 top-2.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="#8e98a9"
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+            </svg>
+            <input id="searchUser" class="bg-gray-800 text-white p-2 pl-10 rounded-md"
+                placeholder="Tìm kiếm người dùng...">
+        </div>
+    </div>
+
+    <!-- Bảng người dùng -->
+    <div class="rounded-md overflow-hidden border border-gray-700">
+        <table class="min-w-full divide-y divide-gray-700">
+            <thead class="bg-gray-700">
+                <tr>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        No.
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Username
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Role
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Require Premium
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-gray-900 divide-y divide-blue-800" id="usersTableBody">
+                {{#users}}
+                <tr data-user-id="{{id}}" class="hover:bg-gray-800">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{@index}}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{username}}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{#if isPremium}}
+                        <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-600 text-blue-100">
+                            Premium
+                        </span>
+                        {{else}}
+                        <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-700 text-gray-300">
+                            User
+                        </span>
+                        {{/if}}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{#if requirePremium}}
+                        <div class="flex items-center space-x-2">
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-600 text-yellow-100">
+                                Pending
+                            </span>
+                            <button onclick="approvePremium({{id}})"
+                                class="text-green-500 hover:text-green-300 transition duration-300 ease-in-out cursor-pointer">
+                                Accept
+                            </button>
+                            <button onclick="rejectPremium({{id}})"
+                                class="text-red-500 hover:text-red-400 transition duration-300 ease-in-out cursor-pointer">
+                                Reject
+                            </button>
+                        </div>
+                        {{else}}
+                        <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-700 text-gray-300">
+                            None
+                        </span>
+                        {{/if}}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        {{#if isPremium}}
+                        <button onclick="downgradeUser({{id}})"
+                            class="text-red-500 hover:text-red-400 transition duration-300 ease-in-out cursor-pointer">
+                            Downgrade
+                        </button>
+                        {{else}}
+                        <button class="text-gray-600">
+                            Downgrade
+                        </button>
+                        {{/if}}
+                    </td>
+                </tr>
+                {{/users}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{!-- Confirm Modal --}}
+<div id="confirmModal"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 text-gray-200 hidden">
+    <div class="bg-gray-800 p-6 rounded-lg w-full max-w-md">
+        <h2 id="modalTitle" class="text-xl font-bold mb-4"></h2>
+        <p id="modalContent" class="mb-6"></p>
+        {{!-- <input type="hidden" id="deleteToolId"> --}}
+        <div class="flex justify-end space-x-3">
+            <button id="cancel" class="px-4 py-2 bg-gray-600 rounded-md hover:bg-gray-500 cursor-pointer">
+                Cancel
+            </button>
+            <button id="confirm" class="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-500 cursor-pointer">
+                Ok
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Tìm kiếm và lọc người dùng
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchUser');
+        const roleFilter = document.getElementById('roleFilter');
+        const requestFilter = document.getElementById('requestFilter');
+
+        function filterUsers() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const roleValue = roleFilter.value;
+            const requestValue = requestFilter.value;
+
+            const rows = document.querySelectorAll('#usersTableBody tr');
+
+            rows.forEach(row => {
+                const username = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const role = row.querySelector('td:nth-child(3)').textContent.trim().toLowerCase();
+                const requestText = row.querySelector('td:nth-child(4)').querySelector('span').textContent.trim().toLowerCase();
+
+                const matchesSearch = username.includes(searchTerm);
+                const matchesRole = roleValue === '' || role === roleValue;
+                const matchesRequest = requestValue === '' ||
+                    requestValue === requestText;
+
+                if (matchesSearch && matchesRole && matchesRequest) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', filterUsers);
+        roleFilter.addEventListener('change', filterUsers);
+        requestFilter.addEventListener('change', filterUsers);
+    });
+</script>
+
+{{!-- Handle Confirm Modal --}}
+<script>
+    const confirmModal = document.getElementById('confirmModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+    const confirmButton = document.getElementById('confirm');
+    const cancelButton = document.getElementById('cancel');
+    cancelButton.addEventListener('click', function () {
+        confirmModal.classList.add('hidden');
+    });
+    confirmButton.addEventListener('click', function () {
+        confirmModal.classList.add('hidden');
+    });
+</script>
+
+{{!-- Call API --}}
+<script>
+    // Chấp nhận yêu cầu premium
+    function approvePremium(userId) {
+        modalTitle.textContent = 'Accept Premium Request';
+        modalContent.textContent = 'Are you sure you want to ACCEPT this Premium request?';
+        confirmModal.classList.remove('hidden');
+
+        confirmButton.onclick = function () {
+            fetch(`/api/user/${userId}/approve-premium`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(isSuccess => {
+                    if (isSuccess) {
+                        location.reload();
+                    } else {
+                        showMessage('An error occurred. Please try again!', true);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    }
+
+    // Từ chối yêu cầu premium
+    function rejectPremium(userId) {
+        modalTitle.textContent = 'Reject Premium Request';
+        modalContent.textContent = 'Are you sure you want to REJECT this Premium request?';
+        confirmModal.classList.remove('hidden');
+
+        confirmButton.onclick = function () {
+            fetch(`/api/user/${userId}/reject-premium`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(isSuccess => {
+                    if (isSuccess) {
+                        location.reload();
+                    } else {
+                        showMessage('An error occurred. Please try again!', true);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    }
+
+    // Chuyển đổi role
+    function downgradeUser(userId) {
+        modalTitle.textContent = 'Downgrade User';
+        modalContent.textContent = 'Are you sure you want to DOWNGRADE this user?';
+        confirmModal.classList.remove('hidden');
+
+        confirmButton.onclick = function () {
+            fetch(`/api/user/${userId}/downgrade`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(isSuccess => {
+                    if (isSuccess) {
+                        location.reload();
+                    } else {
+                        showMessage('An error occurred. Please try again!', true);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    }
+
+    // Hiển thị thông báo
+    function showMessage(message, isError = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `fixed right-10 top-10 text-white p-4 rounded-full opacity-100 duration-2000 z-50 ${isError ? 'bg-red-500' : 'bg-green-500'}`;
+        messageDiv.textContent = message;
+        document.body.appendChild(messageDiv);
+
+        setTimeout(() => {
+            messageDiv.style.opacity = 0;
+            setTimeout(() => messageDiv.remove(), 1000);
+        }, 3000);
+    }
+</script>

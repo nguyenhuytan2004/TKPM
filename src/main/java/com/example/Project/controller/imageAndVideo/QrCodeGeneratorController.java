@@ -51,7 +51,7 @@ public class QrCodeGeneratorController {
 
     @RestController
     @RequestMapping("/api/images-videos/qr-code-generator")
-    public class QrCodeGeneratorHandler {
+    public class QrCodeGeneratorApiController {
         @GetMapping("")
         public Map<String, Object> generateQrCode(
                 @RequestParam String text,

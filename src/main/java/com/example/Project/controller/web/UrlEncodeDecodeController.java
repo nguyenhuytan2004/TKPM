@@ -41,7 +41,7 @@ public class UrlEncodeDecodeController {
 
     @RestController
     @RequestMapping("/api/web/url-encode-decode")
-    public class UrlEncodeDecodeHandler {
+    public class UrlEncodeDecodeApiController {
         @GetMapping("/encode")
         public Map<String, String> encodeTextToUrl(@RequestParam String string) {
             String encodedString = URLEncoder.encode(string, StandardCharsets.UTF_8);

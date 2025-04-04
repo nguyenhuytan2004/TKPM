@@ -52,7 +52,7 @@ public class WifiQrCodeGeneratorController {
 
     @RestController
     @RequestMapping("/api/images-videos/wifi-qr-code-generator")
-    public class WifiQrCodeGeneratorHandler {
+    public class WifiQrCodeGeneratorApiController {
         @GetMapping("")
         public ResponseEntity<Map<String, Object>> generateWifiQrCode(
                 @RequestParam String ssid,
