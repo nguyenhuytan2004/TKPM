@@ -30,7 +30,7 @@ public class ToolController {
 
     @RestController
     @RequestMapping("/api")
-    public class ToolHandler {
+    public class ToolApiController {
         @GetMapping("/search-tool")
         public List<Tool> searchTool(@RequestParam String hintText) {
             return _toolService.getToolsByName(hintText);
@@ -112,6 +112,11 @@ public class ToolController {
                 return false;
             }
             return false;
+        }
+
+        @GetMapping("/get/tools-per-category")
+        public Map<Integer, List<Tool>> getToolsPerCategory() {
+            return _toolService.getToolsPerCategory();
         }
     }
 }

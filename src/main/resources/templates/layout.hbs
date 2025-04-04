@@ -11,7 +11,7 @@
 <body class="bg-gray-900 text-white">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <div class="fixed w-64 bg-gradient-to-b bg-gray-800 p-5 h-full">
+        <div class="fixed w-64 bg-gradient-to-b bg-gray-800 p-5 h-full overflow-auto">
             <a href="/">
                 <div class="w-full bg-green-500 p-4 rounded">
                     <h1 class="text-2xl font-bold">IT - TOOLS</h1>
@@ -19,11 +19,21 @@
                 </div>
             </a>
             <div class="mt-5">
-                <ul class="space-y-2">
+                <ul>
                     {{#categories}}
-                    <div class="flex flex-row items-center cursor-pointer">
-                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                        <li class="block py-2 px-4">{{this.name}}</li>
+                    <div id="categoryContainer" class="flex flex-col cursor-pointer" data-category-id="{{this.id}}">
+                        <div class="flex items-center">
+                            <svg id="arrow-icon"
+                                class="h-3 w-3 transition-transform duration-300 ease-in-out rotate-270"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path fill="#c8c8c8"
+                                    d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+                            </svg>
+                            <li class="block py-2 px-4 text-gray-400">{{ this.name }}</li>
+                        </div>
+                        <div id="toolsContainer" class="ml-5 transition-all duration-300 opacity-0 overflow-hidden"
+                            style="max-height: 0px;">
+                        </div>
                     </div>
                     {{/categories}}
                 </ul>
@@ -48,7 +58,8 @@
 
                 <div class="flex space-x-6 items-center">
                     {{#username}}
-                    <div id="userInformation" class="hidden" data-user-id="{{userId}}"></div>
+                    <div id="userInformation" class="hidden" data-user-id="{{userId}}" data-username="{{username}}">
+                    </div>
                     <div class="flex items-center space-x-4">
                         <div class="relative group">
                             <button class="flex items-center space-x-2">
@@ -128,6 +139,61 @@
             }
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch(`/api/get/tools-per-category`)
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelectorAll("#categoryContainer").forEach(categoryContainer => {
+                        const categoryId = categoryContainer.getAttribute("data-category-id");
+                        const tools = data[categoryId];
+
+                        if (tools) {
+                            const toolsContainer = categoryContainer.querySelector("#toolsContainer");
+                            tools.forEach(tool => {
+                                const toolElement = document.createElement("div");
+                                toolElement.classList.add("p-2", "rounded", "cursor-pointer", "hover:bg-gray-600", "transition", "duration-300");
+                                toolElement.textContent = tool.name;
+                                toolElement.addEventListener("click", (e) => {
+                                    e.stopPropagation();
+                                    window.location.href = tool.endpoint;
+                                });
+                                toolsContainer.appendChild(toolElement);
+                            });
+                        }
+                    });
+                })
+                .catch(error => console.error("Error fetching tools per category: ", error));
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll("#categoryContainer").forEach(categoryContainer => {
+            categoryContainer.addEventListener("click", function () {
+                const toolsContainer = this.querySelector("#toolsContainer");
+                const arrowIcon = this.querySelector("#arrow-icon");
+
+                if (toolsContainer.style.maxHeight === "0px") {
+                    const maxHeight = 2 * toolsContainer.scrollHeight + "px";
+                    toolsContainer.style.maxHeight = maxHeight;
+                    toolsContainer.classList.add("opacity-100");
+                    toolsContainer.classList.remove("opacity-0");
+
+                    arrowIcon.classList.remove("rotate-270");
+                    arrowIcon.classList.add("rotate-360");
+                } else {
+                    toolsContainer.style.maxHeight = "0px";
+                    toolsContainer.classList.remove("opacity-100");
+                    toolsContainer.classList.add("opacity-0");
+
+                    arrowIcon.classList.remove("rotate-360");
+                    arrowIcon.classList.add("rotate-270");
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
