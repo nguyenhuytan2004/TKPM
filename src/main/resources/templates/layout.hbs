@@ -106,7 +106,7 @@
                 return;
             }
 
-            fetch(`/api/search-tool?hintText=${encodeURIComponent(query)}`)
+            fetch(`/api/tools?hintText=${encodeURIComponent(query)}`)
                 .then(response => response.json())
                 .then(data => {
                     searchResults.innerHTML = "";
@@ -142,7 +142,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch(`/api/get/tools-per-category`)
+            fetch(`/api/tools-per-category`)
                 .then(response => response.json())
                 .then(data => {
                     document.querySelectorAll("#categoryContainer").forEach(categoryContainer => {

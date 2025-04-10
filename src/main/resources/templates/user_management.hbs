@@ -209,11 +209,12 @@
         confirmModal.classList.remove('hidden');
 
         confirmButton.onclick = function () {
-            fetch(`/api/user/${userId}/approve-premium`, {
-                method: 'PUT',
+            fetch(`/api/user/${userId}/premium-request`, {
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({ action: 'approve' })
             })
                 .then(response => response.json())
                 .then(isSuccess => {
@@ -236,11 +237,12 @@
         confirmModal.classList.remove('hidden');
 
         confirmButton.onclick = function () {
-            fetch(`/api/user/${userId}/reject-premium`, {
-                method: 'PUT',
+            fetch(`/api/user/${userId}/premium-request`, {
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({ action: 'reject' })
             })
                 .then(response => response.json())
                 .then(isSuccess => {
@@ -263,11 +265,12 @@
         confirmModal.classList.remove('hidden');
 
         confirmButton.onclick = function () {
-            fetch(`/api/user/${userId}/downgrade`, {
+            fetch(`/api/user/${userId}/premium-status`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({ action: 'downgrade' })
             })
                 .then(response => response.json())
                 .then(isSuccess => {

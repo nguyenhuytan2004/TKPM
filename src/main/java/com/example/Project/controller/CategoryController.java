@@ -22,7 +22,8 @@ public class CategoryController {
     @RestController
     @RequestMapping("/api")
     public class CategoryHandler {
-        @PostMapping("/category/add")
+
+        @PostMapping("/category")
         public boolean addCategory(@RequestBody Map<String, Object> requestBody) {
             try {
                 Category category = new Category();

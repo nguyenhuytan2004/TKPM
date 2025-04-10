@@ -312,7 +312,6 @@
                     document.getElementById('toolName').value = tool.name;
                     document.getElementById('toolDescription').value = tool.description;
                     document.getElementById('toolCategory').value = tool.category.id;
-                    console.log(tool);
                     document.getElementById('toolPremium').checked = tool.isPremium;
                     document.getElementById('toolActive').checked = tool.isActive;
                     document.getElementById('toolModal').classList.remove('hidden');
@@ -381,7 +380,7 @@
                 is_active: document.getElementById('toolActive').checked
             };
 
-            const url = toolId ? `/api/tool/${toolId}/edit` : '/api/tool/add';
+            const url = toolId ? `/api/tool/${toolId}` : '/api/tool';
             const method = toolId ? 'PUT' : 'POST';
 
             fetch(url, {
@@ -417,7 +416,7 @@
                 description: categoryDescription
             };
 
-            const url = `/api/category/add`;
+            const url = `/api/category`;
             const method = 'POST';
 
             fetch(url, {
@@ -456,7 +455,7 @@
 
         document.getElementById("confirmDelete").addEventListener("click", function () {
             const toolId = document.getElementById('deleteToolId').value;
-            fetch(`/api/tool/${toolId}/delete`, {
+            fetch(`/api/tool/${toolId}`, {
                 method: 'DELETE'
             })
                 .then(response => response.json())

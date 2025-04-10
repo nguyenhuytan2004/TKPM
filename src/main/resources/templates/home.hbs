@@ -47,9 +47,9 @@
     </div>
 </div>
 
-{{!-- Nhấn nút "Yêu thích" --}}
+{{!-- Nhấn nút "Yêu thích" trong all tools --}}
 <script>
-    const addToFavoriteBtns = document.querySelectorAll("#addToFavoriteBtn");
+    const addToFavoriteBtns = document.getElementById("allToolsContainer").querySelectorAll("#addToFavoriteBtn");
     const userId = document.getElementById("userInformation").dataset.userId;
 
     addToFavoriteBtns.forEach(btn => {
@@ -171,7 +171,19 @@
 <script>
     function updateFavoriteTool(toolId, action) {
 
-        fetch(`/api/user/favorite-tool/${action}?userId=${Number(userId)}&toolId=${Number(toolId)}`)
+        let method;
+        if (action == "add") {
+            method = "POST";
+        } else if (action == "remove") {
+            method = "DELETE";
+        }
+
+        fetch(`/api/user/favorite-tool?userId=${Number(userId)}&toolId=${Number(toolId)}`, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => response.json())
             .then(data => { })
             .catch(error => console.error(error));

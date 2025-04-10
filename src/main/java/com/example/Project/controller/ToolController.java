@@ -31,7 +31,7 @@ public class ToolController {
     @RestController
     @RequestMapping("/api")
     public class ToolApiController {
-        @GetMapping("/search-tool")
+        @GetMapping("/tools")
         public List<Tool> searchTool(@RequestParam String hintText) {
             return _toolService.getToolsByName(hintText);
         }
@@ -58,7 +58,7 @@ public class ToolController {
             return false;
         }
 
-        @PostMapping("/tool/add")
+        @PostMapping("/tool")
         public boolean addTool(@RequestBody Map<String, Object> requestBody) {
             try {
                 Tool tool = new Tool();
@@ -80,7 +80,7 @@ public class ToolController {
             return _toolService.getToolById(id);
         }
 
-        @PutMapping("/tool/{id}/edit")
+        @PutMapping("/tool/{id}")
         public boolean editTool(@PathVariable int id, @RequestBody Map<String, Object> requestBody) {
             try {
                 Tool tool = _toolService.getToolById(id);
@@ -100,7 +100,7 @@ public class ToolController {
             return false;
         }
 
-        @DeleteMapping("/tool/{id}/delete")
+        @DeleteMapping("/tool/{id}")
         public boolean deleteTool(@PathVariable int id) {
             try {
                 Tool tool = _toolService.getToolById(id);
@@ -114,7 +114,7 @@ public class ToolController {
             return false;
         }
 
-        @GetMapping("/get/tools-per-category")
+        @GetMapping("/tools-per-category")
         public Map<Integer, List<Tool>> getToolsPerCategory() {
             return _toolService.getToolsPerCategory();
         }
