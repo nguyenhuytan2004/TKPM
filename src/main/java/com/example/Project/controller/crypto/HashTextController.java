@@ -9,7 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,24 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Project.model.Category;
-import com.example.Project.service.ICategoryService;
-
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("crypto")
 public class HashTextController {
-    @Autowired
-    private ICategoryService _categoryService;
 
     @GetMapping("/hash-text")
     public String show(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
 
-        List<Category> allCategories = _categoryService.getAllCategories();
-        model.addAttribute("categories", allCategories);
         model.addAttribute("title", "Hash Text Tool"); // Thêm tiêu đề
         model.addAttribute("body", "hash-text"); // Load trang con
         return "layout"; // Load vào layout.hbs
