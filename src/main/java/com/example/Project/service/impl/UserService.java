@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Project.model.User;
+import com.example.Project.model.Role;  // Import thêm Role Enum
 import com.example.Project.repository.IUserRepository;
 import com.example.Project.service.IUserService;
 
@@ -39,6 +40,7 @@ public class UserService implements IUserService {
         User user = new User();
         user.setUsername(username);
         user.setPasswordHash(passwordHash);
+        user.setRole(Role.USER); // Mặc định là USER khi tạo mới
         _userRepository.save(user);
         return true;
     }
@@ -55,7 +57,7 @@ public class UserService implements IUserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setRequirePremium(false);
-            user.setPremium(true);
+            user.setRole(Role.PREMIUM);  // Cập nhật role thành PREMIUM
             _userRepository.save(user);
             return true;
         }
@@ -70,6 +72,7 @@ public class UserService implements IUserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setRequirePremium(false);
+            user.setRole(Role.USER);  // Cập nhật role về USER nếu reject premium
             _userRepository.save(user);
             return true;
         }
@@ -83,7 +86,7 @@ public class UserService implements IUserService {
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setPremium(false);
+            user.setRole(Role.USER); // Đổi role về USER khi downgrade
             _userRepository.save(user);
             return true;
         }

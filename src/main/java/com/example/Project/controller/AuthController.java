@@ -41,26 +41,4 @@ public class AuthController {
             return "register";
         }
     }
-
-    /*@PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpSession session,
-                        Model model) {
-        User user = _userService.authenticateUser(username, password);
-
-        if (user != null) {
-            session.setMaxInactiveInterval(1800);
-            session.setAttribute("username", username);
-            session.setAttribute("userId", user.getId());
-            return "redirect:/"; // Trang chủ
-        } else {
-            model.addAttribute("error", "Invalid username or password");
-            return "login";
-        }
-    }*/
-
-    /*@GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
-    }*/
 }

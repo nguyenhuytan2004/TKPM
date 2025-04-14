@@ -18,7 +18,7 @@ public class AdminLog {
 
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
-    private Admin admin;
+    private User admin;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

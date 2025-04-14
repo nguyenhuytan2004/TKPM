@@ -62,7 +62,7 @@ public class AdminDashboardController {
             Map<String, Object> userData = new HashMap<>();
             userData.put("id", user.getId());
             userData.put("username", user.getUsername());
-            userData.put("isPremium", user.isPremium());
+            //userData.put("isPremium", user.isPremium());
             userData.put("requirePremium", user.isRequirePremium());
 
             userList.add(userData);

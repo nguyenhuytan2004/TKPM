@@ -63,12 +63,12 @@
                     <div class="flex items-center space-x-4">
                         <!-- Avatar -->
                         <img src="/images/user_profile.png" alt="User Avatar"
-                             class="w-10 h-10 rounded-full object-cover border border-gray-500" />
+                             class="w-10 h-10 rounded-full object-cover" />
 
                         <!-- Tên + Logout -->
                         <div class="flex items-center gap-2">
-                            <span class="px-1 whitespace-nowrap">Hi, {{username}} </span>
-                            <span class="text-gray-500"> |</span>
+                            <span class="px-2 whitespace-nowrap">Hi, {{username}} </span>
+                            <span class=" text-gray-500">|</span>
                             <form id="logoutForm" action="/user/logout" method="post">
                                 <button type="submit"
                                         class="px-2 py-1 hover:text-red-500 hover:underline bg-transparent border-none">
