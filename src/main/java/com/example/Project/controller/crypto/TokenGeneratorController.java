@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 
+import com.example.Project.service.IToolService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +22,21 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("crypto")
 public class TokenGeneratorController {
 
+    @Autowired
+    private IToolService _toolService;
+
     @GetMapping("/token-generator")
     public String show(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isUser = auth.getAuthorities().stream()
+                .anyMatch(role -> role.getAuthority().equals("ROLE_USER"));
+
+        if (isUser && _toolService.isPremiumToolByName("Token Generator")) {
+            return "404";
+        }
 
         model.addAttribute("title", "Token Generator Tool"); // Thêm tiêu đề
         model.addAttribute("body", "token-generator"); // Load trang con

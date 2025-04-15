@@ -10,8 +10,11 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import com.example.Project.service.IToolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,13 +38,25 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("images-videos")
 public class WifiQrCodeGeneratorController {
+
     @Autowired
     private ICategoryService _categoryService;
+
+    @Autowired
+    private IToolService _toolService;
 
     @GetMapping("/wifi-qr-code-generator")
     public String show(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isUser = auth.getAuthorities().stream()
+                .anyMatch(role -> role.getAuthority().equals("ROLE_USER"));
+
+        if (isUser && _toolService.isPremiumToolByName("WiFi QR Code Generator")) {
+            return "404";
+        }
 
         List<Category> allCategories = _categoryService.getAllCategories();
         model.addAttribute("categories", allCategories);

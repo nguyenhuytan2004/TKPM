@@ -12,9 +12,13 @@ public interface IToolService {
 
     Tool getToolById(Integer toolId);
 
+    Tool getToolByName(String name);
+
     void updateTool(Tool tool);
 
     void deleteTool(Tool tool);
 
     Map<Integer, List<Tool>> getToolsPerCategory();
+
+    boolean isPremiumToolByName(String name);
 }

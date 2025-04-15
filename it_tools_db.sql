@@ -108,12 +108,3 @@ CREATE TABLE favorites (
     FOREIGN KEY (tool_id) REFERENCES tools(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Bảng admin_logs (Lưu thao tác của admin)
-CREATE TABLE admin_logs (
-    id MEDIUMINT PRIMARY KEY AUTO_INCREMENT,
-    admin_id MEDIUMINT NOT NULL,
-    action_type ENUM('enable_tool', 'disable_tool', 'add_tool', 'delete_tool', 'set_premium_tool', 'unset_premium_tool') NOT NULL,
-    target_tool_id MEDIUMINT NOT NULL,
-    FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (target_tool_id) REFERENCES tools(id) ON DELETE CASCADE
-) ENGINE=InnoDB;

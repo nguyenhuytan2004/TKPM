@@ -62,4 +62,15 @@ public class ToolService implements IToolService {
         }
         return toolsPerCategory;
     }
+
+    @Override
+    public Tool getToolByName(String name) {
+        return _toolRepository.findByName(name).orElse(null);
+    }
+
+    @Override
+    public boolean isPremiumToolByName(String name) {
+        Tool tool = getToolByName(name);
+        return tool != null && Boolean.TRUE.equals(tool.isPremium());
+    }
 }

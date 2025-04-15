@@ -7,7 +7,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.example.Project.service.IToolService;
 import org.jsoup.parser.Parser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +25,21 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("converter")
 public class TextToUnicodeController {
 
+    @Autowired
+    private IToolService _toolService;
+
     @GetMapping("/text-to-unicode")
     public String show(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isUser = auth.getAuthorities().stream()
+                .anyMatch(role -> role.getAuthority().equals("ROLE_USER"));
+
+        if (isUser && _toolService.isPremiumToolByName("Text to Unicode")) {
+            return "404";
+        }
 
         model.addAttribute("title", "Text to Unicode Converter"); // Thêm title
         model.addAttribute("body", "text-to-unicode"); // Load template con
