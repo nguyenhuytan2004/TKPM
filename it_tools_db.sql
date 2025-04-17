@@ -57,12 +57,12 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 
 -- Converter (category_id = 2)
 ('Text to NATO alphabet', 'Transform text into the NATO phonetic alphabet for oral transmission.', '/converter/text-to-nato-alphabet', 2),
-('Text to ASCII binary', 'Convert text to its ASCII binary representation and vice-versa.', '/converter/text-to-binary', 2),
+('Text to ASCII binary', 'Convert text to its ASCII binary representation and vice-versa.', '/converter/text-to-ascii-binary', 2),
 ('Text to Unicode', 'Parse and convert text to unicode and vice-versa.', '/converter/text-to-unicode', 2),
 
 -- Web (category_id = 3)
-('Encode/Decode URL', 'Encode text to URL-encoded format (also known as "percent-encoded"), or decode from it.', '/web/url-encode-decode', 3),
-('Escape HTML Entities', 'Escape or unescape HTML entities (replace characters like <,>, &, " and \' with their HTML version).', '/web/html-escape', 3),
+('URL Encode Decode', 'Encode text to URL-encoded format (also known as "percent-encoded"), or decode from it.', '/web/url-encode-decode', 3),
+('Escape HTML Entities', 'Escape or unescape HTML entities (replace characters like <,>, &, " and \' with their HTML version).', '/web/escape-html-entities', 3),
 ('URL Parser', 'Parse a URL into its separate constituent parts (protocol, origin, params, port, username-password, ...).', '/web/url-parser', 3),
 
 -- Images & Videos (category_id = 4)
@@ -72,8 +72,8 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 
 -- Development (category_id = 5)
 ('Git Cheatsheet', 'Git is a decentralized version management software. With this cheatsheet, you will have quick access to the most common git commands.', '/development/git-cheatsheet', 5),
-('Random Port Generator', 'Generate random port numbers outside of the range of "known" ports (0-1023).', '/development/random-port', 5),
-('JSON Prettify and Format', 'Prettify your JSON string into a friendly, human-readable format.', '/development/json-prettify', 5),
+('Random Port Generator', 'Generate random port numbers outside of the range of "known" ports (0-1023).', '/development/random-port-generator', 5),
+('JSON Prettify and Format', 'Prettify your JSON string into a friendly, human-readable format.', '/development/json-prettify-and-format', 5),
 
 -- Network (category_id = 6)
 ('IPv4 Subnet Calculator', 'Parse your IPv4 CIDR blocks and get all the info you need about your subnet.', '/network/ipv4-subnet', 6),

@@ -1,0 +1,34 @@
+<div class="mt-8 flex flex-col items-center">
+    <div class="w-1/2 space-y-3 mb-6">
+        <h1 class="text-4xl font-bold text-gray-400">Text to NATO alphabet</h1>
+        <p class="text-gray-400">Transform text into the NATO phonetic alphabet for oral transmission.</p>
+    </div>
+
+    <div class="p-4 bg-gray-600 w-1/2 space-y-8">
+        <div class="flex flex-col space-y-2">
+            <p>Your text to convert to NATO phonetic alphabet</p>
+            <input id="textToConvert" placeholder="Put your text here..." class="bg-gray-500 p-3 rounded-md"></input>
+        </div>
+        <div class="w-full h-0.5 bg-gray-500"></div>
+        <div class="flex flex-col space-y-2">
+            <p>Your text in NATO phonetic alphabet</p>
+            <p id="textInNatoAlphabet" class="bg-gray-500 p-3 rounded-md"></p>
+        </div>
+    </div>
+</div>
+
+{{!-- Chuyển text thành NATO alphabet --}}
+<script>
+    const textToConvert = document.getElementById("textToConvert");
+    textToConvert.addEventListener("input", textToNatoAlphabet);
+
+    function textToNatoAlphabet() {
+        const string = textToConvert.value;
+        const textInNatoAlphabet = document.getElementById("textInNatoAlphabet");
+
+        fetch(`/api/converter/text-to-nato-alphabet?string=${string}`)
+            .then(response => response.json())
+            .then(data => textInNatoAlphabet.textContent = data.convertedString)
+            .catch(error => console.log(error));
+    }
+</script>

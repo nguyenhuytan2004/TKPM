@@ -1,0 +1,94 @@
+
+
+            <div class="mt-8 flex flex-col items-center">
+                <div class="w-1/2 space-y-3 mb-6">
+                    <h1 class="text-4xl font-bold text-gray-400">WiFi QR Code generator
+                    </h1>
+                    <p class="text-gray-400">Generate and download QR codes for quick connections to WiFi networks.</p>
+                </div>
+
+                <div class="flex flex-col p-6 bg-gray-600 w-1/2 space-y-6">
+                    <div class="grid grid-cols-4 gap-4 items-center">
+
+                        <p class="text-right text-nowrap">Encryption method</p>
+                        <input type="text" class="bg-gray-500 w-full rounded-sm p-2 col-span-3" value="WPA/WPA2"
+                            readonly>
+
+                        <p class="text-right text-nowrap">SSID:</p>
+                        <input id="ssidInput" type="text" class="bg-gray-500 w-full rounded-sm p-2 col-span-3"
+                            placeholder="Your WiFi SSID...">
+
+                        <p class="text-right text-nowrap">Password:</p>
+                        <input id="passwordInput" type="password" class="bg-gray-500 w-full rounded-sm p-2 col-span-3"
+                            placeholder="Your WiFi Password...">
+
+                        <p class="text-right text-nowrap">Foreground color:</p>
+                        <input id="fgColorPicker" type="color"
+                            class="bg-gray-500 w-full rounded-sm col-span-3 cursor-pointer h-10 border px-0.5 hover:border-green-400">
+
+                        <p class="text-right text-nowrap">Background color:</p>
+                        <input id="bgColorPicker" type="color" value="#ffffff"
+                            class="bg-gray-500 w-full rounded-sm col-span-3 cursor-pointer h-10 border px-0.5 hover:border-green-400">
+
+                        <div class="bg-gray-500 col-span-4 h-0.5"></div>
+
+                        <div class="flex flex-col col-span-4 items-center space-y-4">
+                            <img id="qrCodeImage" src="" alt="QR Code" class="w-1/3 rounded-sm">
+                            <button id="btnDownload"
+                                class="bg-gray-500 p-3 rounded-sm hover:bg-gray-400 cursor-pointer">Download
+                                QR-Code</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        {{!-- Generate Wifi QR Code --}}
+        <script>
+            const ssidInput = document.getElementById("ssidInput");
+            const passwordInput = document.getElementById("passwordInput");
+            const fgColorPicker = document.getElementById("fgColorPicker");
+            const bgColorPicker = document.getElementById("bgColorPicker");
+            const qrCodeImage = document.getElementById("qrCodeImage");
+            const btnDownload = document.getElementById("btnDownload");
+
+            document.addEventListener("DOMContentLoaded", generateWifiQrCode);
+            ssidInput.addEventListener("input", generateWifiQrCode);
+            passwordInput.addEventListener("input", generateWifiQrCode);
+            fgColorPicker.addEventListener("input", generateWifiQrCode);
+            bgColorPicker.addEventListener("input", generateWifiQrCode);
+
+            function generateWifiQrCode() {
+                const ssid = ssidInput.value;
+                const password = passwordInput.value;
+                const fgColor = fgColorPicker.value;
+                const bgColor = bgColorPicker.value;
+
+                fetch(`/api/images-videos/wifi-qr-code-generator?ssid=${encodeURIComponent(ssid)}&password=${encodeURIComponent(password)}&fgColor=${encodeURIComponent(fgColor)}&bgColor=${encodeURIComponent(bgColor)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.isSuccess) {
+                            qrCodeImage.src = data.qrCodeImage;
+                            btnDownload.removeAttribute("disabled");
+                        }
+                        else {
+                            qrCodeImage.src = "";
+                            btnDownload.setAttribute("disabled", "true");
+                        }
+                    })
+                    .catch(error => console.log(error));
+            }
+        </script>
+
+        {{!-- Download images --}}
+        <script>
+            btnDownload.addEventListener("click", () => {
+                const link = document.createElement("a");
+                link.href = qrCodeImage.src;
+                link.download = "qr-code.png";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        </script>
+

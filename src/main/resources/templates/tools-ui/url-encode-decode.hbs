@@ -1,0 +1,99 @@
+<div class="mt-8 flex flex-col items-center space-y-2">
+    <div class="w-1/2 space-y-3 mb-6">
+        <h1 class="text-4xl font-bold text-gray-400">Encode/decode URL-formatted strings
+        </h1>
+        <p class="text-gray-400">Encode text to URL-encoded format (also known as "percent-encoded"), or
+            decode from it.</p>
+    </div>
+
+    <div class="flex flex-row space-x-2 w-full">
+        <div class="p-6 bg-gray-600 w-1/2 space-y-6">
+            <p class="text-lg">Encode</p>
+            <div class="flex flex-col space-y-2">
+                <p>Your string:</p>
+                <input id="inputText" class="bg-gray-500 p-3 rounded-md" value="Hello world :)"></input>
+            </div>
+            <div class="flex flex-col space-y-2">
+                <p>Your string encoded:</p>
+                <p id="encodedString" class="bg-gray-500 p-3 rounded-md">
+                </p>
+            </div>
+        </div>
+        <div class="p-6 bg-gray-600 w-1/2 space-y-6">
+            <p class="text-lg">Decode</p>
+            <div id="encodedStringInputContainer" class="flex flex-col space-y-2">
+                <p>Your encoded string:</p>
+                <input id="inputEncodedString" class="bg-gray-500 p-3 rounded-md" value="Hello+world+%3A%29"></input>
+            </div>
+            <div class="flex flex-col space-y-2">
+                <p>Your string decoded:</p>
+                <p id="decodedString" class="bg-gray-500 p-3 rounded-md">
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Encode --}}
+<script>
+    const inputText = document.getElementById("inputText");
+    const encodedString = document.getElementById("encodedString");
+
+    document.addEventListener("DOMContentLoaded", encodeTextToUrl);
+    inputText.addEventListener("input", encodeTextToUrl);
+
+    function encodeTextToUrl() {
+        const string = inputText.value;
+
+        fetch(`/api/web/url-encode-decode?action=encode&string=${encodeURIComponent(string)}`)
+            .then(response => response.json())
+            .then(data => encodedString.textContent = data.encodedString)
+            .catch(error => console.log(error));
+    }
+</script>
+
+{{!-- Decode --}}
+<script>
+    const inputEncodedString = document.getElementById("inputEncodedString");
+    const decodedString = document.getElementById("decodedString");
+
+    document.addEventListener("DOMContentLoaded", decodeUrlToText);
+    inputEncodedString.addEventListener("input", decodeUrlToText);
+
+    function decodeUrlToText() {
+        const encodedString = inputEncodedString.value;
+
+        if (encodedString == "") {
+            decodedString.textContent = "";
+            const errorElement = document.getElementById("errorMessage");
+            if (errorElement) {
+                errorElement.remove();
+            }
+
+            return;
+        }
+
+        fetch(`/api/web/url-encode-decode?action=decode&encodedString=${encodeURIComponent(encodedString)}`)
+            .then(response => response.json())
+            .then(data => {
+                const divContainer = document.getElementById("encodedStringInputContainer");
+                if (data.isSuccess) {
+                    decodedString.textContent = data.decodedString;
+                    const errorElement = document.getElementById("errorMessage");
+                    if (errorElement) {
+                        errorElement.remove();
+                    }
+                } else {
+                    if (!document.getElementById("errorMessage")) {
+                        decodedString.textContent = "";
+                        const errorElement = document.createElement("p");
+                        errorElement.id = "errorMessage";
+                        errorElement.className = "text-red-600";
+                        errorElement.textContent = "Impossible to parse this string";
+                        divContainer.appendChild(errorElement);
+                    }
+                }
+            })
+            .catch(error => console.log(error));
+    }
+</script>

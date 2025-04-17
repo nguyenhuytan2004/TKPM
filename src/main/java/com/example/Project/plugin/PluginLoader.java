@@ -58,6 +58,7 @@ public class PluginLoader {
                             flag1 = true;
 
                             System.out.println("Extracted template: " + targetFile.getPath());
+                            System.out.println("----------------------------------------------");
                         } catch (IOException ioEx) {
                             System.err.println(
                                     "Failed to extract template: " + entry.getName() + " - " + ioEx.getMessage());
@@ -70,6 +71,7 @@ public class PluginLoader {
                         try {
                             Class<?> clazz = classLoader.loadClass(className);
 
+                            System.out.println("----------------------------------------------");
                             System.out.println("Đang kiểm tra class: " + className);
                             System.out.println("ClassLoader của plugin: " + clazz.getClassLoader());
                             System.out.println("ClassLoader của IToolPlugin: " + IToolPlugin.class.getClassLoader());
@@ -93,6 +95,7 @@ public class PluginLoader {
                 System.err.println("Error loading plugin from " + file.getName() + ": " + e.getMessage());
             }
         }
+        System.out.println("----------------------------------------------");
 
         return plugins;
     }
