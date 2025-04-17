@@ -173,7 +173,7 @@
                                 toolElement.textContent = tool.name;
                                 toolElement.addEventListener("click", (e) => {
                                     e.stopPropagation();
-                                    window.location.href = tool.endpoint;
+                                    window.location.href = "/plugin" + tool.endpoint;
                                 });
                                 toolsContainer.appendChild(toolElement);
                             });

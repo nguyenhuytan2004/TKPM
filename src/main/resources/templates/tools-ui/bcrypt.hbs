@@ -1,0 +1,85 @@
+<div class="mt-8 flex flex-col items-center space-y-2">
+    <div class="w-1/2 space-y-3 mb-6">
+        <h1 class="text-4xl font-bold text-gray-400">Bcrypt</h1>
+        <p class="text-gray-400">Hash and compare text string using bcrypt.</p>
+    </div>
+
+    <div class="flex flex-row space-x-2 w-full">
+        <div class="p-6 bg-gray-600 w-1/2 space-y-6">
+            <p class="text-lg">Hash</p>
+            <div class="flex space-x-3 items-center">
+                <p class="w-2/12">Your string:</p>
+                <input id="inputString" class="bg-gray-500 p-2 rounded-md h-6 w-10/12"
+                    placeholder="Your string to bcrypt...">
+            </div>
+            <div class="flex space-x-3 items-center">
+                <p class="w-2/12">Salt count:</p>
+                <input id="inputSalt" class="bg-gray-500 p-2 rounded-md h-6 w-10/12" value="10" min="4" max="12"
+                    type="number">
+            </div>
+            <div class="bg-gray-500 flex flex-wrap break-all p-2 rounded-md">
+                <p id="hashedText"></p>
+            </div>
+        </div>
+        <div class="p-6 bg-gray-600 w-1/2 space-y-6">
+            <p class="text-lg">Compare string with hash</p>
+            <div class="flex space-x-3 items-center">
+                <p class="w-2/12">Your string:</p>
+                <input id="stringToCompare" class="bg-gray-500 p-2 rounded-md h-6 w-10/12"
+                    placeholder="Your string to compare...">
+            </div>
+            <div class="flex space-x-3 items-center">
+                <p class="w-2/12">Your hash:</p>
+                <input id="hashToCompare" class="bg-gray-500 p-2 rounded-md h-6 w-10/12"
+                    placeholder="Your hash to compare...">
+            </div>
+            <div>
+                <span class="mr-2">Do they match?</span>
+                <span id="compareResult"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const inputString = document.getElementById("inputString");
+    const inputSalt = document.getElementById("inputSalt");
+    inputString.addEventListener("input", hashUsingBcrypt);
+    inputSalt.addEventListener("input", hashUsingBcrypt);
+    document.addEventListener("DOMContentLoaded", hashUsingBcrypt);
+
+    function hashUsingBcrypt() {
+        const stringToHash = inputString.value;
+        const saltCount = inputSalt.value;
+        const hashedText = document.getElementById("hashedText");
+
+        fetch(`/api/plugin/bcrypt?action=hash&stringToHash=${stringToHash}&saltCount=${saltCount}`)
+            .then(response => response.json())
+            .then(data => hashedText.textContent = data.hashedString || data.error)
+            .catch(error => console.error("Error:", error));
+    }
+
+    const stringToCompare = document.getElementById("stringToCompare");
+    const hashToCompare = document.getElementById("hashToCompare");
+    stringToCompare.addEventListener("input", compareStringWithHash);
+    hashToCompare.addEventListener("input", compareStringWithHash);
+
+    function compareStringWithHash() {
+        const string = stringToCompare.value;
+        const hash = hashToCompare.value;
+        const compareResult = document.getElementById("compareResult");
+
+        fetch(`/api/plugin/bcrypt?action=compare&string=${string}&hash=${hash}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.match) {
+                    compareResult.textContent = "Yes";
+                    compareResult.setAttribute("class", "text-green-300");
+                } else {
+                    compareResult.textContent = "No";
+                    compareResult.setAttribute("class", "text-red-500");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+    }
+</script>

@@ -162,7 +162,7 @@
                 <label for="toolFile" class="block text-sm font-medium mb-1">Upload .jar File</label>
                 <div class="relative">
                     <input id="toolFile" type="file" accept=".jar"
-                        class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10" />
+                        class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10" required />
                     <div class="w-full p-2 bg-gray-700 rounded-md flex items-center">
                         <span class="mr-auto" id="fileNameDisplay">Choose a .jar file</span>
                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -371,39 +371,41 @@
             const formattedToolName = toolName.toLowerCase().replace(/\s+/g, '-');
             const endpoint = `/${formattedCategory}/${formattedToolName}`;
 
-            const toolData = {
-                name: toolName,
-                description: document.getElementById('toolDescription').value,
-                endpoint: endpoint,
-                category_id: Number(categoryId),
-                is_premium: document.getElementById('toolPremium').checked,
-                is_active: document.getElementById('toolActive').checked
-            };
-
             const url = toolId ? `/api/tool/${toolId}` : '/api/tool';
             const method = toolId ? 'PUT' : 'POST';
 
+            // Use FormData for file uploads
+            const formData = new FormData();
+            formData.append('name', toolName);
+            formData.append('description', document.getElementById('toolDescription').value);
+            formData.append('endpoint', endpoint);
+            formData.append('category_id', Number(categoryId));
+            formData.append('is_premium', document.getElementById('toolPremium').checked);
+            formData.append('is_active', document.getElementById('toolActive').checked);
+
+            const fileInput = document.getElementById('toolFile');
+            if (fileInput.files.length > 0) {
+                formData.append('jar_file', fileInput.files[0]);
+            }
+
             fetch(url, {
                 method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(toolData)
+                body: formData
             })
                 .then(response => response.json())
                 .then(isSuccess => {
                     if (isSuccess) {
                         document.getElementById('toolModal').classList.add('hidden');
                         location.reload();
-                    } else {
-                        showMessage('Tool name already exists. Try another name!', true);
+                    }
+                    else {
+                        showMessage('Failed to add tool. Please try again!', true);
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         });
-
         // Category Form Submit
         document.getElementById('categoryForm').addEventListener('submit', function (e) {
             e.preventDefault();

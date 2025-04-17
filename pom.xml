@@ -105,6 +105,13 @@
 			<artifactId>javase</artifactId>
 			<version>3.4.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.example.plugin</groupId>
+			<artifactId>IPlugin</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/IPlugin-1.0.0.jar</systemPath>
+		</dependency>
 
 	</dependencies>
 	

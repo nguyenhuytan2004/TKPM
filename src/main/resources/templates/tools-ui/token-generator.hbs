@@ -1,0 +1,104 @@
+<div class="mt-8 flex flex-col items-center">
+    <div class="w-1/2 space-y-3 mb-6">
+        <h1 class="text-4xl font-bold text-gray-400">Token
+            Generator</h1>
+        <p class="text-gray-400">Generate random string with the
+            chars you want, uppercase or lowercase letters,
+            numbers and/or symbols.</p>
+    </div>
+
+    <div class="p-4 bg-gray-600 w-1/2 space-y-8">
+        <div class="flex flex-row space-x-2 justify-evenly">
+            <div class="flex flex-row space-x-3 items-center">
+                <p>Uppercase (ABC...)</p>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="uppercaseToggle" class="sr-only peer" value="true" checked />
+                    <div
+                        class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+                    </div>
+                </label>
+            </div>
+            <div class="flex flex-row space-x-3 items-center">
+                <p>Numbers (123...)</p>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="numberToggle" class="sr-only peer" value="true" checked />
+                    <div
+                        class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="flex flex-row space-x-2 justify-evenly">
+            <div class="flex flex-row space-x-3 items-center">
+                <p>Lowercase (abc...)</p>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="lowercaseToggle" class="sr-only peer" value="true" checked />
+                    <div
+                        class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+                    </div>
+                </label>
+            </div>
+            <div class="flex flex-row space-x-3 items-center">
+                <p class="">Symbols (!-;...)</p>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="symbolToggle" class="sr-only peer" value="true" checked />
+                    <div
+                        class="w-12 h-6 bg-gray-500 peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="flex flex-col items-center space-y-3">
+            <p id="lengthText" class="text-lg font-semibold">Length (30)</p>
+            <input type="range" id="lengthSlider" min="1" max="512" value="30"
+                class="w-64 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer" />
+        </div>
+        <div class="bg-gray-500 flex flex-wrap break-all p-2 rounded-md">
+            <p id="tokenText">
+            </p>
+        </div>
+        <div class="flex flex-row space-x-3 justify-center">
+            <button id="refreshBtn"
+                class="bg-gray-500 p-2 rounded-md cursor-pointer hover:bg-gray-400 active:bg-gray-300">Refresh</button>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+{{! Gọi API để hiển thị kết quả }}
+<script>
+    const slider = document.getElementById("lengthSlider"); const text =
+        document.getElementById("lengthText");
+    slider.addEventListener("input", function () {
+        text.textContent =
+            `Length (${slider.value})`;
+    });
+</script>
+
+{{! Tạo token }}
+<script>
+    document.addEventListener("DOMContentLoaded", generateToken);
+    const toggles = document.querySelectorAll("input[type='checkbox']"); const lengthSlider = document.getElementById("lengthSlider");
+    const tokenText = document.getElementById("tokenText");
+    toggles.forEach(toggle => toggle.addEventListener("change", generateToken));
+    lengthSlider.addEventListener("input", generateToken);
+
+    function generateToken() {
+        const uppercase = document.getElementById("uppercaseToggle").checked;
+        const lowercase = document.getElementById("lowercaseToggle").checked;
+        const numbers = document.getElementById("numberToggle").checked;
+        const symbols = document.getElementById("symbolToggle").checked;
+        const length = lengthSlider.value;
+
+        fetch(`/api/crypto/token-generator?uppercase=${uppercase}&lowercase=${lowercase}&numbers=${numbers}&symbols=${symbols}&length=${length}`)
+            .then(response => response.json())
+            .then(data => tokenText.textContent = data.token)
+            .catch(error => console.error("Error:", error));
+    }
+</script>
+
+<script>
+    const refreshBtn = document.getElementById("refreshBtn");
+    refreshBtn.addEventListener("click", generateToken);
+</script>
