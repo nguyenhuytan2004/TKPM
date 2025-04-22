@@ -1,8 +1,6 @@
 package com.example.Project.controller;
 
-import com.example.Project.model.User;
 import com.example.Project.service.IUserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +13,11 @@ public class AuthController {
     private IUserService _userService;
 
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(@RequestParam(value = "error", required = false) String error,
+            Model model) {
+        if (error != null) {
+            model.addAttribute("error", "Invalid username or password");
+        }
         return "login";
     }
 
@@ -26,7 +28,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@RequestParam String username, @RequestParam String password,
-                           @RequestParam String confirmPassword, Model model) {
+            @RequestParam String confirmPassword, Model model) {
         if (!password.equals(confirmPassword)) {
             model.addAttribute("error", "Passwords do not match");
             return "register";

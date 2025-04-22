@@ -12,10 +12,10 @@ CREATE TABLE users (
 ) ENGINE=InnoDB;
 
 INSERT INTO users (username, password_hash) VALUES 
-('u123', '$2a$10$8Huwx9kBs5q78Hp9bDbVS.uOEfT0xy7V7OIImwuvRN5F0W4HWWgi.'),
-('22127380', '$2a$10$QU2.4HZQ9X8Tx58rg5ZEs.v32gKbTJIn2cEs.Rl/Sgo.wuaaXl1Yu');
+('u123', '$2a$10$8Huwx9kBs5q78Hp9bDbVS.uOEfT0xy7V7OIImwuvRN5F0W4HWWgi.');
 
 INSERT INTO users (username, password_hash, role) VALUES
+('22127380', '$2a$10$QU2.4HZQ9X8Tx58rg5ZEs.v32gKbTJIn2cEs.Rl/Sgo.wuaaXl1Yu', "PREMIUM"),
 ('22127467', '$2a$10$ooXwxD/ZPIXznMzw1COsV.6K2QaLp/hVSPJ23oa8k845VTX4pAPhW', "ADMIN");
 
 -- Bảng category (Lưu danh sách nhóm công cụ)

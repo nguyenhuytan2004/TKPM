@@ -1,6 +1,5 @@
 package com.example.Project.config;
 
-import com.example.Project.security.CustomUserDetailsService;
 import com.example.Project.security.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -23,21 +22,18 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().permitAll()
-                )
+                        .anyRequest().permitAll())
                 .formLogin(form -> form
                         .loginPage("/user/login")
                         .loginProcessingUrl("/user/login")
                         .successHandler(loginSuccessHandler)
                         .failureUrl("/user/login?error=true")
-                        .permitAll()
-                )
+                        .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/user/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                );
+                        .deleteCookies("JSESSIONID"));
 
         return http.build();
     }

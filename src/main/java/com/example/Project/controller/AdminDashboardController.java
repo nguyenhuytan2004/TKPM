@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Project.model.Category;
+import com.example.Project.model.Role;
 import com.example.Project.model.Tool;
 import com.example.Project.model.User;
 import com.example.Project.service.ICategoryService;
@@ -59,10 +60,13 @@ public class AdminDashboardController {
         List<User> users = _userService.getAllUsers();
         List<Map<String, Object>> userList = new ArrayList<>();
         for (User user : users) {
+            if (user.getRole() == Role.ADMIN) {
+                continue;
+            }
             Map<String, Object> userData = new HashMap<>();
             userData.put("id", user.getId());
             userData.put("username", user.getUsername());
-            //userData.put("isPremium", user.isPremium());
+            userData.put("isPremium", user.getRole() == Role.PREMIUM);
             userData.put("requirePremium", user.isRequirePremium());
 
             userList.add(userData);
