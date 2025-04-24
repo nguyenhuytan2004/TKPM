@@ -3,7 +3,7 @@
         <p class="text-xl text-gray-400 font-bold">Your favorite tools</p>
         <div id="favoriteContainer" class="grid grid-cols-4 gap-4">
             {{#favoriteTools}}
-                <a href={{endpoint}} id="toolLink" data-tool-id="{{id}}">
+                <a href={{endpoint}} id="toolLink" data-tool-id="{{id}}" data-premium="{{isPremium}}">
                     <div class="bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2">
                         <div class="flex space-x-2 justify-between items-center">
                             <h3 class="text-lg font-semibold flex items-center space-x-2">
@@ -37,7 +37,7 @@
         <p class="text-xl text-gray-400 font-bold">All the tools</p>
         <div id="allToolsContainer" class="grid grid-cols-4 gap-4">
             {{#tools}}
-                <a href="/plugin{{endpoint}}" id="toolLink" data-tool-id="{{id}}">
+                <a href="/plugin{{endpoint}}" id="toolLink" data-tool-id="{{id}}" data-premium="{{isPremium}}">
                     <div class="bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2">
                         <div class="flex space-x-2 justify-between items-center">
                             <h3 class="text-lg font-semibold flex items-center space-x-2">
@@ -63,6 +63,33 @@
                     </div>
                 </a>
             {{/tools}}
+        </div>
+    </div>
+
+
+
+</div>
+
+<!-- Premium Login Prompt -->
+<div id="premiumLoginPopup" class="fixed inset-0 flex justify-center items-center z-50 hidden">
+    <!-- Overlay (clicking outside won't close popup) -->
+    <div class="absolute inset-0 bg-opacity-30 backdrop-blur-sm"></div>
+
+    <!-- Popup box -->
+    <div class="relative bg-gray-900 border border-gray-700 rounded-2xl shadow-xl p-6 w-full max-w-md z-10 text-white space-y-4 pointer-events-auto">
+        <div class="flex justify-between items-center">
+            <h2 class="text-lg font-semibold">🔒 Premium Tool</h2>
+            <button id="closePremiumPopup" class="text-gray-400 hover:text-red-400 text-xl">&times;</button>
+        </div>
+        <p class="text-sm text-gray-300">
+            This tool is available for premium users only.
+            <br/>
+            <a href="/user/login" class="text-blue-400 hover:underline">Log in</a> or <a href="/user/register" class="text-blue-400 hover:underline">register</a> to access it.
+        </p>
+        <div class="flex justify-end">
+            <button id="closePremiumPopupBtn" class="mt-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm">
+                Close
+            </button>
         </div>
     </div>
 </div>
@@ -222,4 +249,33 @@
             }, 2000);
         }, 2000);
     }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const isLoggedIn = !!document.getElementById('userInformation')?.dataset.username;
+        const toolLinks = document.querySelectorAll('[id="toolLink"]');
+        const popup = document.getElementById('premiumLoginPopup');
+        const closeButtons = [
+            document.getElementById('closePremiumPopup'),
+            document.getElementById('closePremiumPopupBtn')
+        ];
+
+        toolLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                const isPremium = link.getAttribute('data-premium') === 'true';
+
+                if (isPremium && !isLoggedIn) {
+                    e.preventDefault();
+                    popup.classList.remove('hidden');
+                }
+            });
+        });
+
+        closeButtons.forEach(btn => {
+            btn?.addEventListener('click', () => {
+                popup.classList.add('hidden');
+            });
+        });
+    });
 </script>

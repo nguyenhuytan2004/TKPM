@@ -78,6 +78,30 @@
     </div>
 </div>
 
+<!-- Premium Login Prompt -->
+<div id="premiumLoginPopup" class="fixed inset-0 flex justify-center items-center z-50 hidden">
+    <!-- Overlay (clicking outside won't close popup) -->
+    <div class="absolute inset-0 bg-opacity-30 backdrop-blur-sm"></div>
+
+    <!-- Popup box -->
+    <div class="relative bg-gray-900 border border-gray-700 rounded-2xl shadow-xl p-6 w-full max-w-md z-10 text-white space-y-4 pointer-events-auto">
+        <div class="flex justify-between items-center">
+            <h2 class="text-lg font-semibold">🔒 Premium Tool</h2>
+            <button id="closePremiumPopup" class="text-gray-400 hover:text-red-400 text-xl">&times;</button>
+        </div>
+        <p class="text-sm text-gray-300">
+            This tool is available for premium users only.
+            <br/>
+            <a href="/user/login" class="text-blue-400 hover:underline">Log in</a> or <a href="/user/register" class="text-blue-400 hover:underline">register</a> to access it.
+        </p>
+        <div class="flex justify-end">
+            <button id="closePremiumPopupBtn" class="mt-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
 {{!-- Tìm kiếm tool --}}
 <script>
     const searchBar = document.getElementById("searchBar");
@@ -157,80 +181,92 @@
 
     // Load công cụ cho mỗi category và xử lý sự kiện click vào category
     function loadToolsAndRegisterEvents() {
-        fetch(`/api/tools-per-category`)
-            .then(response => response.json())
-            .then(data => {
-                document.querySelectorAll(".categoryContainer").forEach(categoryContainer => {
-                    const categoryId = categoryContainer.getAttribute("data-category-id");
-                    const tools = data[categoryId];
+    fetch(`/api/tools-per-category`)
+        .then(response => response.json())
+        .then(data => {
+            document.querySelectorAll(".categoryContainer").forEach(categoryContainer => {
+                const categoryId = categoryContainer.getAttribute("data-category-id");
+                const tools = data[categoryId];
 
-                    if (tools) {
-                        const toolsContainer = categoryContainer.querySelector(".toolsContainer");
-                        tools.forEach(tool => {
-                            const toolElement = document.createElement("div");
-                            toolElement.classList.add("p-2", "rounded", "cursor-pointer", "hover:bg-gray-600", "transition", "duration-300");
+                if (tools) {
+                    const toolsContainer = categoryContainer.querySelector(".toolsContainer");
+                    tools.forEach(tool => {
+                        const toolElement = document.createElement("div");
+                        toolElement.classList.add("p-2", "rounded", "cursor-pointer", "hover:bg-gray-600", "transition", "duration-300");
 
-                            // Tạo một container cho tên công cụ và biểu tượng Premium
-                            const toolContent = document.createElement("div");
-                            toolContent.classList.add("flex", "items-center", "space-x-2");
+                        // Tạo một container cho tên công cụ và biểu tượng Premium
+                        const toolContent = document.createElement("div");
+                        toolContent.classList.add("flex", "items-center", "space-x-2");
 
-                            // Thêm tên công cụ
-                            const toolName = document.createElement("span");
-                            toolName.classList.add("text-white");
-                            toolName.textContent = tool.name;
+                        // Thêm tên công cụ
+                        const toolName = document.createElement("span");
+                        toolName.classList.add("text-white");
+                        toolName.textContent = tool.name;
 
-                            toolContent.appendChild(toolName);  // Thêm tên công cụ vào container
+                        toolContent.appendChild(toolName);
 
-                            toolElement.appendChild(toolContent);  // Thêm toàn bộ content vào phần tử công cụ
+                        // Nếu công cụ là Premium, hiển thị biểu tượng sao vàng
+                        if (tool.isPremium) {
+                            const premiumIcon = document.createElement("svg");
+                            premiumIcon.setAttribute("class", "h-4 w-4 text-yellow-100");
+                            premiumIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+                            premiumIcon.setAttribute("fill", "currentColor");
+                            premiumIcon.setAttribute("viewBox", "0 0 20 20");
+                            premiumIcon.innerHTML = '<path d="M10 1.5l2.755 5.58 6.165.896-4.46 4.347 1.053 6.144L10 15.675l-5.513 2.792 1.053-6.144-4.46-4.347 6.165-.896L10 1.5z" />';
+                            toolContent.appendChild(premiumIcon);
+                        }
 
-                            toolElement.addEventListener("click", (e) => {
-                                e.stopPropagation();
-                                window.location.href = "/plugin" + tool.endpoint;
-                            });
-                            toolsContainer.appendChild(toolElement);
+                        toolElement.appendChild(toolContent);
 
+                        // Xử lý sự kiện click
+                        toolElement.addEventListener("click", (e) => {
+                            e.stopPropagation();
 
-                            // Nếu công cụ là Premium, hiển thị biểu tượng sao vàng
                             if (tool.isPremium) {
-                                const premiumIcon = document.createElement("svg");
-                                premiumIcon.setAttribute("class", "h-4 w-4 text-yellow-100");
-                                premiumIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-                                premiumIcon.setAttribute("fill", "currentColor");
-                                premiumIcon.setAttribute("viewBox", "0 0 20 20");
-                                premiumIcon.innerHTML = '<path d="M10 1.5l2.755 5.58 6.165.896-4.46 4.347 1.053 6.144L10 15.675l-5.513 2.792 1.053-6.144-4.46-4.347 6.165-.896L10 1.5z" />';
-                                toolContent.appendChild(premiumIcon);  // Thêm biểu tượng sao vàng vào cùng dòng
+                                // Hiển thị popup Premium
+                                const popup = document.getElementById("premiumLoginPopup");
+                                if (popup) {
+                                    popup.classList.remove("hidden");
+                                }
+                            } else {
+                                // Mở trang công cụ thường
+                                window.location.href = "/plugin" + tool.endpoint;
                             }
                         });
+
+                        toolsContainer.appendChild(toolElement);
+                    });
+                }
+            });
+
+            // Toggle mở/đóng danh sách công cụ khi click vào category
+            document.querySelectorAll(".categoryContainer").forEach(categoryContainer => {
+                categoryContainer.addEventListener("click", function () {
+                    const toolsContainer = this.querySelector(".toolsContainer");
+                    const arrowIcon = this.querySelector(".arrow-icon");
+
+                    if (toolsContainer.style.maxHeight === "0px") {
+                        const maxHeight = 2 * toolsContainer.scrollHeight + "px";
+                        toolsContainer.style.maxHeight = maxHeight;
+                        toolsContainer.classList.add("opacity-100");
+                        toolsContainer.classList.remove("opacity-0");
+
+                        arrowIcon.classList.remove("rotate-270");
+                        arrowIcon.classList.add("rotate-360");
+                    } else {
+                        toolsContainer.style.maxHeight = "0px";
+                        toolsContainer.classList.remove("opacity-100");
+                        toolsContainer.classList.add("opacity-0");
+
+                        arrowIcon.classList.remove("rotate-360");
+                        arrowIcon.classList.add("rotate-270");
                     }
                 });
+            });
+        })
+        .catch(error => console.error("Error fetching tools per category: ", error));
+}
 
-                // Xử lý sự kiện click vào category để mở/đóng danh sách công cụ
-                document.querySelectorAll(".categoryContainer").forEach(categoryContainer => {
-                    categoryContainer.addEventListener("click", function () {
-                        const toolsContainer = this.querySelector(".toolsContainer");
-                        const arrowIcon = this.querySelector(".arrow-icon");
-
-                        if (toolsContainer.style.maxHeight === "0px") {
-                            const maxHeight = 2 * toolsContainer.scrollHeight + "px";
-                            toolsContainer.style.maxHeight = maxHeight;
-                            toolsContainer.classList.add("opacity-100");
-                            toolsContainer.classList.remove("opacity-0");
-
-                            arrowIcon.classList.remove("rotate-270");
-                            arrowIcon.classList.add("rotate-360");
-                        } else {
-                            toolsContainer.style.maxHeight = "0px";
-                            toolsContainer.classList.remove("opacity-100");
-                            toolsContainer.classList.add("opacity-0");
-
-                            arrowIcon.classList.remove("rotate-360");
-                            arrowIcon.classList.add("rotate-270");
-                        }
-                    });
-                });
-            })
-            .catch(error => console.error("Error fetching tools per category: ", error));
-    }
 </script>
 
 </body>
