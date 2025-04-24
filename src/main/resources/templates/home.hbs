@@ -65,9 +65,6 @@
             {{/tools}}
         </div>
     </div>
-
-
-
 </div>
 
 <!-- Premium Login Prompt -->
@@ -94,6 +91,31 @@
     </div>
 </div>
 
+<!-- Premium Upgrade Prompt -->
+<div id="premiumUpgradePopup" class="fixed inset-0 flex justify-center items-center z-50 hidden">
+    <!-- Overlay (clicking outside won't close popup) -->
+    <div class="absolute inset-0 bg-opacity-30 backdrop-blur-sm"></div>
+
+    <!-- Popup box -->
+    <div class="relative bg-gray-900 border border-gray-700 rounded-2xl shadow-xl p-6 w-full max-w-md z-10 text-white space-y-4 pointer-events-auto">
+        <div class="flex justify-between items-center">
+            <h2 class="text-lg font-semibold text-yellow-400">🚀 Premium Required</h2>
+            <button id="closePremiumUpgradePopup" class="text-gray-400 hover:text-red-400 text-xl">&times;</button>
+        </div>
+        <p class="text-sm text-gray-300">
+            This tool is only available for <span class="text-yellow-300 font-medium">premium users</span>.<br/>
+            Upgrade now for <span class="text-blue-400 font-semibold">{{price}}</span> to unlock full access.
+        </p>
+        <div class="flex justify-end gap-3">
+            <button id="cancelUpgradeBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm">
+                Cancel
+            </button>
+            <button id="requestUpgradeBtn" class="px-4 py-2 bg-blue-500 hover:bg-blue-400 text-black rounded text-sm">
+                Request Upgrade
+            </button>
+        </div>
+    </div>
+</div>
 
 {{!-- Nhấn nút "Yêu thích" trong all tools --}}
 <script>
@@ -278,4 +300,28 @@
             });
         });
     });
+</script>
+
+
+// hiện nếu tool là premium
+<script>
+    // Nếu backend gán biến showPremiumPopup = true, thì chuyển URL về "/"
+    window.addEventListener("DOMContentLoaded", () => {
+        const showPremiumPopup = {{showPremiumPopup}};
+        if (showPremiumPopup) {
+            // Thay đổi URL về "/" nhưng không reload trang
+            window.history.replaceState({}, '', '/');
+            document.getElementById("premiumUpgradePopup")?.classList.remove("hidden");
+        }
+    });
+
+    // Bắt sự kiện click nút Cancel hoặc Close (×)
+        document.getElementById("cancelUpgradeBtn")?.addEventListener("click", () => {
+            document.getElementById("premiumUpgradePopup")?.classList.add("hidden");
+
+        });
+
+        document.getElementById("closePremiumUpgradePopup")?.addEventListener("click", () => {
+            document.getElementById("premiumUpgradePopup")?.classList.add("hidden");
+        });
 </script>

@@ -31,18 +31,29 @@ public class ToolPluginController {
     @Autowired
     private ToolAccessManager toolAccessManager;
 
+    @Autowired
+    private HomeController homeController;
+
     @GetMapping("/{categoryName}/{toolName}/**")
-    public String showPluginUI(@PathVariable String categoryName,@PathVariable String toolName, Model model, HttpSession session) {
+    public String showPluginUI(@PathVariable String categoryName,
+                               @PathVariable String toolName,
+                               Model model,
+                               HttpSession session) {
         IToolPlugin plugin = pluginManager.getPlugin(toolName);
         if (plugin != null) {
             String username = (String) session.getAttribute("username");
-            model.addAttribute("username", username);
+            Integer userId = (Integer) session.getAttribute("userId");
+
+            if (username != null) model.addAttribute("username", username);
+            if (userId != null) model.addAttribute("userId", userId);
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
             String endpoint = "/" + categoryName + "/" + toolName;
+
             if (!toolAccessManager.canAccessTool(endpoint, auth)) {
-                return "404";
+                model.addAttribute("showPremiumPopup", true);
+                model.addAttribute("price", "$10"); // giá để upgrade to premium
+                return homeController.show(model, session);
             }
 
             model.addAttribute("title", StringHelper.toNormalCase(plugin.getName()));
