@@ -43,4 +43,8 @@ public class Tool {
 
     @JsonProperty("isPremium")
     private boolean isPremium = false;
+
+    public Boolean getIsPremium() { // dùng như vậy mới chạy được hbs, không dùng lombok
+        return isPremium;
+    }
 }

@@ -46,6 +46,10 @@ public class HomeController {
 
         // Lấy danh sách tất cả công cụ
         List<Tool> allTools = _toolService.getAllTools();
+        for (Tool tool : allTools) {
+            System.out.println("Tool: " + tool.getName() + ", isPremium: " + tool.getIsPremium());
+        }
+
         model.addAttribute("tools", allTools);
 
         // Trả về layout chính, chỉ truyền body là "home"

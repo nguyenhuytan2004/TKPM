@@ -39,7 +39,7 @@ public class AdminDashboardController {
             toolData.put("name", tool.getName());
             toolData.put("description", tool.getDescription());
             toolData.put("categoryName", tool.getCategory().getName());
-            toolData.put("is_premium", tool.isPremium());
+            toolData.put("is_premium", tool.getIsPremium());
             toolData.put("is_active", tool.isActive());
             toolList.add(toolData);
         }

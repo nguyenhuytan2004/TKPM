@@ -9,45 +9,44 @@
 </head>
 
 <body class="bg-gray-900 text-white">
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="fixed w-64 bg-gradient-to-b bg-gray-800 p-5 h-full overflow-auto">
-            <a href="/">
-                <div class="w-full bg-green-500 p-4 rounded">
-                    <h1 class="text-2xl font-bold">IT - TOOLS</h1>
-                    <p class="text-sm">Handy tools for developers</p>
-                </div>
-            </a>
-            <div class="mt-5">
-                <ul id="categoryList">
-                </ul>
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <div class="fixed w-64 bg-gradient-to-b bg-gray-800 p-5 h-full overflow-auto">
+        <a href="/">
+            <div class="w-full bg-green-500 p-4 rounded">
+                <h1 class="text-2xl font-bold">IT - TOOLS</h1>
+                <p class="text-sm">Handy tools for developers</p>
             </div>
+        </a>
+        <div class="mt-5">
+            <ul id="categoryList">
+            </ul>
         </div>
+    </div>
 
-        <div class="w-64"></div>
+    <div class="w-64"></div>
 
-        <!-- Main Content (Load động trang con) -->
-        <div class="flex-1 p-10">
-            <div class="flex justify-between items-center">
-                <div class="flex w-3/7 space-x-4">
-                    <div class="relative w-full">
-                        <input id="searchBar" type="text" placeholder="Search..."
-                            class="px-4 py-2 w-full bg-gray-800 border border-gray-700 rounded">
+    <!-- Main Content (Load động trang con) -->
+    <div class="flex-1 p-10">
+        <div class="flex justify-between items-center">
+            <div class="flex w-3/7 space-x-4">
+                <div class="relative w-full">
+                    <input id="searchBar" type="text" placeholder="Search..."
+                           class="px-4 py-2 w-full bg-gray-800 border border-gray-700 rounded">
 
-                        <ul id="searchResults"
-                            class="absolute w-full bg-gray-800 text-white border border-gray-700 mt-2 rounded-lg shadow-lg hidden z-10 p-4 max-h-96 overflow-y-auto">
-                        </ul>
-                    </div>
+                    <ul id="searchResults"
+                        class="absolute w-full bg-gray-800 text-white border border-gray-700 mt-2 rounded-lg shadow-lg hidden z-10 p-4 max-h-96 overflow-y-auto">
+                    </ul>
                 </div>
+            </div>
 
-                <div class="flex space-x-6 items-center">
-                    {{#username}}
-                    <div id="userInformation" class="hidden" data-user-id="{{userId}}" data-username="{{username}}">
-                    </div>
+            <div class="flex space-x-6 items-center">
+                {{#username}}
+                    <div id="userInformation" class="hidden" data-user-id="{{userId}}" data-username="{{username}}"></div>
                     <div class="flex items-center space-x-4">
                         <!-- Avatar -->
                         <img src="/images/user_profile.png" alt="User Avatar"
-                            class="w-10 h-10 rounded-full object-cover border border-gray-500" />
+                             class="w-10 h-10 rounded-full object-cover border border-gray-500" />
 
                         <!-- Tên + Logout -->
                         <div class="flex items-center gap-2">
@@ -55,159 +54,184 @@
                             <span class="text-gray-500"> |</span>
                             <form id="logoutForm" action="/user/logout" method="post">
                                 <button type="submit"
-                                    class="px-2 py-1 hover:text-red-500 hover:underline bg-transparent border-none">
+                                        class="px-2 py-1 hover:text-red-500 hover:underline bg-transparent border-none">
                                     Sign out
                                 </button>
                             </form>
                         </div>
                     </div>
-                    {{/username}}
+                {{/username}}
 
-                    {{^username}}
+                {{^username}}
                     <div id="userInformation" class="hidden"></div>
                     <div class="space-x-2">
                         <a href="/user/login" class="hover:underline hover:text-blue-500">Login</a>
                         <span>|</span>
                         <a href="/user/register" class="hover:underline hover:text-blue-500">Register</a>
                     </div>
-                    {{/username}}
-                </div>
+                {{/username}}
             </div>
-            <main class="flex-1 py-10">
-                {{> (lookup . "body") }} <!-- Load trang theo biến body -->
-            </main>
         </div>
+        <main class="flex-1 py-10">
+            {{> (lookup . "body") }} <!-- Load trang theo biến body -->
+        </main>
     </div>
+</div>
 
-    {{!-- Tìm kiếm tool --}}
-    <script>
-        const searchBar = document.getElementById("searchBar");
-        const searchResults = document.getElementById("searchResults");
+{{!-- Tìm kiếm tool --}}
+<script>
+    const searchBar = document.getElementById("searchBar");
+    const searchResults = document.getElementById("searchResults");
 
-        searchBar.addEventListener("input", searchTool);
+    searchBar.addEventListener("input", searchTool);
 
-        function searchTool() {
-            const query = searchBar.value.trim();
-            if (query.length === 0) {
-                searchResults.innerHTML = "";
-                searchResults.classList.add("hidden");
-                return;
-            }
-
-            fetch(`/api/tools?hintText=${encodeURIComponent(query)}`)
-                .then(response => response.json())
-                .then(data => {
-                    searchResults.innerHTML = "";
-                    if (data.length === 0) {
-                        searchResults.classList.add("hidden");
-                        return;
-                    }
-
-                    searchResults.classList.remove("hidden");
-
-                    data.forEach(tool => {
-                        const li = document.createElement("li");
-                        li.textContent = tool.name;
-                        li.classList.add("p-2", "cursor-pointer", "hover:bg-gray-700");
-
-                        li.addEventListener("click", () => {
-                            window.location.href = tool.endpoint;
-                        });
-
-                        searchResults.appendChild(li);
-                    });
-                })
-                .catch(error => console.error(error));
+    function searchTool() {
+        const query = searchBar.value.trim();
+        if (query.length === 0) {
+            searchResults.innerHTML = "";
+            searchResults.classList.add("hidden");
+            return;
         }
 
-        // Ẩn kết quả tìm kiếm khi click ra ngoài
-        document.addEventListener("click", (event) => {
-            if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
-                searchResults.classList.add("hidden");
-            }
-        });
-    </script>
+        fetch(`/api/tools?hintText=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                searchResults.innerHTML = "";
+                if (data.length === 0) {
+                    searchResults.classList.add("hidden");
+                    return;
+                }
 
-    {{!-- Hiển thị danh sách categories --}}
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            fetch(`/api/categories`)
-                .then(response => response.json())
-                .then(categories => {
-                    const categoryList = document.getElementById("categoryList");
-                    categories.forEach(category => {
-                        categoryList.innerHTML += `<div class="categoryContainer flex flex-col cursor-pointer" data-category-id="${category.id}">
-                    <div class="flex items-center">
-                        <svg class="arrow-icon h-3 w-3 transition-transform duration-300 ease-in-out rotate-270"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                            <path fill="#c8c8c8"
-                                d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
-                        </svg>
-                        <li class="block py-2 px-4 text-gray-400">${category.name}</li>
-                    </div>
-                    <div class="toolsContainer ml-5 transition-all duration-300 opacity-0 overflow-hidden"
-                        style="max-height: 0px;">
-                    </div>
-                </div>`;
+                searchResults.classList.remove("hidden");
+
+                data.forEach(tool => {
+                    const li = document.createElement("li");
+                    li.textContent = tool.name;
+                    li.classList.add("p-2", "cursor-pointer", "hover:bg-gray-700");
+
+                    li.addEventListener("click", () => {
+                        window.location.href = tool.endpoint;
                     });
 
-                    loadToolsAndRegisterEvents();
-                })
-                .catch(error => console.error("Error fetching categories: ", error));
-        });
+                    searchResults.appendChild(li);
+                });
+            })
+            .catch(error => console.error(error));
+    }
 
-        // Load công cụ cho mỗi category và xử lý sự kiện click vào category
-        function loadToolsAndRegisterEvents() {
-            fetch(`/api/tools-per-category`)
-                .then(response => response.json())
-                .then(data => {
-                    document.querySelectorAll(".categoryContainer").forEach(categoryContainer => {
-                        const categoryId = categoryContainer.getAttribute("data-category-id");
-                        const tools = data[categoryId];
+    // Ẩn kết quả tìm kiếm khi click ra ngoài
+    document.addEventListener("click", (event) => {
+        if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.classList.add("hidden");
+        }
+    });
+</script>
 
-                        if (tools) {
-                            const toolsContainer = categoryContainer.querySelector(".toolsContainer");
-                            tools.forEach(tool => {
-                                const toolElement = document.createElement("div");
-                                toolElement.classList.add("p-2", "rounded", "cursor-pointer", "hover:bg-gray-600", "transition", "duration-300");
-                                toolElement.textContent = tool.name;
-                                toolElement.addEventListener("click", (e) => {
-                                    e.stopPropagation();
-                                    window.location.href = "/plugin" + tool.endpoint;
-                                });
-                                toolsContainer.appendChild(toolElement);
+{{!-- Hiển thị danh sách categories --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch(`/api/categories`)
+            .then(response => response.json())
+            .then(categories => {
+                const categoryList = document.getElementById("categoryList");
+                categories.forEach(category => {
+                    categoryList.innerHTML += `<div class="categoryContainer flex flex-col cursor-pointer" data-category-id="${category.id}">
+                <div class="flex items-center">
+                    <svg class="arrow-icon h-3 w-3 transition-transform duration-300 ease-in-out rotate-270"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path fill="#c8c8c8"
+                            d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+                    </svg>
+                    <li class="block py-2 px-4 text-gray-400">${category.name}</li>
+                </div>
+                <div class="toolsContainer ml-5 transition-all duration-300 opacity-0 overflow-hidden"
+                    style="max-height: 0px;">
+                </div>
+            </div>`;
+                });
+
+                loadToolsAndRegisterEvents();
+            })
+            .catch(error => console.error("Error fetching categories: ", error));
+    });
+
+    // Load công cụ cho mỗi category và xử lý sự kiện click vào category
+    function loadToolsAndRegisterEvents() {
+        fetch(`/api/tools-per-category`)
+            .then(response => response.json())
+            .then(data => {
+                document.querySelectorAll(".categoryContainer").forEach(categoryContainer => {
+                    const categoryId = categoryContainer.getAttribute("data-category-id");
+                    const tools = data[categoryId];
+
+                    if (tools) {
+                        const toolsContainer = categoryContainer.querySelector(".toolsContainer");
+                        tools.forEach(tool => {
+                            const toolElement = document.createElement("div");
+                            toolElement.classList.add("p-2", "rounded", "cursor-pointer", "hover:bg-gray-600", "transition", "duration-300");
+
+                            // Tạo một container cho tên công cụ và biểu tượng Premium
+                            const toolContent = document.createElement("div");
+                            toolContent.classList.add("flex", "items-center", "space-x-2");
+
+                            // Thêm tên công cụ
+                            const toolName = document.createElement("span");
+                            toolName.classList.add("text-white");
+                            toolName.textContent = tool.name;
+
+                            toolContent.appendChild(toolName);  // Thêm tên công cụ vào container
+
+                            toolElement.appendChild(toolContent);  // Thêm toàn bộ content vào phần tử công cụ
+
+                            toolElement.addEventListener("click", (e) => {
+                                e.stopPropagation();
+                                window.location.href = "/plugin" + tool.endpoint;
                             });
-                        }
-                    });
+                            toolsContainer.appendChild(toolElement);
 
-                    // Xử lý sự kiện click
-                    document.querySelectorAll(".categoryContainer").forEach(categoryContainer => {
-                        categoryContainer.addEventListener("click", function () {
-                            const toolsContainer = this.querySelector(".toolsContainer");
-                            const arrowIcon = this.querySelector(".arrow-icon");
 
-                            if (toolsContainer.style.maxHeight === "0px") {
-                                const maxHeight = 2 * toolsContainer.scrollHeight + "px";
-                                toolsContainer.style.maxHeight = maxHeight;
-                                toolsContainer.classList.add("opacity-100");
-                                toolsContainer.classList.remove("opacity-0");
-
-                                arrowIcon.classList.remove("rotate-270");
-                                arrowIcon.classList.add("rotate-360");
-                            } else {
-                                toolsContainer.style.maxHeight = "0px";
-                                toolsContainer.classList.remove("opacity-100");
-                                toolsContainer.classList.add("opacity-0");
-
-                                arrowIcon.classList.remove("rotate-360");
-                                arrowIcon.classList.add("rotate-270");
+                            // Nếu công cụ là Premium, hiển thị biểu tượng sao vàng
+                            if (tool.isPremium) {
+                                const premiumIcon = document.createElement("svg");
+                                premiumIcon.setAttribute("class", "h-4 w-4 text-yellow-100");
+                                premiumIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+                                premiumIcon.setAttribute("fill", "currentColor");
+                                premiumIcon.setAttribute("viewBox", "0 0 20 20");
+                                premiumIcon.innerHTML = '<path d="M10 1.5l2.755 5.58 6.165.896-4.46 4.347 1.053 6.144L10 15.675l-5.513 2.792 1.053-6.144-4.46-4.347 6.165-.896L10 1.5z" />';
+                                toolContent.appendChild(premiumIcon);  // Thêm biểu tượng sao vàng vào cùng dòng
                             }
                         });
+                    }
+                });
+
+                // Xử lý sự kiện click vào category để mở/đóng danh sách công cụ
+                document.querySelectorAll(".categoryContainer").forEach(categoryContainer => {
+                    categoryContainer.addEventListener("click", function () {
+                        const toolsContainer = this.querySelector(".toolsContainer");
+                        const arrowIcon = this.querySelector(".arrow-icon");
+
+                        if (toolsContainer.style.maxHeight === "0px") {
+                            const maxHeight = 2 * toolsContainer.scrollHeight + "px";
+                            toolsContainer.style.maxHeight = maxHeight;
+                            toolsContainer.classList.add("opacity-100");
+                            toolsContainer.classList.remove("opacity-0");
+
+                            arrowIcon.classList.remove("rotate-270");
+                            arrowIcon.classList.add("rotate-360");
+                        } else {
+                            toolsContainer.style.maxHeight = "0px";
+                            toolsContainer.classList.remove("opacity-100");
+                            toolsContainer.classList.add("opacity-0");
+
+                            arrowIcon.classList.remove("rotate-360");
+                            arrowIcon.classList.add("rotate-270");
+                        }
                     });
-                })
-                .catch(error => console.error("Error fetching tools per category: ", error));
-        }
-    </script>
+                });
+            })
+            .catch(error => console.error("Error fetching tools per category: ", error));
+    }
+</script>
 
 </body>
 
