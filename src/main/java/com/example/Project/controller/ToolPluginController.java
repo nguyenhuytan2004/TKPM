@@ -3,7 +3,10 @@ package com.example.Project.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.Project.security.ToolAccessManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +28,22 @@ public class ToolPluginController {
     @Autowired
     private PluginManager pluginManager;
 
+    @Autowired
+    private ToolAccessManager toolAccessManager;
+
     @GetMapping("/{categoryName}/{toolName}/**")
-    public String showPluginUI(@PathVariable String toolName, Model model, HttpSession session) {
+    public String showPluginUI(@PathVariable String categoryName,@PathVariable String toolName, Model model, HttpSession session) {
         IToolPlugin plugin = pluginManager.getPlugin(toolName);
         if (plugin != null) {
             String username = (String) session.getAttribute("username");
             model.addAttribute("username", username);
+
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+            String endpoint = "/" + categoryName + "/" + toolName;
+            if (!toolAccessManager.canAccessTool(endpoint, auth)) {
+                return "404";
+            }
 
             model.addAttribute("title", StringHelper.toNormalCase(plugin.getName()));
             model.addAttribute("body", "tools-ui/" + plugin.getName());

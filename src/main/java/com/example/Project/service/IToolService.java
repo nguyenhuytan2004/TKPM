@@ -14,6 +14,8 @@ public interface IToolService {
 
     Tool getToolByName(String name);
 
+    Tool getToolByEndpoint(String endpoint);
+
     void updateTool(Tool tool);
 
     void deleteTool(Tool tool);

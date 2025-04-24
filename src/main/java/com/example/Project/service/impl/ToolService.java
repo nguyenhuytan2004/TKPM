@@ -69,6 +69,11 @@ public class ToolService implements IToolService {
     }
 
     @Override
+    public Tool getToolByEndpoint(String endpoint) {
+        return _toolRepository.findByEndpoint(endpoint).orElse(null);
+    }
+
+    @Override
     public boolean isPremiumToolByName(String name) {
         Tool tool = getToolByName(name);
         return tool != null && Boolean.TRUE.equals(tool.getIsPremium());

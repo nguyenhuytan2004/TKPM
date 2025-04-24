@@ -13,4 +13,6 @@ public interface IToolRepository extends JpaRepository<Tool, Integer> {
     List<Tool> findByNameContainingIgnoreCase(String name);
 
     Optional<Tool> findByName(String name);
+
+    Optional<Tool> findByEndpoint(String endpoint);
 }
