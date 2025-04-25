@@ -1,0 +1,66 @@
+<div class="min-h-screen bg-gray-900 text-white flex flex-col items-center pt-10">
+    <h1 class="text-3xl font-bold">Text statistics</h1>
+    <p class="text-gray-400 mb-6">
+        Get information about a text, the number of characters, the number of words, its size in bytes, ...
+    </p>
+
+    <div class="bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-2xl">
+        <textarea id="textInput" class="w-full p-3 bg-gray-700 text-white rounded-md resize-none"
+                  placeholder="Your text..." rows="5" oninput="analyzeText()"></textarea>
+
+        <div class="grid grid-cols-4 gap-4 text-center mt-4">
+            <div>
+                <p class="text-gray-400">Character count</p>
+                <p class="text-xl font-bold" id="charCount">0</p>
+            </div>
+            <div>
+                <p class="text-gray-400">Word count</p>
+                <p class="text-xl font-bold" id="wordCount">0</p>
+            </div>
+            <div>
+                <p class="text-gray-400">Line count</p>
+                <p class="text-xl font-bold" id="lineCount">0</p>
+            </div>
+            <div>
+                <p class="text-gray-400">Byte size</p>
+                <p class="text-xl font-bold" id="byteSize">0 Bytes</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const textInput = document.getElementById("textInput");
+
+    textInput.addEventListener("input", debounce(analyzeText, 500)); // debounce để tránh gọi liên tục quá nhiều
+
+    async function analyzeText() {
+        const text = textInput.value;
+        if (!text.trim()) return; // tránh gọi API nếu trống
+
+        const encodedText = encodeURIComponent(text);
+        const response = await fetch(`/api/text/statistics?text=${encodedText}`);
+
+        if (!response.ok) {
+            console.error("Failed to fetch data");
+            return;
+        }
+
+        const data = await response.json();
+
+        document.getElementById("charCount").textContent = data.characterCount || 0;
+        document.getElementById("wordCount").textContent = data.wordCount || 0;
+        document.getElementById("lineCount").textContent = data.lineCount || 0;
+        document.getElementById("byteSize").textContent = data.byteSize ? `${data.byteSize} Bytes` : "0 Bytes";
+    }
+
+    // Hàm debounce để giới hạn tần suất gọi API
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+</script>
+

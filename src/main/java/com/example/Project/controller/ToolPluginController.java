@@ -40,8 +40,6 @@ public class ToolPluginController {
                                Model model,
                                HttpSession session) {
         IToolPlugin plugin = pluginManager.getPlugin(toolName);
-        System.out.println(toolName);
-        System.out.println(plugin);
         if (plugin != null) {
             String username = (String) session.getAttribute("username");
             Integer userId = (Integer) session.getAttribute("userId");
