@@ -31,8 +31,6 @@ public class AdminDashboardController {
     private ICategoryService _categoryService;
     @Autowired
     private IUserService _userService;
-    @Autowired
-    private IFavoriteService _favoriteService;  // Dịch vụ yêu thích người dùng
 
     @GetMapping("/tool/management")
     public String showToolManagement(Model model, HttpSession session) {
@@ -85,7 +83,7 @@ public class AdminDashboardController {
         List<Map<String, Object>> userList = new ArrayList<>();
         for (User user : users) {
             if (user.getRole() == Role.ADMIN) {
-                continue; // Không lấy admin
+                continue;
             }
             Map<String, Object> userData = new HashMap<>();
             userData.put("id", user.getId());

@@ -54,7 +54,7 @@
                             <span class="text-gray-500"> |</span>
                             <form id="logoutForm" action="/user/logout" method="post">
                                 <button type="submit"
-                                        class="px-2 py-1 hover:text-red-500 hover:underline bg-transparent border-none">
+                                        class="px-2 py-1 hover:text-red-500 hover:underline bg-transparent border-none cursor-pointer">
                                     Sign out
                                 </button>
                             </form>
@@ -134,7 +134,7 @@
                     li.classList.add("p-2", "cursor-pointer", "hover:bg-gray-700");
 
                     li.addEventListener("click", () => {
-                        window.location.href = tool.endpoint;
+                        window.location.href = "/plugin" + tool.endpoint;
                     });
 
                     searchResults.appendChild(li);

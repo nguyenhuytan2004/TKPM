@@ -3,7 +3,7 @@
         <p class='text-xl text-gray-400 font-bold'>Your favorite tools</p>
         <div id='favoriteContainer' class='grid grid-cols-4 gap-4'>
             {{#favoriteTools}}
-                <a href={{endpoint}} id='toolLink' data-tool-id='{{id}}' data-premium='{{isPremium}}'>
+                <a href='/plugin{{endpoint}}' id='toolLink' data-tool-id='{{id}}' data-premium='{{isPremium}}'>
                     <div class='bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2'>
                         <div class='flex space-x-2 justify-between items-center'>
                             <h3 class='text-lg font-semibold flex items-center space-x-2'>

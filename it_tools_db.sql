@@ -78,27 +78,27 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 ('JSON Prettify and Format', 'Prettify your JSON string into a friendly, human-readable format.', '/development/json-prettify-and-format', 5),
 
 -- Network (category_id = 6)
-('IPv4 Subnet Calculator', 'Parse your IPv4 CIDR blocks and get all the info you need about your subnet.', '/network/ipv4-subnet', 6),
-('IPv4 Address Converter', 'Convert an IP address into decimal, binary, hexadecimal, or even an IPv6 representation of it.', '/network/ipv4-converter', 6),
+('IPv4 Subnet Calculator', 'Parse your IPv4 CIDR blocks and get all the info you need about your subnet.', '/network/ipv4-subnet-calculator', 6),
+('IPv4 Address Converter', 'Convert an IP address into decimal, binary, hexadecimal, or even an IPv6 representation of it.', '/network/ipv4-address-converter', 6),
 ('IPv4 Range Expander', 'Given a start and an end IPv4 address, this tool calculates a valid IPv4 subnet along with its CIDR notation.', '/network/ipv4-range-expander', 6),
-('MAC Address Generator', 'Enter the quantity and prefix. MAC addresses will be generated in your chosen case (uppercase or lowercase)', '/network/ipv4-mac-generator', 6),
+('MAC Address Generator', 'Enter the quantity and prefix. MAC addresses will be generated in your chosen case (uppercase or lowercase)', '/network/mac-address-generator', 6),
 
 -- Math (category_id = 7)
-('Math Evaluator', 'A calculator for evaluating mathematical expressions. You can use functions like sqrt, cos, sin, abs, etc.', '/math/evaluator', 7),
+('Math Evaluator', 'A calculator for evaluating mathematical expressions. You can use functions like sqrt, cos, sin, abs, etc.', '/math/math-evaluator', 7),
 ('ETA Calculator', 'An ETA (Estimated Time of Arrival) calculator to determine the approximate end time of a task, for example, the end time and duration of a file download. With a concrete example, if you wash 5 plates in 3 minutes and you have 500 plates to wash, it will take you 5 hours to wash them all.', '/math/eta-calculator', 7),
-('Percentage Calculator', 'Easily calculate percentages from a value to another value, or from a percentage to a value.', '/math/percentage', 7),
+('Percentage Calculator', 'Easily calculate percentages from a value to another value, or from a percentage to a value.', '/math/percentage-calculator', 7),
 
 -- Measurement (category_id = 8)
 ('Chronometer', 'Monitor the duration of a thing. Basically a chronometer with simple chronometer features.', '/measurement/chronometer', 8),
-('Temperature Converter', 'Degrees temperature conversions for Kelvin, Celsius, Fahrenheit, Rankine, Delisle, Newton, Réaumur, and Rømer.', '/measurement/temperature', 8),
+('Temperature Converter', 'Degrees temperature conversions for Kelvin, Celsius, Fahrenheit, Rankine, Delisle, Newton, Réaumur, and Rømer.', '/measurement/temperature-converter', 8),
 
 -- Text (category_id = 9)
-('Text Statistics', 'Get information about a text, the number of characters, the number of words, its size in bytes, ...', '/text/statistics', 9),
-('Numeronym Generator', 'A numeronym is a word where a number is used to form an abbreviation. For example, "i18n" is a numeronym of "internationalization" where 18 stands for the number of letters between the first i and the last n in the word.', '/text/numeronym', 9),
+('Text Statistics', 'Get information about a text, the number of characters, the number of words, its size in bytes, ...', '/text/text-statistics', 9),
+('Numeronym Generator', 'A numeronym is a word where a number is used to form an abbreviation. For example, "i18n" is a numeronym of "internationalization" where 18 stands for the number of letters between the first i and the last n in the word.', '/text/numeronym-generator', 9),
 ('String obfuscator', 'Obfuscate a string (like a secret, an IBAN, or a token) to make it shareable and identifiable without revealing its content.', '/text/string-obfuscator', 9),
 
 -- Data (category_id = 10)
-('IBAN Validator and Parser', 'Validate and parse IBAN numbers. Check if an IBAN is valid and get the country, BBAN, if it is a QR-IBAN and the IBAN friendly format.', '/data/iban-validator', 10);
+('IBAN Validator and Parser', 'Validate and parse IBAN numbers. Check if an IBAN is valid and get the country, BBAN, if it is a QR-IBAN and the IBAN friendly format.', '/data/iban-validato-and-parser', 10);
 
 -- Bảng favorites (Lưu danh sách công cụ yêu thích của user)
 CREATE TABLE favorites (

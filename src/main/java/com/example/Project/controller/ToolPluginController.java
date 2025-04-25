@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.Project.security.ToolAccessManager;
+import com.example.Project.service.IToolService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Project.model.Tool;
 import com.example.Project.plugin.PluginManager;
 import com.example.Project.shared.util.StringHelper;
 import com.example.plugin.IToolPlugin;
@@ -34,18 +37,23 @@ public class ToolPluginController {
     @Autowired
     private HomeController homeController;
 
+    @Autowired
+    private IToolService _toolService;
+
     @GetMapping("/{categoryName}/{toolName}/**")
     public String showPluginUI(@PathVariable String categoryName,
-                               @PathVariable String toolName,
-                               Model model,
-                               HttpSession session) {
+            @PathVariable String toolName,
+            Model model,
+            HttpSession session) {
         IToolPlugin plugin = pluginManager.getPlugin(toolName);
         if (plugin != null) {
             String username = (String) session.getAttribute("username");
             Integer userId = (Integer) session.getAttribute("userId");
 
-            if (username != null) model.addAttribute("username", username);
-            if (userId != null) model.addAttribute("userId", userId);
+            if (username != null)
+                model.addAttribute("username", username);
+            if (userId != null)
+                model.addAttribute("userId", userId);
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String endpoint = "/" + categoryName + "/" + toolName;
@@ -56,12 +64,18 @@ public class ToolPluginController {
                 return homeController.show(model, session);
             }
 
+            // Chuyển đến 404 nếu Tool disabled
+            Tool tool = _toolService.getToolByName(StringHelper.toNormalCase(plugin.getName()));
+            if (tool == null || !tool.isActive()) {
+                return "404";
+            }
+
             model.addAttribute("title", StringHelper.toNormalCase(plugin.getName()));
             model.addAttribute("body", "tools-ui/" + plugin.getName());
 
             return "layout";
         }
-        return "redirect:/";
+        return "redirect:/error";
     }
 
     @RestController

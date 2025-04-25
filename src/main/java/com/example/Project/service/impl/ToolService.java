@@ -30,8 +30,18 @@ public class ToolService implements IToolService {
     }
 
     @Override
+    public List<Tool> getAllActivationTools() {
+        return _toolRepository.findAll()
+                .stream()
+                .filter(Tool::isActive)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Tool> getToolsByName(String hintText) {
-        return _toolRepository.findByNameContainingIgnoreCase(hintText);
+        return _toolRepository.findByNameContainingIgnoreCase(hintText).stream()
+                .filter(Tool::isActive)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -51,7 +61,10 @@ public class ToolService implements IToolService {
 
     @Override
     public Map<Integer, List<Tool>> getToolsPerCategory() {
-        List<Tool> allTools = _toolRepository.findAll();
+        List<Tool> allTools = _toolRepository.findAll()
+                .stream()
+                .filter(Tool::isActive)
+                .collect(Collectors.toList());
         List<Category> allCategories = _categoryService.getAllCategories();
         Map<Integer, List<Tool>> toolsPerCategory = new HashMap<>();
         for (Category category : allCategories) {

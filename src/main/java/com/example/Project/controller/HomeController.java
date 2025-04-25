@@ -45,8 +45,8 @@ public class HomeController {
         model.addAttribute("categories", allCategories);
 
         // Lấy danh sách tất cả công cụ
-        List<Tool> allTools = _toolService.getAllTools();
-        model.addAttribute("tools", allTools);
+        List<Tool> allActivationTools = _toolService.getAllActivationTools();
+        model.addAttribute("tools", allActivationTools);
 
         // Trả về layout chính, chỉ truyền body là "home"
         model.addAttribute("title", "Home Page");

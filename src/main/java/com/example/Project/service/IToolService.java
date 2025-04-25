@@ -8,6 +8,8 @@ import com.example.Project.model.Tool;
 public interface IToolService {
     List<Tool> getAllTools();
 
+    List<Tool> getAllActivationTools();
+
     List<Tool> getToolsByName(String hintText);
 
     Tool getToolById(Integer toolId);

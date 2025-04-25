@@ -32,7 +32,9 @@ public class FavoriteService implements IFavoriteService {
             favoriteTools.add(tool);
         }
 
-        return favoriteTools;
+        return favoriteTools.stream()
+                .filter(Tool::isActive)
+                .toList();
     }
 
     @Override
