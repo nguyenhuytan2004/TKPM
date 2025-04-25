@@ -93,4 +93,16 @@ public class UserService implements IUserService {
 
         return false;
     }
+
+    @Override
+    public boolean requestPremium(int id) {
+        Optional<User> optionalUser = _userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setRequirePremium(true);
+            _userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
 }

@@ -106,7 +106,7 @@
             This tool is only available for <span class="text-yellow-300 font-medium">premium users</span>.<br/>
             Upgrade now for <span class="text-blue-400 font-semibold">{{price}}</span> to unlock full access.
         </p>
-        <div class="flex justify-end gap-3">
+        <div class="flex justify-end gap-6"> <!-- Tăng khoảng cách giữa các nút bằng cách sử dụng gap-6 -->
             <button id="cancelUpgradeBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm">
                 Cancel
             </button>
@@ -323,5 +323,27 @@
 
         document.getElementById("closePremiumUpgradePopup")?.addEventListener("click", () => {
             document.getElementById("premiumUpgradePopup")?.classList.add("hidden");
+        });
+
+     // Gửi request yêu cầu nâng cấp
+        document.getElementById("requestUpgradeBtn")?.addEventListener("click", () => {
+            fetch(`/api/premium/${userId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("✅ Yêu cầu nâng cấp đã được gửi thành công!");
+                    document.getElementById("premiumUpgradePopup")?.classList.add("hidden");
+                } else {
+                    alert("❌ Không thể gửi yêu cầu. Vui lòng thử lại.");
+                }
+            })
+            .catch(error => {
+                console.error("Lỗi khi gửi yêu cầu nâng cấp:", error);
+                alert("❌ Đã xảy ra lỗi khi gửi yêu cầu.");
+            });
         });
 </script>

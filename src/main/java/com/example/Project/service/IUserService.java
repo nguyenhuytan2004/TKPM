@@ -17,4 +17,6 @@ public interface IUserService {
     public boolean rejectPremium(int id);
 
     public boolean downgrade(int id);
+
+    public boolean requestPremium(int id);
 }
