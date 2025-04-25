@@ -1,0 +1,62 @@
+<div class="w-full max-w-lg bg-gray-800 p-8 rounded-md border border-gray-700 mx-auto mt-16 text-center">
+    <h2 class="text-2xl font-bold text-white mb-4">ETA Calculator</h2>
+    <p class="text-left text-gray-300 mb-6">
+        An ETA (Estimated Time of Arrival) calculator to determine the approximate end time of a task,
+        for example, the end time and duration of a file download.
+    </p>
+    <p class="text-left text-gray-300 mb-8">
+        With a concrete example, if you wash 5 plates in 3 minutes and you have 500 plates to wash,
+        it will take you 5 hours to wash them all.
+    </p>
+
+    <label class="block text-sm text-left mb-3">Amount of element to consume</label>
+    <input type="number" id="totalElements" class="w-full p-3 rounded-md bg-gray-700 text-white mb-6">
+
+    <label class="block text-sm text-left mb-3">The consumption started at</label>
+    <input type="datetime-local" id="startTime" class="w-full p-3 rounded-md bg-gray-700 text-white mb-6">
+
+    <label class="block text-sm text-left mb-3">Amount of unit consumed</label>
+    <input type="number" id="rate" class="w-full p-3 rounded-md bg-gray-700 text-white mb-6">
+
+    <label class="block text-sm text-left mb-3">Time span for the rate</label>
+    <input type="number" id="timeSpan" class="w-full p-3 rounded-md bg-gray-700 text-white mb-3">
+    <select id="timeUnit" class="w-full p-3 rounded-md bg-gray-700 text-white mb-6">
+        <option value="seconds">seconds</option>
+        <option value="minutes">minutes</option>
+        <option value="hours">hours</option>
+        <option value="days">days</option>
+    </select>
+
+    <button id="calculate" class="w-full bg-blue-600 p-3 rounded-md hover:bg-blue-700 text-white">Calculate</button>
+</div>
+
+<div id="result-container" class="hidden mt-12 bg-gray-800 p-6 rounded-md text-center border border-gray-700 w-full max-w-lg mx-auto">
+    <p class="text-lg font-semibold text-blue-300">Total duration</p>
+    <p id="duration" class="mt-4 text-2xl font-bold text-white"></p>
+    <p class="text-lg font-semibold text-blue-300 mt-6">It will end</p>
+    <p id="endTime" class="mt-4 text-2xl font-bold text-white"></p>
+</div>
+
+<script>
+    document.getElementById("calculate").addEventListener("click", async function() {
+        const totalElements = parseFloat(document.getElementById("totalElements").value);
+        const startTime = document.getElementById("startTime").value;
+        const rate = parseFloat(document.getElementById("rate").value);
+        const timeSpan = parseFloat(document.getElementById("timeSpan").value);
+        const timeUnit = document.getElementById("timeUnit").value;
+
+        if (!totalElements || !startTime || !rate || !timeSpan) return;
+
+        try {
+            // Gọi API với phương thức GET
+            const response = await fetch(`/api/math/eta-calculator?totalElements=${totalElements}&startTime=${encodeURIComponent(startTime)}&rate=${rate}&timeSpan=${timeSpan}&timeUnit=${timeUnit}`)
+
+            const data = await response.json();
+            document.getElementById("duration").textContent = `${data.duration} ${data.unit}`;
+            document.getElementById("endTime").textContent = data.endTime;
+            document.getElementById("result-container").classList.remove("hidden");
+        } catch (error) {
+            console.error("Error calculating ETA:", error);
+        }
+    });
+</script>

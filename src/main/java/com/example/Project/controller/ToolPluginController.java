@@ -85,7 +85,6 @@ public class ToolPluginController {
                         params.put(key, values[0]);
                     }
                 });
-
                 return plugin.handle(params);
             }
 
