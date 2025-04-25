@@ -24,21 +24,36 @@
 
             {{!-- End --}}
             <div class="flex-1 flex justify-end">
-                <div id="userInformation" class="hidden" data-user-id="{{userId}}"></div>
-                <div class="flex items-center space-x-4 pr-8">
-                    <div class="relative group">
-                        <button class="flex items-center space-x-2">
-                            <div
-                                class="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-xl font-semibold text-white">
-                                T
-                            </div>
-                            <span class="text-white">Hi, {{username}}!</span>
-                            <span class="text-gray-500">|</span>
-                            <a href="/user/logout" class="hover:text-red-500 hover:underline cursor-pointer">Sign
-                                out</a>
-                        </button>
+                {{#username}}
+                    <div id="userInformation" class="hidden" data-user-id="{{userId}}" data-username="{{username}}"></div>
+                    <div class="flex items-center space-x-4">
+                        <!-- Avatar -->
+                        <img src="/images/user_profile.png" alt="User Avatar"
+                             class="w-10 h-10 rounded-full object-cover border border-gray-500" />
+
+                        <!-- Tên + Logout -->
+                        <div class="flex items-center gap-2">
+                            <span class="px-1 whitespace-nowrap">Hi, {{username}} </span>
+                            <span class="text-gray-500"> |</span>
+                            <form id="logoutForm" action="/user/logout" method="post">
+                                <button type="submit"
+                                        class="px-2 py-1 hover:text-red-500 hover:underline bg-transparent border-none">
+                                    Sign out
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                {{/username}}
+
+                {{^username}}
+                    <div id="userInformation" class="hidden"></div>
+                    <div class="space-x-2">
+                        <a href="/user/login" class="hover:underline hover:text-blue-500">Login</a>
+                        <span>|</span>
+                        <a href="/user/register" class="hover:underline hover:text-blue-500">Register</a>
+                    </div>
+                {{/username}}
+
             </div>
         </div>
 
