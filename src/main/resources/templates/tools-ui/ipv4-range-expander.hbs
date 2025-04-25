@@ -1,0 +1,61 @@
+<div class="container mx-auto p-8 text-gray-300 min-h-screen">
+    <h1 class="text-3xl font-bold text-center mb-4">IPv4 range expander</h1>
+    <p class="text-center mb-6">Given a start and an end IPv4 address, this tool calculates a valid IPv4 subnet along with its CIDR notation.</p>
+
+    <div class="flex items-center justify-center space-x-2">
+        <input id="startIp" class="bg-gray-800 text-white p-2 w-48 rounded-md" placeholder="Start address" />
+        <input id="endIp" class="bg-gray-800 text-white p-2 w-48 rounded-md" placeholder="End address" />
+        <button class="bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 transition" onclick="expandRange()">Expand</button>
+    </div>
+
+    <div class="mt-6 bg-gray-900 p-6 rounded-md ">
+        <table class="w-3/4 max-w-lg text-left mx-auto border border-gray-700 rounded-lg">
+            <tr>
+                <th class="p-3 border-b border-gray-700"></th>
+                <th class="p-3 border-b border-gray-700">Old value</th>
+                <th class="p-3 border-b border-gray-700">New value</th>
+            </tr>
+            <tr>
+                <td class="p-3 border-b border-gray-700">Start address</td>
+                <td id="oldStartAddress" class="p-3 border-b border-gray-700"></td>
+                <td id="newStartAddress" class="p-3 border-b border-gray-700"></td>
+            </tr>
+            <tr>
+                <td class="p-3 border-b border-gray-700">End address</td>
+                <td id="oldEndAddress" class="p-3 border-b border-gray-700"></td>
+                <td id="newEndAddress" class="p-3 border-b border-gray-700"></td>
+            </tr>
+            <tr>
+                <td class="p-3 border-b border-gray-700">Addresses in range</td>
+                <td id="oldAddressCount" class="p-3 border-b border-gray-700"></td>
+                <td id="newAddressCount" class="p-3 border-b border-gray-700"></td>
+            </tr>
+            <tr>
+                <td class="p-3 border-b border-gray-700">CIDR</td>
+                <td id="oldcidr" class="p-3 border-b border-gray-700"></td>
+                <td id="newcidr" class="p-3 border-b border-gray-700"></td> 
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    function expandRange() {
+        const startIp = document.getElementById("startIp").value;
+        const endIp = document.getElementById("endIp").value;
+
+        fetch(`/api/network/ipv4-range-expander?start=${encodeURIComponent(startIp)}&end=${encodeURIComponent(endIp)}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("oldStartAddress").textContent = data.oldStart || "-";
+                document.getElementById("newStartAddress").textContent = data.newStart || "-";
+                document.getElementById("oldEndAddress").textContent = data.oldEnd || "-";
+                document.getElementById("newEndAddress").textContent = data.newEnd || "-";
+                document.getElementById("oldAddressCount").textContent = data.oldRange || "-";
+                document.getElementById("newAddressCount").textContent = data.newRange || "-";
+                document.getElementById("oldcidr").textContent = "-"; // không có kết quả trả về
+                document.getElementById("newcidr").textContent = data.cidr || "-";
+            })
+            .catch(error => console.error("Error:", error));
+    }
+</script>
