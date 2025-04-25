@@ -64,6 +64,8 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 ('URL Encode Decode', 'Encode text to URL-encoded format (also known as "percent-encoded"), or decode from it.', '/web/url-encode-decode', 3),
 ('Escape HTML Entities', 'Escape or unescape HTML entities (replace characters like <,>, &, " and \' with their HTML version).', '/web/escape-html-entities', 3),
 ('URL Parser', 'Parse a URL into its separate constituent parts (protocol, origin, params, port, username-password, ...).', '/web/url-parser', 3),
+('Keycode Infor', 'Find the javascript keycode, code, location and modifiers of any pressed key.','/web/keycode-infor','3'),
+('Slugify string', 'Make a string url, filename and id safe.', '/web/slugify-string',3),
 
 -- Images & Videos (category_id = 4)
 ('QR Code Generator', 'Generate and download a QR code for a URL (or just plain text), and customize the background and foreground colors.', '/images-videos/qr-code-generator', 4),
@@ -79,6 +81,7 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 ('IPv4 Subnet Calculator', 'Parse your IPv4 CIDR blocks and get all the info you need about your subnet.', '/network/ipv4-subnet', 6),
 ('IPv4 Address Converter', 'Convert an IP address into decimal, binary, hexadecimal, or even an IPv6 representation of it.', '/network/ipv4-converter', 6),
 ('IPv4 Range Expander', 'Given a start and an end IPv4 address, this tool calculates a valid IPv4 subnet along with its CIDR notation.', '/network/ipv4-range-expander', 6),
+('MAC Address Generator', 'Enter the quantity and prefix. MAC addresses will be generated in your chosen case (uppercase or lowercase)', '/network/ipv4-mac-generator', 6),
 
 -- Math (category_id = 7)
 ('Math Evaluator', 'A calculator for evaluating mathematical expressions. You can use functions like sqrt, cos, sin, abs, etc.', '/math/evaluator', 7),
@@ -88,7 +91,6 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 -- Measurement (category_id = 8)
 ('Chronometer', 'Monitor the duration of a thing. Basically a chronometer with simple chronometer features.', '/measurement/chronometer', 8),
 ('Temperature Converter', 'Degrees temperature conversions for Kelvin, Celsius, Fahrenheit, Rankine, Delisle, Newton, Réaumur, and Rømer.', '/measurement/temperature', 8),
-('Benchmark Builder', 'Easily compare execution time of tasks with this very simple online benchmark builder.', '/measurement/benchmark-builder', 8),
 
 -- Text (category_id = 9)
 ('Text Statistics', 'Get information about a text, the number of characters, the number of words, its size in bytes, ...', '/text/statistics', 9),
@@ -96,7 +98,6 @@ INSERT INTO tools (name, description, endpoint, category_id) VALUES
 ('String obfuscator', 'Obfuscate a string (like a secret, an IBAN, or a token) to make it shareable and identifiable without revealing its content.', '/text/string-obfuscator', 9),
 
 -- Data (category_id = 10)
-('Phone Parser and Formatter', 'Parse, validate and format phone numbers. Get information about the phone number, like the country code, type, etc.', '/data/phone-parser', 10),
 ('IBAN Validator and Parser', 'Validate and parse IBAN numbers. Check if an IBAN is valid and get the country, BBAN, if it is a QR-IBAN and the IBAN friendly format.', '/data/iban-validator', 10);
 
 -- Bảng favorites (Lưu danh sách công cụ yêu thích của user)

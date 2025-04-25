@@ -1,0 +1,120 @@
+<div class="max-w-2xl mx-auto mt-16 text-white px-4">
+  <h1 class="text-4xl font-bold mb-2 border-b border-gray-700 pb-2">MAC address generator</h1>
+  <p class="text-gray-400 mb-6">
+    Enter the quantity and prefix. MAC addresses will be generated in your chosen case (uppercase or lowercase)
+  </p>
+
+  <!-- Quantity -->
+  <label class="block text-sm mb-2">Quantity:</label>
+  <input
+    id="quantity"
+    type="number"
+    min="1"
+    value="1"
+    class="w-full p-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+  />
+
+  <!-- Prefix -->
+  <label class="block text-sm mb-2">MAC address prefix:</label>
+  <input
+    id="prefix"
+    type="text"
+    placeholder="64:16:7F"
+    class="w-full p-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+  />
+
+  <!-- Case -->
+  <label class="block text-sm mb-2">Case:</label>
+  <div class="flex gap-2 mb-4">
+    <button id="uppercaseBtn" class="bg-green-700 px-4 py-2 rounded-md hover:bg-green-600">Uppercase</button>
+    <button id="lowercaseBtn" class="bg-gray-700 px-4 py-2 rounded-md hover:bg-gray-600">Lowercase</button>
+  </div>
+
+  <!-- Separator -->
+  <label class="block text-sm mb-2">Separator:</label>
+  <div class="flex gap-2 mb-6">
+    <button data-separator=":" class="bg-green-700 px-4 py-2 rounded-md hover:bg-green-600">:</button>
+    <button data-separator="-" class="bg-gray-700 px-4 py-2 rounded-md hover:bg-gray-600">-</button>
+    <button data-separator="" class="bg-gray-700 px-4 py-2 rounded-md hover:bg-gray-600">None</button>
+  </div>
+
+  <!-- Output -->
+  <div id="outputContainer" class="bg-gray-900 p-4 rounded-md shadow-md text-left font-mono text-lg mb-6 hidden">
+    <pre id="outputAddress" class="whitespace-pre-wrap break-all"></pre>
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex gap-4 justify-center">
+    <button onclick="generateMAC()" class="bg-blue-600 px-6 py-2 rounded-md hover:bg-blue-500">Refresh</button>
+    <button onclick="copyMAC()" class="bg-gray-600 px-6 py-2 rounded-md hover:bg-gray-500">Copy</button>
+  </div>
+</div>
+
+<script>
+  const output = document.getElementById("outputAddress");
+  const outputContainer = document.getElementById("outputContainer");
+  const quantityInput = document.getElementById("quantity");
+  const prefixInput = document.getElementById("prefix");
+
+  let isUppercase = true;
+  let separator = ":";
+
+  // Toggle case
+  document.getElementById("uppercaseBtn").onclick = () => {
+    isUppercase = true;
+    toggleButton("uppercaseBtn", "lowercaseBtn");
+    generateMAC();
+  };
+
+  document.getElementById("lowercaseBtn").onclick = () => {
+    isUppercase = false;
+    toggleButton("lowercaseBtn", "uppercaseBtn");
+    generateMAC();
+  };
+
+  // Separator
+  document.querySelectorAll("[data-separator]").forEach(btn => {
+    btn.onclick = () => {
+      separator = btn.getAttribute("data-separator");
+      document.querySelectorAll("[data-separator]").forEach(b => b.classList.remove("bg-green-700"));
+      btn.classList.add("bg-green-700");
+      generateMAC();
+    };
+  });
+
+  function toggleButton(activeId, inactiveId) {
+    document.getElementById(activeId).classList.add("bg-green-700");
+    document.getElementById(inactiveId).classList.remove("bg-green-700");
+  }
+
+  async function generateMAC() {
+    const quantity = parseInt(quantityInput.value) || 1;
+    const prefix = prefixInput.value.trim();
+    const caseParam = isUppercase ? "upper" : "lower";
+    const encodedPrefix = encodeURIComponent(prefix);
+    const encodedSep = encodeURIComponent(separator);
+
+    const url = `/api/network/mac-generator?quantity=${quantity}&prefix=${encodedPrefix}&case=${caseParam}&separator=${encodedSep}`;
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to fetch MAC addresses");
+
+      const data = await res.json(); // Expecting server to return: { macs: ["64:16:7F:0D:B6:04", ...] }
+
+      output.textContent = data.macs.join("\n");
+      outputContainer.classList.remove("hidden");
+    } catch (err) {
+      output.textContent = "Error generating MAC addresses.";
+      outputContainer.classList.remove("hidden");
+      console.error(err);
+    }
+  }
+
+  function copyMAC() {
+    navigator.clipboard.writeText(output.textContent);
+  }
+
+  generateMAC();
+</script>
+

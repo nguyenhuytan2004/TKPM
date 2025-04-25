@@ -1,0 +1,83 @@
+<div class="max-w-2xl mx-auto mt-16 text-white px-4">
+  <h1 class="text-4xl font-bold mb-2 border-b border-gray-700 pb-2">Numeronym Generator</h1>
+  <p class="text-gray-400 mb-6">
+    A numeronym is a word where a number replaces a group of letters. For example, "i18n" is a numeronym of "internationalization".
+  </p>
+
+  <!-- Input -->
+  <input
+    id="inputWord"
+    type="text"
+    placeholder="Enter a word like internationalization..."
+    class="w-full p-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-6"
+  />
+
+  <!-- Arrow -->
+  <div class="text-3xl text-center animate-bounce mb-6">⬇</div>
+
+  <!-- Output -->
+  <div id="outputContainer" class="bg-gray-900 p-4 rounded-md shadow-md flex items-center justify-between mb-6 hidden">
+    <span id="outputWord" class="font-mono text-lg break-all">i18n</span>
+    <button onclick="copyText()" class="text-gray-400 hover:text-white">❐</button>
+  </div>
+
+  <!-- Examples -->
+  <div class="bg-gray-900 p-6 rounded-md shadow-md">
+    <h2 class="font-semibold text-lg mb-2">Try these examples</h2>
+    <ul class="space-y-1">
+      <li>
+        <button onclick="fillExample('localization')" class="hover:underline text-blue-400">localization</button>
+      </li>
+      <li>
+        <button onclick="fillExample('accessibility')" class="hover:underline text-blue-400">accessibility</button>
+      </li>
+      <li>
+        <button onclick="fillExample('internationalization')" class="hover:underline text-blue-400">internationalization</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const input = document.getElementById('inputWord');
+  const output = document.getElementById('outputWord');
+  const outputBox = document.getElementById('outputContainer');
+
+  // Function to generate numeronym
+  function generateNumeronym(word) {
+    if (word.length <= 3) return word;
+    return `${word[0]}${word.length - 2}${word[word.length - 1]}`;
+  }
+
+  // Update output based on input
+  function updateOutput() {
+    const word = input.value.trim();
+    if (word.length < 4) {
+      outputBox.classList.add("hidden");
+      return;
+    }
+    output.textContent = generateNumeronym(word);
+    outputBox.classList.remove("hidden");
+  }
+
+  // Copy the generated numeronym to clipboard
+  function copyText() {
+    const range = document.createRange();
+    range.selectNode(output);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+  }
+
+  // Fill the input with a sample word
+  function fillExample(word) {
+    input.value = word;
+    updateOutput();
+  }
+
+  // Event listener for input changes
+  input.addEventListener('input', updateOutput);
+
+  // Initialize output box visibility
+  outputBox.classList.add("hidden");
+</script>

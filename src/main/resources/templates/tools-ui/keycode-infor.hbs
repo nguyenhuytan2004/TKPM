@@ -1,0 +1,63 @@
+<div class="max-w-2xl mx-auto mt-16 text-white px-4">
+  <h1 class="text-4xl font-bold mb-2 border-b border-gray-700 pb-2">Keycode Info</h1>
+  <p class="text-gray-400 mb-6">Press any key on your keyboard to get JavaScript key info (Key, Keycode, Code, Location, Modifiers)</p>
+
+  <div id="pressedKey" class="bg-gray-900 text-5xl font-bold text-center p-6 rounded-md mb-6 shadow-md">
+    ⌨️
+  </div>
+
+  <div class="space-y-4">
+    <div class="flex justify-between bg-gray-800 p-3 rounded-md">
+      <span class="text-gray-400">Key :</span>
+      <span id="keyValue" class="font-mono">-</span>
+    </div>
+
+    <div class="flex justify-between bg-gray-800 p-3 rounded-md">
+      <span class="text-gray-400">Keycode :</span>
+      <span id="keyCodeValue" class="font-mono">-</span>
+    </div>
+
+    <div class="flex justify-between bg-gray-800 p-3 rounded-md">
+      <span class="text-gray-400">Code :</span>
+      <span id="codeValue" class="font-mono">-</span>
+    </div>
+
+    <div class="flex justify-between bg-gray-800 p-3 rounded-md">
+      <span class="text-gray-400">Location :</span>
+      <span id="locationValue" class="font-mono">-</span>
+    </div>
+
+    <div class="flex justify-between bg-gray-800 p-3 rounded-md">
+      <span class="text-gray-400">Modifiers :</span>
+      <span id="modifiersValue" class="font-mono">-</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const pressedKey = document.getElementById("pressedKey");
+  const keyValue = document.getElementById("keyValue");
+  const keyCodeValue = document.getElementById("keyCodeValue");
+  const codeValue = document.getElementById("codeValue");
+  const locationValue = document.getElementById("locationValue");
+  const modifiersValue = document.getElementById("modifiersValue");
+
+  window.addEventListener("keydown", (e) => {
+    e.preventDefault(); // prevent scrolling etc
+
+    pressedKey.textContent = e.key;
+
+    keyValue.textContent = e.key;
+    keyCodeValue.textContent = e.keyCode || e.which;
+    codeValue.textContent = e.code;
+    locationValue.textContent = e.location;
+
+    const modifiers = [];
+    if (e.ctrlKey) modifiers.push("Ctrl");
+    if (e.shiftKey) modifiers.push("Shift");
+    if (e.altKey) modifiers.push("Alt");
+    if (e.metaKey) modifiers.push("Meta");
+
+    modifiersValue.textContent = modifiers.length ? modifiers.join(" + ") : "None";
+  });
+</script>

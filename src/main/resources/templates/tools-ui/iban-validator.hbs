@@ -1,0 +1,95 @@
+<div class="max-w-2xl mx-auto mt-16 text-white px-4">
+    <h1 class="text-4xl font-bold mb-2 border-b border-gray-700 pb-2">IBAN validator and parser</h1>
+    <p class="text-gray-400 mb-6">
+        Validate and parse IBAN numbers. Check if an IBAN is valid and get the country, BBAN, if it is a QR-IBAN and the IBAN friendly format.
+    </p>
+
+    <!-- IBAN Input -->
+    <input id="ibanInput" type="text" placeholder="Enter an IBAN to check for validity..."
+        class="w-full p-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 mb-6" />
+
+    <!-- Result Section -->
+    <div id="resultBox" class="bg-gray-900 p-6 rounded-md mb-6 shadow-md hidden">
+        <div class="mb-2">
+            <span class="text-gray-400">Is IBAN valid ?</span>
+            <p id="isValid" class="font-semibold">Yes</p>
+        </div>
+        <div class="mb-2">
+            <span class="text-gray-400">Is IBAN a QR-IBAN ?</span>
+            <p id="isQR" class="font-semibold">No</p>
+        </div>
+        <div class="mb-2 flex items-center gap-2">
+            <span class="text-gray-400">Country code</span>
+            <p id="countryCode" class="font-semibold">FR</p>
+            <button onclick="copyText('countryCode')" class="text-gray-400 hover:text-white">❐</button>
+        </div>
+        <div class="mb-2 flex items-center gap-2">
+            <span class="text-gray-400">BBAN</span>
+            <p id="bban" class="font-semibold break-all">30006000011234567890189</p>
+            <button onclick="copyText('bban')" class="text-gray-400 hover:text-white">❐</button>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-gray-400">IBAN friendly format</span>
+            <p id="friendlyFormat" class="font-semibold break-all">FR76 3000 6000 0112 3456 7890 189</p>
+            <button onclick="copyText('friendlyFormat')" class="text-gray-400 hover:text-white">❐</button>
+        </div>
+    </div>
+
+    <!-- Examples -->
+    <div class="bg-gray-900 p-6 rounded-md shadow-md">
+        <h2 class="font-semibold text-lg mb-2">Valid IBAN examples</h2>
+        <ul class="space-y-1">
+            <li>FR76 <span class="font-mono">3000 6000 0112 3456 7890 189</span> <button onclick="fillExample('FR7630006000011234567890189')" class="text-gray-400 hover:text-white">❐</button></li>
+            <li>DE89 <span class="font-mono">3704 0044 0532 0130 00</span> <button onclick="fillExample('DE89370400440532013000')" class="text-gray-400 hover:text-white">❐</button></li>
+            <li>GB29 <span class="font-mono">NWBK 6016 1331 9268 19</span> <button onclick="fillExample('GB29NWBK60161331926819')" class="text-gray-400 hover:text-white">❐</button></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    async function validateIBAN() {
+    const iban = document.getElementById('ibanInput').value.trim();
+    if (!iban) return;
+
+    const res = await fetch(`/api/text/iban-validator?iban=${encodeURIComponent(iban)}`);
+    const data = await res.json();
+
+    if (!data) {
+        document.getElementById("resultBox").classList.add("hidden");
+        return;
+    }
+
+    document.getElementById("resultBox").classList.remove("hidden");
+    document.getElementById('isValid').textContent = data.valid ? 'Yes' : 'No';
+    document.getElementById('isQR').textContent = data.qrIban ? 'Yes' : 'No';
+    document.getElementById('countryCode').textContent = data.countryCode || 'N/A';
+    document.getElementById('bban').textContent = data.bban || 'N/A';
+    document.getElementById('friendlyFormat').textContent = data.friendlyFormat || 'N/A';
+}
+
+    function copyText(id) {
+        const text = document.getElementById(id).textContent;
+        navigator.clipboard.writeText(text).then(() => alert("Copied!"));
+    }
+
+    function fillExample(example) {
+        document.getElementById("ibanInput").value = example;
+        validateIBAN();
+    }
+
+    const ibanInput = document.getElementById("ibanInput");
+
+    // Gửi khi nhập đủ dài
+    ibanInput.addEventListener("input", () => {
+        const value = ibanInput.value.trim();
+        if (value.length >= 5) validateIBAN();
+    });
+
+    // Gửi khi nhấn Enter
+    ibanInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Ngăn submit form nếu có
+            validateIBAN();
+        }
+    });
+</script>

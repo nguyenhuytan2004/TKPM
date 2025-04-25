@@ -1,0 +1,57 @@
+<div class="max-w-2xl mx-auto mt-16 text-white px-4">
+  <h1 class="text-4xl font-bold mb-2 border-b border-gray-700 pb-2">Slugify string</h1>
+  <p class="text-gray-400 mb-6">Make a string URL, filename and ID safe.</p>
+
+  <div class="space-y-6">
+    <!-- Input field -->
+    <div>
+      <label for="inputString" class="block text-gray-300 mb-2">Your string to slugify</label>
+      <textarea id="inputString" rows="2" placeholder="Put your string here (ex: My file path)"
+        class="w-full p-4 bg-green-950 text-white rounded-md border border-green-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-600"></textarea>
+    </div>
+
+    <!-- Output field -->
+    <div>
+      <label for="outputSlug" class="block text-gray-300 mb-2">Your slug</label>
+      <textarea id="outputSlug" rows="2" readonly
+        class="w-full p-4 bg-gray-800 text-white rounded-md placeholder-gray-500 resize-none focus:outline-none"></textarea>
+    </div>
+
+    <!-- Copy button -->
+    <div class="text-center">
+      <button id="copySlug"
+        class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition-all duration-200">
+        Copy slug
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const input = document.getElementById("inputString");
+  const output = document.getElementById("outputSlug");
+  const copyBtn = document.getElementById("copySlug");
+
+  const slugify = (str) => {
+    return str
+      .toString()
+      .normalize("NFKD")                 // remove accents
+      .replace(/[\u0300-\u036f]/g, "")   // more accent cleanup
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")      // remove invalid chars
+      .replace(/\s+/g, "-")              // replace whitespace with -
+      .replace(/-+/g, "-");              // collapse dashes
+  };
+
+  input.addEventListener("input", () => {
+    output.value = slugify(input.value);
+  });
+
+  copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(output.value).then(() => {
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => copyBtn.textContent = "Copy slug", 1500);
+    });
+  });
+</script>
