@@ -39,7 +39,7 @@
         if (!text.trim()) return; // tránh gọi API nếu trống
 
         const encodedText = encodeURIComponent(text);
-        const response = await fetch(`/api/text/statistics?text=${encodedText}`);
+        const response = await fetch(`/api/text/text-statistics?text=${encodedText}`);
 
         if (!response.ok) {
             console.error("Failed to fetch data");

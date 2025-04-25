@@ -53,7 +53,7 @@
     // Gọi API để tính subnet
     function calculateSubnet() {
         const ipInput = document.getElementById("ipInput").value;
-        fetch(`/api/network/ipv4-subnet?ip=${encodeURIComponent(ipInput)}`)
+        fetch(`/api/network/ipv4-subnet-calculator?ip=${encodeURIComponent(ipInput)}`)
             .then(response => response.json())
             .then(data => {
                 document.getElementById("netmask").textContent = data.netmask || "-";

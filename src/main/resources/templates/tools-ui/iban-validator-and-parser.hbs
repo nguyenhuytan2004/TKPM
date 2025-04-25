@@ -51,7 +51,7 @@
     const iban = document.getElementById('ibanInput').value.trim();
     if (!iban) return;
 
-    const res = await fetch(`/api/text/iban-validator?iban=${encodeURIComponent(iban)}`);
+    const res = await fetch(`/api/data/iban-validator-and-parser?iban=${encodeURIComponent(iban)}`);
     const data = await res.json();
 
     if (!data) {

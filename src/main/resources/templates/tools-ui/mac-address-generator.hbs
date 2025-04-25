@@ -94,7 +94,7 @@
     const encodedPrefix = encodeURIComponent(prefix);
     const encodedSep = encodeURIComponent(separator);
 
-    const url = `/api/network/mac-generator?quantity=${quantity}&prefix=${encodedPrefix}&case=${caseParam}&separator=${encodedSep}`;
+    const url = `/api/network/mac-address-generator?quantity=${quantity}&prefix=${encodedPrefix}&case=${caseParam}&separator=${encodedSep}`;
 
     try {
       const res = await fetch(url);

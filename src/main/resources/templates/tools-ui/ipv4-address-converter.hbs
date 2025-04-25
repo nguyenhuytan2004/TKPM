@@ -39,7 +39,7 @@
     const ipInput = document.getElementById("ipInput").value;
 
     // Gọi API với phương thức GET và truyền params qua query string
-    fetch(`/api/network/ipv4-converter?ip=${ipInput}`)
+    fetch(`/api/network/ipv4-address-converter?ip=${ipInput}`)
     .then(response => response.json())
     .then(data => {
         document.getElementById("decimal").textContent = data.decimal || "-";
