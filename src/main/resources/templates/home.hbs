@@ -1,29 +1,29 @@
-<div class="space-y-6">
-    <div class="space-y-2">
-        <p class="text-xl text-gray-400 font-bold">Your favorite tools</p>
-        <div id="favoriteContainer" class="grid grid-cols-4 gap-4">
+<div class='space-y-6'>
+    <div class='space-y-2'>
+        <p class='text-xl text-gray-400 font-bold'>Your favorite tools</p>
+        <div id='favoriteContainer' class='grid grid-cols-4 gap-4'>
             {{#favoriteTools}}
-                <a href={{endpoint}} id="toolLink" data-tool-id="{{id}}" data-premium="{{isPremium}}">
-                    <div class="bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2">
-                        <div class="flex space-x-2 justify-between items-center">
-                            <h3 class="text-lg font-semibold flex items-center space-x-2">
+                <a href={{endpoint}} id='toolLink' data-tool-id='{{id}}' data-premium='{{isPremium}}'>
+                    <div class='bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2'>
+                        <div class='flex space-x-2 justify-between items-center'>
+                            <h3 class='text-lg font-semibold flex items-center space-x-2'>
                                 <span>{{name}}</span>
                                 {{#isPremium}}
-                                    <svg class="h-5 w-5 text-yellow-100 xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                         viewBox="0 0 20 20">
-                                        <path
-                                                d="M10 1.5l2.755 5.58 6.165.896-4.46 4.347 1.053 6.144L10 15.675l-5.513 2.792 1.053-6.144-4.46-4.347 6.165-.896L10 1.5z" />
+                                    <svg class='h-5 w-5 text-yellow-100 xmlns=http://www.w3.org/2000/svg' fill='currentColor'
+                                    viewBox='0 0 20 20'>
+                                    <path
+                                            d='M10 1.5l2.755 5.58 6.165.896-4.46 4.347 1.053 6.144L10 15.675l-5.513 2.792 1.053-6.144-4.46-4.347 6.165-.896L10 1.5z' />
                                     </svg>
                                 {{/isPremium}}
                             </h3>
-                            <div id="addToFavoriteBtn" class="p-2 rounded-full hover:bg-gray-700 mr-2">
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path fill="#74C0FC"
-                                          d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
+                            <div id='addToFavoriteBtn' class='p-2 rounded-full hover:bg-gray-700 mr-2'>
+                                <svg class='h-5 w-5' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+                                    <path fill='#74C0FC'
+                                          d='M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z' />
                                 </svg>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-400 line-clamp-2">
+                        <p class='text-sm text-gray-400 line-clamp-2'>
                             {{description}}
                         </p>
                     </div>
@@ -33,31 +33,31 @@
     </div>
 
     <!-- All tools -->
-    <div class="space-y-2">
-        <p class="text-xl text-gray-400 font-bold">All the tools</p>
-        <div id="allToolsContainer" class="grid grid-cols-4 gap-4">
+    <div class='space-y-2'>
+        <p class='text-xl text-gray-400 font-bold'>All the tools</p>
+        <div id='allToolsContainer' class='grid grid-cols-4 gap-4'>
             {{#tools}}
-                <a href="/plugin{{endpoint}}" id="toolLink" data-tool-id="{{id}}" data-premium="{{isPremium}}">
-                    <div class="bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2">
-                        <div class="flex space-x-2 justify-between items-center">
-                            <h3 class="text-lg font-semibold flex items-center space-x-2">
+                <a href='/plugin{{endpoint}}' id='toolLink' data-tool-id='{{id}}' data-premium='{{isPremium}}'>
+                    <div class='bg-gray-800 p-4 rounded-lg hover:border-blue-500 border h-full space-y-2'>
+                        <div class='flex space-x-2 justify-between items-center'>
+                            <h3 class='text-lg font-semibold flex items-center space-x-2'>
                                 <span>{{name}}</span>
                                 {{#isPremium}}
-                                    <svg class="h-5 w-5 text-yellow-100" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                         viewBox="0 0 20 20">
+                                    <svg class='h-5 w-5 text-yellow-100' xmlns='http://www.w3.org/2000/svg' fill='currentColor'
+                                         viewBox='0 0 20 20'>
                                         <path
-                                                d="M10 1.5l2.755 5.58 6.165.896-4.46 4.347 1.053 6.144L10 15.675l-5.513 2.792 1.053-6.144-4.46-4.347 6.165-.896L10 1.5z" />
+                                                d='M10 1.5l2.755 5.58 6.165.896-4.46 4.347 1.053 6.144L10 15.675l-5.513 2.792 1.053-6.144-4.46-4.347 6.165-.896L10 1.5z' />
                                     </svg>
                                 {{/isPremium}}
                             </h3>
-                            <div id="addToFavoriteBtn" class="p-2 rounded-full hover:bg-gray-700 mr-2">
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path fill="#74C0FC"
-                                          d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z" />
+                            <div id='addToFavoriteBtn' class='p-2 rounded-full hover:bg-gray-700 mr-2'>
+                                <svg class='h-5 w-5' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+                                    <path fill='#74C0FC'
+                                          d='M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z' />
                                 </svg>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-400 line-clamp-2">
+                        <p class='text-sm text-gray-400 line-clamp-2'>
                             {{description}}
                         </p>
                     </div>
@@ -68,23 +68,23 @@
 </div>
 
 <!-- Premium Login Prompt -->
-<div id="premiumLoginPopup" class="fixed inset-0 flex justify-center items-center z-50 hidden">
+<div id='premiumLoginPopup' class='fixed inset-0 flex justify-center items-center z-50 hidden'>
     <!-- Overlay (clicking outside won't close popup) -->
-    <div class="absolute inset-0 bg-opacity-30 backdrop-blur-sm"></div>
+    <div class='absolute inset-0 bg-opacity-30 backdrop-blur-sm'></div>
 
     <!-- Popup box -->
-    <div class="relative bg-gray-900 border border-gray-700 rounded-2xl shadow-xl p-6 w-full max-w-md z-10 text-white space-y-4 pointer-events-auto">
-        <div class="flex justify-between items-center">
-            <h2 class="text-lg font-semibold">🔒 Premium Tool</h2>
-            <button id="closePremiumPopup" class="text-gray-400 hover:text-red-400 text-xl">&times;</button>
+    <div class='relative bg-gray-900 border border-gray-700 rounded-2xl shadow-xl p-6 w-full max-w-md z-10 text-white space-y-4 pointer-events-auto'>
+        <div class='flex justify-between items-center'>
+            <h2 class='text-lg font-semibold'>🔒 Premium Tool</h2>
+            <button id='closePremiumPopup' class='text-gray-400 hover:text-red-400 text-xl'>&times;</button>
         </div>
-        <p class="text-sm text-gray-300">
+        <p class='text-sm text-gray-300'>
             This tool is available for premium users only.
             <br/>
-            <a href="/user/login" class="text-blue-400 hover:underline">Log in</a> or <a href="/user/register" class="text-blue-400 hover:underline">register</a> to access it.
+            <a href='/user/login' class='text-blue-400 hover:underline'>Log in</a> or <a href='/user/register' class='text-blue-400 hover:underline'>register</a> to access it.
         </p>
-        <div class="flex justify-end">
-            <button id="closePremiumPopupBtn" class="mt-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm">
+        <div class='flex justify-end'>
+            <button id='closePremiumPopupBtn' class='mt-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm'>
                 Close
             </button>
         </div>
@@ -92,30 +92,31 @@
 </div>
 
 <!-- Premium Upgrade Prompt -->
-<div id="premiumUpgradePopup" class="fixed inset-0 flex justify-center items-center z-50 hidden">
+<div id='premiumUpgradePopup' class='fixed inset-0 flex justify-center items-center z-50 hidden'>
     <!-- Overlay (clicking outside won't close popup) -->
-    <div class="absolute inset-0 bg-opacity-30 backdrop-blur-sm"></div>
+    <div class='absolute inset-0 bg-opacity-30 backdrop-blur-sm'></div>
 
     <!-- Popup box -->
-    <div class="relative bg-gray-900 border border-gray-700 rounded-2xl shadow-xl p-6 w-full max-w-md z-10 text-white space-y-4 pointer-events-auto">
-        <div class="flex justify-between items-center">
-            <h2 class="text-lg font-semibold text-yellow-400">🚀 Premium Required</h2>
-            <button id="closePremiumUpgradePopup" class="text-gray-400 hover:text-red-400 text-xl">&times;</button>
+    <div class='relative bg-gray-900 border border-gray-700 rounded-2xl shadow-xl p-6 w-full max-w-md z-10 text-white space-y-4 pointer-events-auto'>
+        <div class='flex justify-between items-center'>
+            <h2 class='text-lg font-semibold text-yellow-400'>🚀 Premium Required</h2>
+            <button id='closePremiumUpgradePopup' class='text-gray-400 hover:text-red-400 text-xl'>&times;</button>
         </div>
-        <p class="text-sm text-gray-300">
-            This tool is only available for <span class="text-yellow-300 font-medium">premium users</span>.<br/>
-            Upgrade now for <span class="text-blue-400 font-semibold">{{price}}</span> to unlock full access.
+        <p class='text-sm text-gray-300'>
+            This tool is only available for <span class='text-yellow-300 font-medium'>premium users</span>.<br/>
+            Upgrade now for <span class='text-blue-400 font-semibold'>{{price}}</span> to unlock full access.
         </p>
-        <div class="flex justify-end gap-6"> <!-- Tăng khoảng cách giữa các nút bằng cách sử dụng gap-6 -->
-            <button id="cancelUpgradeBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm">
+        <div class='flex justify-end gap-6'>
+            <button id='cancelUpgradeBtn' class='px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm'>
                 Cancel
             </button>
-            <button id="requestUpgradeBtn" class="px-4 py-2 bg-blue-500 hover:bg-blue-400 text-black rounded text-sm">
+            <button id='requestUpgradeBtn' class='px-4 py-2 bg-blue-500 hover:bg-blue-400 text-black rounded text-sm'>
                 Request Upgrade
             </button>
         </div>
     </div>
 </div>
+
 
 {{!-- Nhấn nút "Yêu thích" trong all tools --}}
 <script>
