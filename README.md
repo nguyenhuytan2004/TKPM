@@ -116,5 +116,3 @@ Dự án sử dụng file JAR nội bộ:
 > 📂 Đảm bảo file `libs/IPlugin-1.0.0.jar` tồn tại trong thư mục `libs/` ở root project.
 
 ---
-
-✅ Sau khi hoàn tất các bước trên, bạn đã có thể phát triển và chạy ứng dụng Spring Boot với giao diện Tailwind, Handlebars template và cơ sở dữ liệu MySQL đã được khởi tạo.
